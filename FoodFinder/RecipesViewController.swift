@@ -19,7 +19,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         super.viewDidLoad()
         
         // Search Button Setup
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(animateViews))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(animateViews))
         
         // Search Bar Setup
         searchBar.placeholder = "Search"
@@ -93,11 +93,19 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     
     @objc func animateViews() {
         if navigationItem.leftBarButtonItem?.image == UIImage(systemName: "magnifyingglass.circle.fill") {
-            navigationItem.leftBarButtonItem?.image = UIImage(systemName: "magnifyingglass")
+            navigationItem.leftBarButtonItem?.image = UIImage(systemName: "magnifyingglass.circle")
             searchBar.isHidden = true
+            for cell in collectionView.visibleCells {
+                cell.isHidden = false
+            }
+            collectionView.isScrollEnabled = true
         } else {
             navigationItem.leftBarButtonItem?.image = UIImage(systemName: "magnifyingglass.circle.fill")
             searchBar.isHidden = false
+            for cell in collectionView.visibleCells {
+                cell.isHidden = true
+            }
+            collectionView.isScrollEnabled = false
         }
     }
     
@@ -146,7 +154,37 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         viewController.mealId = self.recipes[indexPath.item].mealId
         navigationController?.pushViewController(viewController, animated: true)
     }
-
+    
+    //MARK: Search Bar Config
+    
+    // Determine whether to filter ingredients or find autocompletes
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    }
+    
+    // Show cancel and scope views
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+        searchBar.sizeToFit()
+    }
+    
+    // Hide cancel and scope views
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.sizeToFit()
+    }
+    
+    // Hide keyboard
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+        searchBar.text = ""
+    }
+    
+    // Hide keyboard and reset views
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+        searchBar.text = ""
+    }
+    
 }
 
 extension UIImageView {
