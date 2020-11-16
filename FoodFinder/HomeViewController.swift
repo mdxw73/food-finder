@@ -81,15 +81,14 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
     // @objc makes the code within the method available to Objective C code, which is run at runtime, as well as Swift code
     // Generates alert and appends input to ingredients array before reloading the data
     @objc func addIngredient() {
-        displayIngredientAlert(textFieldText: "", title: "Quick Add", message: "Enter Ingredient")
+        displayIngredientAlert(title: "Quick Add", message: "Enter Ingredient")
     }
     
-    func displayIngredientAlert(textFieldText: String, title: String, message: String) {
+    func displayIngredientAlert(title: String, message: String) {
         // Instantiate alert
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         // Add a text field
         alert.addTextField(configurationHandler: { textField in
-            textField.text = textFieldText
             textField.autocapitalizationType = .none
             textField.autocorrectionType = .yes
             })

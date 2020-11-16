@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3Qc-Ka-h9n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3Qc-Ka-h9n">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -26,7 +26,7 @@
             </objects>
             <point key="canvasLocation" x="59" y="333"/>
         </scene>
-        <!--Recipes-->
+        <!--By Ingredients-->
         <scene sceneID="ZB8-fS-Lj4">
             <objects>
                 <collectionViewController id="gbR-Z0-nB8" customClass="RecipesViewController" customModule="FoodFinder" customModuleProvider="target" sceneMemberID="viewController">
@@ -87,7 +87,7 @@
                             <outlet property="delegate" destination="gbR-Z0-nB8" id="GwA-zV-owP"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Recipes" id="wpk-fS-UWh"/>
+                    <navigationItem key="navigationItem" title="By Ingredients" id="wpk-fS-UWh"/>
                     <connections>
                         <outlet property="searchBar" destination="JQo-8u-xtE" id="1Xa-eW-ZSj"/>
                     </connections>
@@ -550,6 +550,68 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tQk-0U-xLv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="718.84057971014499" y="1058.7053571428571"/>
+        </scene>
+        <!--Recipes-->
+        <scene sceneID="TFD-sr-h3c">
+            <objects>
+                <collectionViewController storyboardIdentifier="SearchedRecipesViewController" id="auV-Wq-HPu" customClass="SearchedRecipesViewController" customModule="FoodFinder" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Yl4-SV-Y6W">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.96462208029999996" green="0.97258907559999996" blue="0.97243374589999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="14" id="3Ny-Z5-apE">
+                            <size key="itemSize" width="190" height="180"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="10" minY="14" maxX="10" maxY="10"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Recipe" id="zwN-IL-tlk" customClass="RecipeCell" customModule="FoodFinder" customModuleProvider="target">
+                                <rect key="frame" x="10" y="14" width="190" height="180"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="7vf-dU-xVX">
+                                    <rect key="frame" x="0.0" y="0.0" width="190" height="180"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GOt-6j-z2L">
+                                            <rect key="frame" x="0.0" y="-2" width="190" height="140"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="leo-hb-d89">
+                                            <rect key="frame" x="10" y="143" width="170" height="32"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                            <color key="textColor" red="0.96861749890000004" green="0.96471267940000005" blue="0.98909741640000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="leo-hb-d89" secondAttribute="bottom" constant="5" id="9bw-0a-kNN"/>
+                                        <constraint firstItem="leo-hb-d89" firstAttribute="leading" secondItem="7vf-dU-xVX" secondAttribute="leading" constant="10" id="Gwa-Xr-Kdl"/>
+                                        <constraint firstAttribute="trailing" secondItem="leo-hb-d89" secondAttribute="trailing" constant="10" id="I31-ib-Hed"/>
+                                        <constraint firstItem="GOt-6j-z2L" firstAttribute="leading" secondItem="7vf-dU-xVX" secondAttribute="leading" id="Umh-ga-b6G"/>
+                                        <constraint firstItem="GOt-6j-z2L" firstAttribute="centerX" secondItem="7vf-dU-xVX" secondAttribute="centerX" id="WfP-nA-EMz"/>
+                                        <constraint firstItem="GOt-6j-z2L" firstAttribute="height" secondItem="7vf-dU-xVX" secondAttribute="height" multiplier="0.777778" id="Wjp-Dv-I0e"/>
+                                        <constraint firstItem="GOt-6j-z2L" firstAttribute="top" secondItem="7vf-dU-xVX" secondAttribute="top" constant="-2" id="hzJ-jO-mNR"/>
+                                        <constraint firstItem="leo-hb-d89" firstAttribute="top" secondItem="GOt-6j-z2L" secondAttribute="bottom" constant="5" id="kdx-fQ-ZjF"/>
+                                        <constraint firstAttribute="trailing" secondItem="GOt-6j-z2L" secondAttribute="trailing" id="xSd-kQ-wlb"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <color key="backgroundColor" red="0.92211711409999997" green="0.37639513610000003" blue="0.55893963579999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="imageView" destination="GOt-6j-z2L" id="MC9-t4-Rgc"/>
+                                    <outlet property="mealName" destination="leo-hb-d89" id="VYF-pL-i3f"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="auV-Wq-HPu" id="krb-1D-c1i"/>
+                            <outlet property="delegate" destination="auV-Wq-HPu" id="nmZ-Wf-oO8"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Recipes" id="ToH-Li-p94"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rGW-Me-bg5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2139" y="333"/>
         </scene>
     </scenes>
     <resources>

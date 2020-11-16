@@ -33,6 +33,8 @@
 		D7055F65255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F52255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift */; };
 		D7055F6D255F3C97001DF3F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */; };
 		D7055F72255F3D20001DF3F2 /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D7055F71255F3D20001DF3F2 /* YOLOv3.mlmodel */; };
+		D7F023DC2562ACC200B6A9DD /* RecipeSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F023DB2562ACC200B6A9DD /* RecipeSearchResults.swift */; };
+		D7F023E92562B32200B6A9DD /* SearchedRecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F023E82562B32200B6A9DD /* SearchedRecipesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,8 @@
 		D7055F52255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedRecipeAdaptor.swift; sourceTree = "<group>"; };
 		D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D7055F71255F3D20001DF3F2 /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = YOLOv3.mlmodel; path = ../../YOLOv3.mlmodel; sourceTree = "<group>"; };
+		D7F023DB2562ACC200B6A9DD /* RecipeSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchResults.swift; sourceTree = "<group>"; };
+		D7F023E82562B32200B6A9DD /* SearchedRecipesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedRecipesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,8 +147,10 @@
 				D7055F43255F3C7A001DF3F2 /* AutocompleteIngredientsAdaptor.swift */,
 				D7055F40255F3C7A001DF3F2 /* AutocompleteIngredient.swift */,
 				D7055F48255F3C7B001DF3F2 /* RecipesViewController.swift */,
+				D7F023E82562B32200B6A9DD /* SearchedRecipesViewController.swift */,
 				D7055F46255F3C7B001DF3F2 /* RecipeAdaptor.swift */,
 				D7055F45255F3C7B001DF3F2 /* Recipe.swift */,
+				D7F023DB2562ACC200B6A9DD /* RecipeSearchResults.swift */,
 				D7055F4C255F3C7B001DF3F2 /* RecipeCell.swift */,
 				D7055F51255F3C7C001DF3F2 /* FavouritesViewController.swift */,
 				D7055F50255F3C7C001DF3F2 /* SelectedRecipeViewController.swift */,
@@ -316,6 +322,7 @@
 				D7055F08255F3C49001DF3F2 /* AppDelegate.swift in Sources */,
 				D7055F5D255F3C7C001DF3F2 /* Ingredient.swift in Sources */,
 				D7055F62255F3C7C001DF3F2 /* HomeViewController.swift in Sources */,
+				D7F023DC2562ACC200B6A9DD /* RecipeSearchResults.swift in Sources */,
 				D7055F55255F3C7C001DF3F2 /* IngredientCell.swift in Sources */,
 				D7055F64255F3C7C001DF3F2 /* FavouritesViewController.swift in Sources */,
 				D7055F5F255F3C7C001DF3F2 /* RecipeCell.swift in Sources */,
@@ -331,6 +338,7 @@
 				D7055F0A255F3C49001DF3F2 /* SceneDelegate.swift in Sources */,
 				D7055F59255F3C7C001DF3F2 /* RecipeAdaptor.swift in Sources */,
 				D7055F58255F3C7C001DF3F2 /* Recipe.swift in Sources */,
+				D7F023E92562B32200B6A9DD /* SearchedRecipesViewController.swift in Sources */,
 				D7055F65255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift in Sources */,
 				D7055F60255F3C7C001DF3F2 /* SelectedRecipe.swift in Sources */,
 			);

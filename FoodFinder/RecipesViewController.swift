@@ -19,7 +19,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         super.viewDidLoad()
         
         // Search Button Setup
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(animateViews))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(displayComplexSearchAlert))
         
         // Search Bar Setup
         searchBar.placeholder = "Search"
@@ -38,7 +38,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             for count in 1 ..< ingredients.count {
                 searchTerm += ",+\(ingredients[count])"
             }
-            recipeAdaptor.getRecipes(searchTerm) { (recipes, error) in
+            recipeAdaptor.getRecipes(searchTerm, directory: "findByIngredients?ingredients=") { (recipes, error) in
                 // If no internet connection or unable to parse JSON
                 if error == true {
                     // UI changes done on main thread
@@ -46,6 +46,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
                         self.navigationItem.rightBarButtonItem?.title = "No Connection"
                     }
                 } else if recipes == nil && error == false {
+                    // Run out of API queries
                     DispatchQueue.main.async {
                         self.navigationItem.rightBarButtonItem?.title = "Error"
                         // Instantiate alert
@@ -91,27 +92,63 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        if navigationItem.leftBarButtonItem?.image == UIImage(systemName: "magnifyingglass.circle.fill") {
-            animateViews()
-        }
+    @objc func displayComplexSearchAlert() {
+        let alert = UIAlertController(title: "Complex Recipe Search", message: "Enter a meal name, style or genre.", preferredStyle: .alert)
+        // Add a text field
+        alert.addTextField(configurationHandler: { textField in
+            textField.autocapitalizationType = .none
+            textField.autocorrectionType = .yes
+            })
+        // Add a button below the text field
+        alert.addAction(UIAlertAction(title: "Search", style: .default, handler: { (_) in
+            let textField = alert.textFields![0]
+            let response = textField.text ?? ""
+            
+            // Check if ingredient already exists
+            if response != "" {
+                self.searchButtonPressed(response)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        self.present(alert, animated: true, completion: nil)
     }
     
-    @objc func animateViews() {
-        if navigationItem.leftBarButtonItem?.image == UIImage(systemName: "magnifyingglass.circle.fill") {
-            navigationItem.leftBarButtonItem?.image = UIImage(systemName: "magnifyingglass.circle")
-            searchBar.isHidden = true
-            for cell in collectionView.visibleCells {
-                cell.isHidden = false
+    // Search API with search bar text
+    func searchButtonPressed(_ searchTerm: String) {
+        recipeAdaptor.getRecipes(searchTerm, directory: "complexSearch?query=") { (recipes, error) in
+            // If no internet connection or unable to parse JSON
+            if error == true {
+                // UI changes done on main thread
+                DispatchQueue.main.async {
+                    self.navigationItem.rightBarButtonItem?.title = "No Connection"
+                }
+            } else if recipes == nil && error == false {
+                // Run out of API queries
+                DispatchQueue.main.async {
+                    self.navigationItem.rightBarButtonItem?.title = "Error"
+                    // Instantiate alert
+                    let alert = UIAlertController(title: "Error Message", message: "We have run into a server-side problem. We aim to fix this as soon as possible; however, the app will be fully functioning from tomorrow morning, sorry for the inconvenience.", preferredStyle: .alert)
+                    // Add a button below the text field
+                    alert.addAction(UIAlertAction(title: "Close", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    // UI change must be done on main thread
+                    guard let viewController = self.storyboard?.instantiateViewController(identifier: "SearchedRecipesViewController") as? SearchedRecipesViewController else {
+                        fatalError("Unable to load RecipesViewController from storyboard")
+                    }
+                    viewController.recipes = recipes ?? [] // Create an array from the attribute strMeal of all returned recipes
+                    
+                    // Check if no recipes found
+                    if viewController.recipes.count == 0 {
+                        viewController.navigationItem.rightBarButtonItem?.title = "No Recipes"
+                    } else {
+                        viewController.navigationItem.rightBarButtonItem = nil
+                    }
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             }
-            collectionView.isScrollEnabled = true
-        } else {
-            navigationItem.leftBarButtonItem?.image = UIImage(systemName: "magnifyingglass.circle.fill")
-            searchBar.isHidden = false
-            for cell in collectionView.visibleCells {
-                cell.isHidden = true
-            }
-            collectionView.isScrollEnabled = false
         }
     }
     
@@ -159,36 +196,6 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         }
         viewController.mealId = self.recipes[indexPath.item].mealId
         navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    //MARK: Search Bar Config
-    
-    // Determine whether to filter ingredients or find autocompletes
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    }
-    
-    // Show cancel and scope views
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
-        searchBar.sizeToFit()
-    }
-    
-    // Hide cancel and scope views
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
-        searchBar.sizeToFit()
-    }
-    
-    // Hide keyboard
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        view.endEditing(true)
-        searchBar.text = ""
-    }
-    
-    // Hide keyboard and reset views
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        view.endEditing(true)
-        searchBar.text = ""
     }
     
 }
