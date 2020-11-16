@@ -14,8 +14,8 @@
             <objects>
                 <navigationController id="35T-EN-00a" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recipes" image="book.fill" catalog="system" id="aFF-gv-bOf"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ZIZ-Ht-cfL">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="ZIZ-Ht-cfL">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
