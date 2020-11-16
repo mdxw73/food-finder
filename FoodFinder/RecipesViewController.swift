@@ -91,6 +91,12 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        if navigationItem.leftBarButtonItem?.image == UIImage(systemName: "magnifyingglass.circle.fill") {
+            animateViews()
+        }
+    }
+    
     @objc func animateViews() {
         if navigationItem.leftBarButtonItem?.image == UIImage(systemName: "magnifyingglass.circle.fill") {
             navigationItem.leftBarButtonItem?.image = UIImage(systemName: "magnifyingglass.circle")
