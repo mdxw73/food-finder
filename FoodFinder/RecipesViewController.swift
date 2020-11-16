@@ -9,8 +9,6 @@ import UIKit
 
 class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     
-    @IBOutlet var searchBar: UISearchBar!
-    
     let recipeAdaptor = RecipeAdaptor()
     var recipes: [Recipe] = []
     var latestIngredients: [String] = ingredients
@@ -20,12 +18,6 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         
         // Search Button Setup
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(displayComplexSearchAlert))
-        
-        // Search Bar Setup
-        searchBar.placeholder = "Search"
-        searchBar.delegate = self
-        searchBar.autocapitalizationType = .none
-        searchBar.isHidden = true
 
         // Generate search term and completion handler to send to instance of RecipeAdaptor.
         if ingredients.count > 0 {
@@ -76,7 +68,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             }
         } else {
             // Set up no ingredients text in navigation bar
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "No Ingredients")
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Empty")
             navigationItem.rightBarButtonItem?.isEnabled = false
             
             // Remove all recipes and refresh data
