@@ -26,9 +26,9 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             navigationItem.rightBarButtonItem?.isEnabled = false
             
             // Convert ingredients array into string separated by ,+ to conform to API syntax
-            var searchTerm = "\(ingredients[0])"
+            var searchTerm = "\(ingredients[0].name)"
             for count in 1 ..< ingredients.count {
-                searchTerm += ",+\(ingredients[count])"
+                searchTerm += ",+\(ingredients[count].name)"
             }
             recipeAdaptor.getRecipes(searchTerm, directory: "findByIngredients?ingredients=") { (recipes, error) in
                 // If no internet connection or unable to parse JSON

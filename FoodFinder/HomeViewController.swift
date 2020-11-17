@@ -100,6 +100,14 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         tableView.reloadData()
     }
     
+    func getIngredientNames() -> [String] {
+        var ingredientNames: [String] = []
+        for ingredient in ingredients {
+            ingredientNames.append(ingredient.name)
+        }
+        return ingredientNames
+    }
+    
     //MARK: Table View Config
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -120,7 +128,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         
         // Configure the cell...
         let selectedIngredient = filteredIngredients[indexPath.row]
-        if ingredients.contains(selectedIngredient) == false {
+        if getIngredientNames().contains(selectedIngredient.name) == false {
             cell.ingredientLabel?.textColor = UIColor.systemPink
             cell.ingredientLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
         } else {
@@ -160,7 +168,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if ingredients.contains(filteredIngredients[indexPath.row]) == false {
+        if getIngredientNames().contains(filteredIngredients[indexPath.row].name) == false {
             // Reset views
             view.endEditing(true)
             searchBar.text = ""

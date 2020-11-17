@@ -23,6 +23,7 @@ class SelectedRecipeViewController: UIViewController {
     @IBOutlet var peopleButton: UIButton!
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var collectionViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var similarRecipesLabel: UILabel!
     
     var mealId: Int = 0
     let selectedRecipeAdaptor = SelectedRecipeAdaptor()
@@ -35,6 +36,7 @@ class SelectedRecipeViewController: UIViewController {
         
         if similarRecipes == nil {
             collectionViewHeightConstraint.constant = 0
+            similarRecipesLabel.font = UIFont.systemFont(ofSize: 0)
         } else {
             collectionViewHeightConstraint.constant = 200
         }
@@ -153,6 +155,7 @@ class SelectedRecipeViewController: UIViewController {
         peopleButton.isHidden = true
         servingsLabel.isHidden = true
         collectionView.isHidden = true
+        similarRecipesLabel.isHidden = true
     }
     
     func unhideAllViews() {
@@ -166,6 +169,7 @@ class SelectedRecipeViewController: UIViewController {
         peopleButton.isHidden = false
         servingsLabel.isHidden = false
         collectionView.isHidden = false
+        similarRecipesLabel.isHidden = false
     }
     
     func checkIfFavourited() -> Bool {
@@ -184,7 +188,7 @@ class SelectedRecipeViewController: UIViewController {
         // Add a button below the text field
         alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: {_ in
             if title == "No Recipe Found" {
-                self.navigationController?.popToRootViewController(animated: true)
+                self.navigationController?.popViewController(animated: true)
             }
         }))
         self.present(alert, animated: true, completion: nil)
@@ -229,6 +233,9 @@ class SelectedRecipeViewController: UIViewController {
                 } else if instructions?.count ?? 0 > 0 {
                     for instructionStep in instructions![0].steps {
                         formattedInstructions += " \u{2022} \(instructionStep.step)\n"
+                    }
+                    for _ in 0...1 {
+                        formattedInstructions.removeLast()
                     }
                     self.textLabel.attributedText = self.addAttributes(formattedInstructions)
                 } else {
