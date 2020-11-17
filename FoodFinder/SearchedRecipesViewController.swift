@@ -60,6 +60,7 @@ class SearchedRecipesViewController: UICollectionViewController {
             fatalError("Failed to load Selected Recipe View Controller from Storyboard")
         }
         viewController.mealId = self.recipes[indexPath.item].mealId
+        viewController.similarRecipes = recipes.filter({$0.mealId != viewController.mealId})
         navigationController?.pushViewController(viewController, animated: true)
     }
     

@@ -11,7 +11,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     
     let recipeAdaptor = RecipeAdaptor()
     var recipes: [Recipe] = []
-    var latestIngredients: [String] = ingredients
+    var latestIngredients: [HomeIngredient] = ingredients
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +79,17 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     
     // Check if latest query used current ingredients
     override func viewDidAppear(_ animated: Bool) {
-        if latestIngredients != ingredients {
+        var change = false
+        if latestIngredients.count != ingredients.count {
+            change = true
+        } else {
+            for count in 0..<favouriteRecipes.count {
+                if latestIngredients[count].name != ingredients[count].name {
+                    change = true
+                }
+            }
+        }
+        if change == true {
             viewDidLoad()
         }
     }
@@ -187,6 +197,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             fatalError("Failed to load Selected Recipe View Controller from Storyboard")
         }
         viewController.mealId = self.recipes[indexPath.item].mealId
+        viewController.similarRecipes = recipes.filter({$0.mealId != viewController.mealId})
         navigationController?.pushViewController(viewController, animated: true)
     }
     

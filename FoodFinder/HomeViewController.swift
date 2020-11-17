@@ -7,14 +7,14 @@
 
 import UIKit
 
-var ingredients: [String] = []
+var ingredients: [HomeIngredient] = []
 
 class HomeViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
     let defaults = UserDefaults.standard
-    var filteredIngredients: [String]!
+    var filteredIngredients: [HomeIngredient]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,11 +27,9 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         self.clearsSelectionOnViewWillAppear = true
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addIngredient))
-        
-        // If there are ingredients saved in the defaults database, copy them across
-        if let savedIngredients = defaults.stringArray(forKey: "savedIngredients") {
-            ingredients = savedIngredients
+        if let savedIngredients = defaults.object(forKey: "savedIngredients") {
+            // Type cast object of type Any
+            ingredients = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedIngredients as! Data) as! [HomeIngredient]
         }
         
         filteredIngredients = ingredients
@@ -39,7 +37,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         // Check whether each element in detectedIngredients is already in ingredients
-        var elementsToDelete: [String] = []
+        var elementsToDelete: [HomeIngredient] = []
         for count in 0..<detectedIngredients.count {
             if checkRepeatedIngredient(detectedIngredients[count]) == true {
                 elementsToDelete.append(detectedIngredients[count])
@@ -60,7 +58,12 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             // Update all relevant data structures
             detectedIngredients = []
             self.filteredIngredients = ingredients
-            self.defaults.set(ingredients, forKey: "savedIngredients")
+            
+            // Convert type [SelectedRecipe] to type NSData
+            if let convertedIngredients = try? NSKeyedArchiver.archivedData(withRootObject: ingredients, requiringSecureCoding: false) {
+                defaults.set(convertedIngredients, forKey: "savedIngredients")
+            }
+            
             self.tableView.insertRows(at: indexPaths, with: .fade)
         }
     }
@@ -69,46 +72,13 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         searchBarCancelButtonClicked(searchBar)
     }
     
-    func checkRepeatedIngredient(_ response: String) -> Bool {
+    func checkRepeatedIngredient(_ response: HomeIngredient) -> Bool {
         for ingredient in ingredients {
-            if ingredient.lowercased() == response.lowercased() {
+            if ingredient.name.lowercased() == response.name.lowercased() {
                 return true
             }
         }
         return false
-    }
-    
-    // @objc makes the code within the method available to Objective C code, which is run at runtime, as well as Swift code
-    // Generates alert and appends input to ingredients array before reloading the data
-    @objc func addIngredient() {
-        displayIngredientAlert(title: "Quick Add", message: "Enter Ingredient")
-    }
-    
-    func displayIngredientAlert(title: String, message: String) {
-        // Instantiate alert
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        // Add a text field
-        alert.addTextField(configurationHandler: { textField in
-            textField.autocapitalizationType = .none
-            textField.autocorrectionType = .yes
-            })
-        // Add a button below the text field and create a closure to be executed when the button is pressed
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
-            let textField = alert.textFields![0]
-            let response = textField.text ?? ""
-            
-            // Check if ingredient already exists
-            if response != "" && self.checkRepeatedIngredient(response) == false {
-                let indexPath = IndexPath(row: ingredients.count, section: 0)
-                
-                ingredients.append(response)
-                self.filteredIngredients = ingredients
-                self.defaults.set(ingredients, forKey: "savedIngredients")
-                self.tableView.insertRows(at: [indexPath], with: .fade)
-            }
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        self.present(alert, animated: true, completion: nil)
     }
     
     // Set filtered ingredients to ingredients when search bar is empty and filter based on whether the element contains the search text. Then reload the table view to update the cells to only display the filtered elements
@@ -122,7 +92,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             self.navigationItem.leftBarButtonItem?.isEnabled = false
             
             for ingredient in ingredients {
-                if ingredient.lowercased().contains(searchText.lowercased()) {
+                if ingredient.name.lowercased().contains(searchText.lowercased()) {
                     filteredIngredients.append(ingredient)
                 }
             }
@@ -157,8 +127,8 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             cell.ingredientLabel?.textColor = UIColor.black
             cell.ingredientLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         }
-        cell.ingredientLabel?.text = selectedIngredient
-        cell.ingredientImage?.load(url: URL(string: "https://spoonacular.com/cdn/ingredients_100x100/\(selectedIngredient.replacingOccurrences(of: " ", with: "+")).jpg") ?? URL(string: "https://spoonacular.com/cdn/ingredients_100x100.jpg")!)
+        cell.ingredientLabel?.text = selectedIngredient.name
+        cell.ingredientImage?.load(url: URL(string: "https://spoonacular.com/cdn/ingredients_100x100/\(selectedIngredient.imageDirectory)") ?? URL(string: "https://spoonacular.com/cdn/ingredients_100x100.jpg")!)
         
         return cell
     }
@@ -179,7 +149,12 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             // Delete the row from the data source
             ingredients.remove(at: indexPath.row)
             self.filteredIngredients = ingredients
-            self.defaults.set(ingredients, forKey: "savedIngredients")
+            
+            // Convert type [SelectedRecipe] to type NSData
+            if let convertedIngredients = try? NSKeyedArchiver.archivedData(withRootObject: ingredients, requiringSecureCoding: false) {
+                defaults.set(convertedIngredients, forKey: "savedIngredients")
+            }
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -195,7 +170,12 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             
             // Add and store ingredient and display the ingredients before the addition
             ingredients.append(filteredIngredients[indexPath.row])
-            self.defaults.set(ingredients, forKey: "savedIngredients")
+            
+            // Convert type [SelectedRecipe] to type NSData
+            if let convertedIngredients = try? NSKeyedArchiver.archivedData(withRootObject: ingredients, requiringSecureCoding: false) {
+                defaults.set(convertedIngredients, forKey: "savedIngredients")
+            }
+            
             filteredIngredients = ingredients
             filteredIngredients.removeLast()
             tableView.reloadData()
@@ -230,7 +210,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
                 if error == false {
                     self.filteredIngredients = []
                     for ingredient in autocompleteIngredients ?? [] {
-                        self.filteredIngredients.append(ingredient.name)
+                        self.filteredIngredients.append(HomeIngredient(name: ingredient.name, imageDirectory: ingredient.image))
                     }
                 }
                 DispatchQueue.main.async {

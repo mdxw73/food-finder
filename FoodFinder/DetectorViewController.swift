@@ -9,7 +9,7 @@ import UIKit
 import CoreML
 import Vision
 
-var detectedIngredients: [String] = []
+var detectedIngredients: [HomeIngredient] = []
 
 class DetectorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -57,15 +57,46 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
     
     // Save objects detected to ingredients array and segue to HomeViewController
     @objc func storeObject() {
-        // Force unwrap because the label will never be empty (starts with a message and won't be edited unless the response isn't empty)
-        while navigationItem.title!.count > 0 && navigationItem.title!.contains(",") {
-            let index = navigationItem.title!.firstIndex(of: ",")!
-            detectedIngredients.append(String(navigationItem.title![..<index]))
-            navigationItem.title = String(navigationItem.title![index...])
-            navigationItem.title?.removeFirst()
+        if let queries = navigationItem.title?.split(separator: ",") { // Generate individual ingredients from many
+            var formattedQueries = queries
+            for count in 0..<formattedQueries.count {
+                if formattedQueries[count].last == " " {
+                    formattedQueries[count].removeLast() // Remove spaces at the end of the ingredients
+                }
+                AutocompleteIngredientsAdaptor().getAutocompleteIngredients(String(formattedQueries[count])+"&number=1") { (autocompleteIngredients, error) in // Create an autocomplete query and get the first response
+                    if error == false {
+                        if let autocompleteIngredient = autocompleteIngredients?[0] { // Unwrap response
+                            detectedIngredients.append(HomeIngredient(name: autocompleteIngredient.name, imageDirectory: autocompleteIngredient.image)) // Successful response
+                        } else {
+                            detectedIngredients.append(HomeIngredient(name: String(formattedQueries[count]), imageDirectory: "\(String(formattedQueries[count])).jpg")) // Unsuccessful response
+                        }
+                    } else {
+                        detectedIngredients.append(HomeIngredient(name: String(formattedQueries[count]), imageDirectory: "\(String(formattedQueries[count])).jpg")) // Unsuccessful response
+                    }
+                    if detectedIngredients.count == formattedQueries.count {
+                        DispatchQueue.main.async {
+                            self.tabBarController?.selectedIndex = 1 // Return to home view if last ingredient
+                        }
+                    }
+                }
+            }
+        } else {
+            // Single ingredient case
+            AutocompleteIngredientsAdaptor().getAutocompleteIngredients(navigationItem.title!+"&number=1") { (autocompleteIngredients, error) in
+                if error == false {
+                    if let autocompleteIngredient = autocompleteIngredients?[0] {
+                        detectedIngredients.append(HomeIngredient(name: autocompleteIngredient.name, imageDirectory: autocompleteIngredient.image))
+                    } else {
+                        detectedIngredients.append(HomeIngredient(name: "\(self.navigationItem.title!)", imageDirectory: "\(self.navigationItem.title!).jpg"))
+                    }
+                } else {
+                    detectedIngredients.append(HomeIngredient(name: "\(self.navigationItem.title!)", imageDirectory: "\(self.navigationItem.title!).jpg"))
+                }
+                DispatchQueue.main.async {
+                    self.tabBarController?.selectedIndex = 1
+                }
+            }
         }
-        detectedIngredients.append(navigationItem.title!)
-        tabBarController?.selectedIndex = 1
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

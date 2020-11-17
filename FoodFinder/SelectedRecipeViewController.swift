@@ -21,14 +21,27 @@ class SelectedRecipeViewController: UIViewController {
     @IBOutlet var textLabel: UILabel!
     @IBOutlet var servingsLabel: UILabel!
     @IBOutlet var peopleButton: UIButton!
+    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var collectionViewHeightConstraint: NSLayoutConstraint!
     
     var mealId: Int = 0
     let selectedRecipeAdaptor = SelectedRecipeAdaptor()
     var recipe: SelectedRecipe?
     let defaults = UserDefaults.standard
+    var similarRecipes: [Recipe]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if similarRecipes == nil {
+            collectionViewHeightConstraint.constant = 0
+        } else {
+            collectionViewHeightConstraint.constant = 200
+        }
+        
+        // Set up collection view
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         // Set initial button states
         clockButton.isEnabled = false
@@ -75,6 +88,16 @@ class SelectedRecipeViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        var state = false
+        for favouriteRecipe in favouriteRecipes {
+            if favouriteRecipe.mealId == mealId {
+                state = true
+            }
+        }
+        favouriteButton.isSelected = state
+    }
+    
     func addAttributes(_ text: String) -> NSMutableAttributedString {
         var indexArray: [Int] = []
         let attributedText = NSMutableAttributedString(string: text)
@@ -119,16 +142,6 @@ class SelectedRecipeViewController: UIViewController {
         self.navigationItem.title = self.recipe!.mealName
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        var state = false
-        for favouriteRecipe in favouriteRecipes {
-            if favouriteRecipe.mealId == mealId {
-                state = true
-            }
-        }
-        favouriteButton.isSelected = state
-    }
-    
     func hideAllViews() {
         favouriteButton.isHidden = true
         clockButton.isHidden = true
@@ -139,6 +152,7 @@ class SelectedRecipeViewController: UIViewController {
         textLabel.isHidden = true
         peopleButton.isHidden = true
         servingsLabel.isHidden = true
+        collectionView.isHidden = true
     }
     
     func unhideAllViews() {
@@ -151,6 +165,7 @@ class SelectedRecipeViewController: UIViewController {
         textLabel.isHidden = false
         peopleButton.isHidden = false
         servingsLabel.isHidden = false
+        collectionView.isHidden = false
     }
     
     func checkIfFavourited() -> Bool {
@@ -246,5 +261,58 @@ extension String {
     }
     var htmlToString: String {
         return htmlToAttributedString?.string ?? ""
+    }
+}
+
+extension SelectedRecipeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return similarRecipes?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // Type cast each instance of UICollectionViewCell as RecipeCell.
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Recipe", for: indexPath) as? RecipeCell else {
+            fatalError("Unable to dequeue a RecipeCell.")
+        }
+        
+        let recipe = similarRecipes![indexPath.item]
+        
+        // Edit UILabel
+        cell.mealName.text = recipe.mealName
+        cell.mealName.adjustsFontSizeToFitWidth = true
+        
+        // Edit UIImage
+        cell.imageView.load(url: recipe.mealImage)
+        cell.imageView.layer.cornerRadius = 10
+        
+        // Customize cell
+        cell.layer.cornerRadius = 10
+        cell.clipsToBounds = true
+        
+        // Add shadows
+        cell.layer.borderWidth = 0.0
+        cell.layer.shadowColor = UIColor.darkGray.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 0)
+        cell.layer.shadowRadius = 5.0
+        cell.layer.shadowOpacity = 1
+        cell.layer.masksToBounds = false
+        
+        return cell
+    }
+    
+    // Instantiate a selected recipe and pass in the meal id
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let viewController = storyboard?.instantiateViewController(identifier: "SelectedRecipeViewController") as? SelectedRecipeViewController else {
+            fatalError("Failed to load Selected Recipe View Controller from Storyboard")
+        }
+        viewController.mealId = self.similarRecipes![indexPath.item].mealId
+        viewController.similarRecipes = similarRecipes?.filter({$0.mealId != self.similarRecipes![indexPath.item].mealId})
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
+extension SelectedRecipeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width/2-17, height: collectionView.frame.width/2.25)
     }
 }
