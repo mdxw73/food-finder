@@ -36,17 +36,17 @@ class FoodFinderTests: XCTestCase {
         XCTAssertNil(actual)
     }
     
-    func testcheckRecpeatedIngredientReturnsTrueWhenResponseIsInIngredients() throws {
+    func testCheckRepeatedIngredientReturnsTrueWhenResponseIsInIngredients() throws {
         let ViewController = HomeViewController()
-        ingredients = ["Chicken", "Rice", "Pepper"]
-        let actual = ViewController.checkRepeatedIngredient("Chicken")
+        ingredients = [HomeIngredient(name: "Chicken", imageDirectory: "chicken.jpg"), HomeIngredient(name: "Rice", imageDirectory: "rice.jpg"), HomeIngredient(name: "Pepper", imageDirectory: "pepper.jpg")]
+        let actual = ViewController.checkRepeatedIngredient(HomeIngredient(name: "Chicken", imageDirectory: "chicken.jpg"))
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         XCTAssertEqual(actual, true)
     }
-    func testcheckRecpeatedIngredientReturnsFalseWhenResponseIsNotInIngredients() throws {
+    func testCheckRepeatedIngredientReturnsFalseWhenResponseIsNotInIngredients() throws {
         let ViewController = HomeViewController()
-        ingredients = ["Chicken", "Rice", "Pepper"]
-        let actual = ViewController.checkRepeatedIngredient("Cucumber")
+        ingredients = [HomeIngredient(name: "Chicken", imageDirectory: "chicken.jpg"), HomeIngredient(name: "Rice", imageDirectory: "rice.jpg"), HomeIngredient(name: "Pepper", imageDirectory: "pepper.jpg")]
+        let actual = ViewController.checkRepeatedIngredient(HomeIngredient(name: "Cucumber", imageDirectory: "cucumber.jpg"))
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         XCTAssertEqual(actual, false)
     }

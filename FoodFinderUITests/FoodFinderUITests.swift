@@ -38,7 +38,7 @@ class FoodFinderUITests: XCTestCase {
         app.launch()
         app.tabBars["Tab Bar"].buttons["Detector"].tap()
         app.buttons["photo"].tap()
-        XCUIApplication().scrollViews.otherElements.images["Photo, November 09, 11:51 PM"].tap()
+        XCUIApplication().scrollViews.otherElements.images["Photo, November 18, 9:31 AM"].tap()
         
         // Wait for loading text to be replaced by "Store"
         _ = app.navigationBars.buttons["Store"].waitForExistence(timeout: 5)
@@ -62,7 +62,6 @@ class FoodFinderUITests: XCTestCase {
         app.typeText("carrot")
         
         XCTAssertEqual(app.navigationBars["Home"].buttons["Edit"].isEnabled, false)
-        XCTAssertEqual(app.navigationBars["Home"].buttons["add"].isEnabled, false)
     }
     
     //MARK: Selected Recipe View
@@ -83,6 +82,7 @@ class FoodFinderUITests: XCTestCase {
         XCTAssert(app.images.firstMatch.exists) // Meal image view
         XCTAssert(app.buttons["person"].exists) // People button
         XCTAssert(app.staticTexts.matching(identifier: "servingsLabel").firstMatch.exists) // Servings label
+        XCTAssert(app.staticTexts.matching(identifier: "similarRecipesLabel").firstMatch.exists) // Similar recipes label
         
         removeIngredient(app: app)
     }
@@ -101,7 +101,8 @@ class FoodFinderUITests: XCTestCase {
         app.tabBars["Tab Bar"].buttons["Favourites"].tap()
         app.collectionViews.cells.firstMatch.tap()
         
-        XCTAssert(app.staticTexts["Carrot, Ginger, and Lime Juice"].exists)
+        XCTAssert(app.staticTexts["Maple Glazed Bacon Wrapped Roasted Carrots"].exists)
+        XCTAssertEqual(app.staticTexts.matching(identifier: "similarRecipesLabel").firstMatch.exists, false) // Similar recipes label
         
         app.buttons["heart"].tap() // Select favourite button
         removeIngredient(app: app)
