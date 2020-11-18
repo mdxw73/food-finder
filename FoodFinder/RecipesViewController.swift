@@ -31,27 +31,24 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
                 searchTerm += ",+\(ingredients[count].name)"
             }
             recipeAdaptor.getRecipes(searchTerm, directory: "findByIngredients?ingredients=") { (recipes, error) in
+                // Update latest queried ingredients
+                self.latestIngredients = ingredients
+                
                 // If no internet connection or unable to parse JSON
                 if error == true {
                     // UI changes done on main thread
                     DispatchQueue.main.async {
                         self.navigationItem.rightBarButtonItem?.title = "No Connection"
+                        self.displayAlert(title: "No Connection", message: "Please check your network connection.")
                     }
                 } else if recipes == nil && error == false {
                     // Run out of API queries
                     DispatchQueue.main.async {
                         self.navigationItem.rightBarButtonItem?.title = "Error"
-                        // Instantiate alert
-                        let alert = UIAlertController(title: "Error Message", message: "We have run into a server-side problem. We aim to fix this as soon as possible; however, the app will be fully functioning from tomorrow morning, sorry for the inconvenience.", preferredStyle: .alert)
-                        // Add a button below the text field
-                        alert.addAction(UIAlertAction(title: "Close", style: .default))
-                        self.present(alert, animated: true, completion: nil)
+                        self.displayAlert(title: "Error Message", message: "We have run into a server-side problem. We aim to fix this as soon as possible; however, the app will be fully functioning from tomorrow morning, sorry for the inconvenience.")
                     }
                 } else {
                     self.recipes = recipes ?? [] // Create an array from the attribute strMeal of all returned recipes
-                    
-                    // Update latest queried ingredients
-                    self.latestIngredients = ingredients
                     
                     // UI change must be done on main thread
                     DispatchQueue.main.async {
@@ -60,6 +57,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
                         // Check if no recipes found
                         if self.recipes.count == 0 {
                             self.navigationItem.rightBarButtonItem?.title = "No Recipes"
+                            self.displayAlert(title: "No Recipes", message: "We couldn't find any recipes for the ingredients in your home tab.")
                         } else {
                             self.navigationItem.rightBarButtonItem = nil
                         }
@@ -68,12 +66,10 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             }
         } else {
             // Set up no ingredients text in navigation bar
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Empty")
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "No Ingredients")
             navigationItem.rightBarButtonItem?.isEnabled = false
-            
-            // Remove all recipes and refresh data
-            self.recipes.removeAll()
-            collectionView.reloadData()
+            displayAlert(title: "No Ingredients", message: "To find recipes by ingredients, return to the home tab and add some using the search bar.")
+            latestIngredients = ingredients
         }
     }
     
@@ -83,7 +79,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         if latestIngredients.count != ingredients.count {
             change = true
         } else {
-            for count in 0..<favouriteRecipes.count {
+            for count in 0..<ingredients.count {
                 if latestIngredients[count].name != ingredients[count].name {
                     change = true
                 }
@@ -92,6 +88,13 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         if change == true {
             viewDidLoad()
         }
+    }
+    
+    func displayAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        // Add a button below the text field
+        alert.addAction(UIAlertAction(title: "Close", style: .default))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @objc func displayComplexSearchAlert() {

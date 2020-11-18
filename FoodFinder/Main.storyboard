@@ -323,6 +323,8 @@
                         <outlet property="peopleButton" destination="YlQ-35-nuw" id="i79-Mx-Dtg"/>
                         <outlet property="segmentedControl" destination="Yuh-yI-RGj" id="QhU-PY-Gra"/>
                         <outlet property="servingsLabel" destination="fcR-0B-aBx" id="tcc-4g-bFL"/>
+                        <outlet property="similarRecipesConstraintOne" destination="PmO-fz-2M2" id="BA1-pC-ADM"/>
+                        <outlet property="similarRecipesConstraintTwo" destination="Wfz-TV-YRd" id="Oxk-5k-5Pb"/>
                         <outlet property="similarRecipesLabel" destination="BnD-eA-VOL" id="hxc-nQ-SX7"/>
                         <outlet property="textLabel" destination="mZG-Ec-O0a" id="QUR-um-HeG"/>
                     </connections>

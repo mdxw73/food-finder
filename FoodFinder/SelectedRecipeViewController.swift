@@ -24,6 +24,8 @@ class SelectedRecipeViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var collectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet var similarRecipesLabel: UILabel!
+    @IBOutlet var similarRecipesConstraintOne: NSLayoutConstraint!
+    @IBOutlet var similarRecipesConstraintTwo: NSLayoutConstraint!
     
     var mealId: Int = 0
     let selectedRecipeAdaptor = SelectedRecipeAdaptor()
@@ -37,6 +39,8 @@ class SelectedRecipeViewController: UIViewController {
         if similarRecipes == nil {
             collectionViewHeightConstraint.constant = 0
             similarRecipesLabel.font = UIFont.systemFont(ofSize: 0)
+            similarRecipesConstraintOne.constant = 0
+            similarRecipesConstraintTwo.constant = 0
         } else {
             collectionViewHeightConstraint.constant = 200
         }
