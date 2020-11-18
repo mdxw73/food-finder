@@ -46,12 +46,6 @@ class SearchedRecipesViewController: UICollectionViewController {
         cell.layer.cornerRadius = 10
         cell.clipsToBounds = true
         
-        // Checkmark
-        if recipe.mealLikes == 0 {
-            cell.checkmark.isHidden = true
-            cell.checkmarkConstraintOne.constant = 0
-        }
-        
         // Add shadows
         cell.layer.borderWidth = 0.0
         cell.layer.shadowColor = UIColor.darkGray.cgColor

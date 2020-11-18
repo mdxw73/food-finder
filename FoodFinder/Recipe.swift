@@ -11,12 +11,10 @@ struct Recipe: Codable {
     var mealName: String
     var mealImage: URL
     var mealId: Int
-    var mealLikes: Int?
     
     private enum CodingKeys: String, CodingKey {
         case mealName = "title"
         case mealImage = "image"
         case mealId = "id"
-        case mealLikes = "likes"
     }
 }

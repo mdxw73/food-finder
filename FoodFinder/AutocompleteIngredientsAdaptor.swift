@@ -12,7 +12,7 @@ class AutocompleteIngredientsAdaptor {
     let decoder = JSONDecoder()
     
     func getAutocompleteIngredients(_ search: String, completion: @escaping ([AutocompleteIngredient]?, Bool) -> Void) {
-        let path = "\(search.replacingOccurrences(of: " ", with: "+"))&apiKey=45216d9690b142a6921321f38ce6dfd1"
+        let path = "\(search.replacingOccurrences(of: " ", with: "+"))&apiKey=\(apiKey)"
         
         guard let url = URL(string: baseUrl + path) else {
             print("Invalid URL")

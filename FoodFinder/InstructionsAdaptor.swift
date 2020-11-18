@@ -12,7 +12,7 @@ class InstructionsAdaptor {
     let decoder = JSONDecoder()
     
     func getInstructions(_ mealId: Int, completion: @escaping ([Instructions]?, Bool) -> Void) {
-        let path = "\(mealId)/analyzedInstructions?&apiKey=45216d9690b142a6921321f38ce6dfd1"
+        let path = "\(mealId)/analyzedInstructions?&apiKey=\(apiKey)"
         
         guard let url = URL(string: baseUrl + path) else {
             print("Invalid URL")

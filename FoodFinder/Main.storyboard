@@ -52,20 +52,11 @@
                                             <rect key="frame" x="0.0" y="-2" width="190" height="140"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vgy-9S-OgR">
-                                            <rect key="frame" x="10" y="143" width="147" height="32"/>
+                                            <rect key="frame" x="10" y="143" width="170" height="32"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                             <color key="textColor" red="0.96861749890000004" green="0.96471267940000005" blue="0.98909741640000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKa-LP-5ff">
-                                            <rect key="frame" x="162" y="153" width="18" height="13"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="18" id="3mH-Qx-ksB"/>
-                                                <constraint firstAttribute="height" constant="16.5" id="wrO-LP-cZG"/>
-                                            </constraints>
-                                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" backgroundImage="checkmark" catalog="system"/>
-                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="vgy-9S-OgR" secondAttribute="bottom" constant="5" id="44m-rg-SKK"/>
@@ -73,19 +64,14 @@
                                         <constraint firstItem="vgy-9S-OgR" firstAttribute="top" secondItem="ShC-7L-8qw" secondAttribute="bottom" constant="5" id="D1L-aU-Wb4"/>
                                         <constraint firstItem="ShC-7L-8qw" firstAttribute="centerX" secondItem="0xw-dX-Jxd" secondAttribute="centerX" id="K04-IH-loK"/>
                                         <constraint firstItem="ShC-7L-8qw" firstAttribute="leading" secondItem="0xw-dX-Jxd" secondAttribute="leading" id="QCF-dA-eOf"/>
-                                        <constraint firstItem="BKa-LP-5ff" firstAttribute="leading" secondItem="vgy-9S-OgR" secondAttribute="trailing" constant="5" id="Wkx-Mi-md4"/>
                                         <constraint firstItem="ShC-7L-8qw" firstAttribute="height" secondItem="0xw-dX-Jxd" secondAttribute="height" multiplier="0.777778" id="ePk-NS-gzi"/>
                                         <constraint firstAttribute="trailing" secondItem="ShC-7L-8qw" secondAttribute="trailing" id="k86-t0-Z8O"/>
-                                        <constraint firstItem="BKa-LP-5ff" firstAttribute="centerY" secondItem="vgy-9S-OgR" secondAttribute="centerY" id="mQT-Mx-2zf"/>
+                                        <constraint firstAttribute="trailing" secondItem="vgy-9S-OgR" secondAttribute="trailing" constant="10" id="mwS-Xg-8te"/>
                                         <constraint firstItem="vgy-9S-OgR" firstAttribute="leading" secondItem="0xw-dX-Jxd" secondAttribute="leading" constant="10" id="olk-yv-YFi"/>
-                                        <constraint firstAttribute="trailing" secondItem="BKa-LP-5ff" secondAttribute="trailing" constant="10" id="pYu-CP-EgG"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <color key="backgroundColor" red="0.92211711409999997" green="0.37639513610000003" blue="0.55893963579999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <outlet property="checkmark" destination="BKa-LP-5ff" id="Rrb-Ey-jiH"/>
-                                    <outlet property="checkmarkConstraintOne" destination="3mH-Qx-ksB" id="VhT-3x-fUi"/>
-                                    <outlet property="checkmarkConstraintTwo" destination="pYu-CP-EgG" id="xcU-r7-eWI"/>
                                     <outlet property="imageView" destination="ShC-7L-8qw" id="0kK-cl-h8l"/>
                                     <outlet property="mealName" destination="vgy-9S-OgR" id="s76-ct-BTc"/>
                                 </connections>
@@ -692,7 +678,6 @@
     <resources>
         <image name="book.fill" catalog="system" width="128" height="102"/>
         <image name="camera" catalog="system" width="128" height="94"/>
-        <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="clock.arrow.circlepath" catalog="system" width="128" height="110"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>

@@ -12,7 +12,7 @@ class SelectedRecipeAdaptor {
     let decoder = JSONDecoder()
     
     func getSelectedRecipe(_ mealId: Int, completion: @escaping (SelectedRecipe?, Bool) -> Void) {
-        let path = "\(mealId)/information?&apiKey=45216d9690b142a6921321f38ce6dfd1"
+        let path = "\(mealId)/information?&apiKey=\(apiKey)"
         
         guard let url = URL(string: baseUrl + path) else {
             print("Invalid URL")
