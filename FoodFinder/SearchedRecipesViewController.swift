@@ -10,10 +10,13 @@ import UIKit
 class SearchedRecipesViewController: UICollectionViewController {
 
     var recipes: [Recipe] = []
+    var rightBarButtonItem: UIBarButtonItem?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        rightBarButtonItem?.isEnabled = false
         navigationItem.title = "By Complex Search"
     }
     
@@ -42,6 +45,12 @@ class SearchedRecipesViewController: UICollectionViewController {
         // Customize cell
         cell.layer.cornerRadius = 10
         cell.clipsToBounds = true
+        
+        // Checkmark
+        if recipe.mealLikes == 0 {
+            cell.checkmark.isHidden = true
+            cell.checkmarkConstraintOne.constant = 0
+        }
         
         // Add shadows
         cell.layer.borderWidth = 0.0

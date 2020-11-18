@@ -12,7 +12,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     let recipeAdaptor = RecipeAdaptor()
     var recipes: [Recipe] = []
     var latestIngredients: [HomeIngredient] = ingredients
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -102,7 +102,6 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         // Add a text field
         alert.addTextField(configurationHandler: { textField in
             textField.autocapitalizationType = .none
-            textField.autocorrectionType = .yes
             })
         // Add a button below the text field
         alert.addAction(UIAlertAction(title: "Search", style: .default, handler: { (_) in
@@ -147,9 +146,9 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
                     
                     // Check if no recipes found
                     if viewController.recipes.count == 0 {
-                        viewController.navigationItem.rightBarButtonItem?.title = "No Recipes"
+                        viewController.rightBarButtonItem = UIBarButtonItem(title: "No Recipes")
                     } else {
-                        viewController.navigationItem.rightBarButtonItem = nil
+                        viewController.rightBarButtonItem = nil
                     }
                     self.navigationController?.pushViewController(viewController, animated: true)
                 }
@@ -182,6 +181,16 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         // Customize cell
         cell.layer.cornerRadius = 10
         cell.clipsToBounds = true
+        
+        // Checkmark
+        if recipe.mealLikes == 0 {
+            cell.checkmark.isHidden = true
+            cell.checkmarkConstraintOne.constant = 0
+            cell.checkmarkConstraintTwo.constant = 5
+        } else if recipe.mealLikes ?? 0 > 100 {
+            cell.checkmark.backgroundColor = UIColor.systemYellow
+            cell.checkmark.layer.cornerRadius = 4
+        }
         
         // Add shadows
         cell.layer.borderWidth = 0.0
