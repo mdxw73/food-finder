@@ -60,13 +60,13 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
         if let queries = navigationItem.title?.split(separator: ",") { // Generate individual ingredients from many
             var formattedQueries = queries
             for count in 0..<formattedQueries.count {
-                if formattedQueries[count].last == " " {
-                    formattedQueries[count].removeLast() // Remove spaces at the end of the ingredients
+                if formattedQueries[count].first == " " {
+                    formattedQueries[count].removeFirst() // Remove spaces at the end of the ingredients
                 }
                 AutocompleteIngredientsAdaptor().getAutocompleteIngredients(String(formattedQueries[count])+"&number=1") { (autocompleteIngredients, error) in // Create an autocomplete query and get the first response
                     if error == false {
-                        if let autocompleteIngredient = autocompleteIngredients?[0] { // Unwrap response
-                            detectedIngredients.append(HomeIngredient(name: autocompleteIngredient.name, imageDirectory: autocompleteIngredient.image)) // Successful response
+                        if autocompleteIngredients?.count != 0 { // Unwrap response
+                            detectedIngredients.append(HomeIngredient(name: autocompleteIngredients![0].name, imageDirectory: autocompleteIngredients![0].image)) // Successful response
                         } else {
                             detectedIngredients.append(HomeIngredient(name: String(formattedQueries[count]), imageDirectory: "\(String(formattedQueries[count])).jpg")) // Unsuccessful response
                         }

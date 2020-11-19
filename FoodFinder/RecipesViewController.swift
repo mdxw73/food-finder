@@ -182,6 +182,9 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         cell.layer.cornerRadius = 10
         cell.clipsToBounds = true
         
+        // Likes
+        cell.mealLikes.text = String(recipe.mealLikes!)
+        
         // Add shadows
         cell.layer.borderWidth = 0.0
         cell.layer.shadowColor = UIColor.darkGray.cgColor
