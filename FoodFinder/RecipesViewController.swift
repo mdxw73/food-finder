@@ -183,7 +183,9 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         cell.clipsToBounds = true
         
         // Likes
-        cell.mealLikes.text = String(recipe.mealLikes!)
+        cell.mealLikes.text = String(recipe.mealLikes ?? 0)
+        cell.usedIngredientCount.text = String(recipe.usedIngredientCount ?? 0)
+        cell.missedIngredientCount.text = String(recipe.missedIngredientCount ?? 0)
         
         // Add shadows
         cell.layer.borderWidth = 0.0

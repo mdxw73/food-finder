@@ -11,4 +11,6 @@ class RecipeCell: UICollectionViewCell {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var mealName: UILabel!
     @IBOutlet var mealLikes: UILabel!
+    @IBOutlet var usedIngredientCount: UILabel!
+    @IBOutlet var missedIngredientCount: UILabel!
 }
