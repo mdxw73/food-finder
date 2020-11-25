@@ -26,6 +26,8 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         
         self.clearsSelectionOnViewWillAppear = true
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear All", style: .plain, target: self, action: #selector(removeAllIngredients))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.red
         
         if let savedIngredients = defaults.object(forKey: "savedIngredients") {
             // Type cast object of type Any
@@ -66,10 +68,23 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             
             self.tableView.insertRows(at: indexPaths, with: .fade)
         }
+        
+        setStateOfBarButtonItems()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         searchBarCancelButtonClicked(searchBar)
+    }
+    
+    func setStateOfBarButtonItems() {
+        // Disable bar buttons when there are no ingredients
+        if ingredients.count == 0 {
+            self.navigationItem.leftBarButtonItem?.isEnabled = false
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+        } else {
+            self.navigationItem.leftBarButtonItem?.isEnabled = true
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
+        }
     }
     
     func checkRepeatedIngredient(_ response: HomeIngredient) -> Bool {
@@ -85,8 +100,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
     func filterIngredients(_ searchText: String) {
         if searchText == "" {
             filteredIngredients = ingredients
-            self.navigationItem.rightBarButtonItem!.isEnabled = true
-            self.navigationItem.leftBarButtonItem?.isEnabled = true
+            setStateOfBarButtonItems()
         } else {
             self.navigationItem.rightBarButtonItem!.isEnabled = false
             self.navigationItem.leftBarButtonItem?.isEnabled = false
@@ -97,7 +111,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
                 }
             }
         }
-        tableView.reloadData()
+        self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
     
     func getIngredientNames() -> [String] {
@@ -106,6 +120,25 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             ingredientNames.append(ingredient.name)
         }
         return ingredientNames
+    }
+    
+    @objc func removeAllIngredients() {
+        let alert = UIAlertController(title: "Remove All Ingredients", message: "Are you sure you want to remove all your ingredients?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Clear", style: .destructive, handler: { (_) in
+            // Update all relevant data structures
+            ingredients = []
+            self.filteredIngredients = ingredients
+            
+            // Convert type [SelectedRecipe] to type NSData
+            if let convertedIngredients = try? NSKeyedArchiver.archivedData(withRootObject: ingredients, requiringSecureCoding: false) {
+                self.defaults.set(convertedIngredients, forKey: "savedIngredients")
+            }
+            
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            self.setStateOfBarButtonItems()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        self.present(alert, animated: true, completion: nil)
     }
     
     //MARK: Table View Config
@@ -164,6 +197,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             }
             
             tableView.deleteRows(at: [indexPath], with: .fade)
+            setStateOfBarButtonItems()
         }
     }
     
@@ -172,9 +206,6 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             // Reset views
             view.endEditing(true)
             searchBar.text = ""
-            searchBar.selectedScopeButtonIndex = 0
-            navigationItem.rightBarButtonItem!.isEnabled = true
-            navigationItem.leftBarButtonItem?.isEnabled = true
             
             // Add and store ingredient and display the ingredients before the addition
             ingredients.append(filteredIngredients[indexPath.row])
@@ -186,7 +217,8 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             
             filteredIngredients = ingredients
             filteredIngredients.removeLast()
-            tableView.reloadData()
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            setStateOfBarButtonItems()
             
             // Animate new ingredient into table view
             let indexPath = IndexPath(row: filteredIngredients.count, section: 0)
@@ -222,7 +254,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
                     }
                 }
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
                 }
             }
         }
@@ -253,11 +285,9 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         view.endEditing(true)
         searchBar.text = ""
-        searchBar.selectedScopeButtonIndex = 0
         filteredIngredients = ingredients
-        navigationItem.rightBarButtonItem!.isEnabled = true
-        navigationItem.leftBarButtonItem?.isEnabled = true
-        tableView.reloadData()
+        setStateOfBarButtonItems()
+        self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
     
 }

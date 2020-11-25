@@ -102,6 +102,8 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         // Add a text field
         alert.addTextField(configurationHandler: { textField in
             textField.autocapitalizationType = .none
+            textField.autocorrectionType = .yes
+            textField.placeholder = "Search"
             })
         // Add a button below the text field
         alert.addAction(UIAlertAction(title: "Search", style: .default, handler: { (_) in
