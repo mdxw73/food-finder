@@ -217,7 +217,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             
             filteredIngredients = ingredients
             filteredIngredients.removeLast()
-            self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            self.tableView.reloadData()
             setStateOfBarButtonItems()
             
             // Animate new ingredient into table view
