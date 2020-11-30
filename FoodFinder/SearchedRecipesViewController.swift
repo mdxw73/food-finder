@@ -10,13 +10,9 @@ import UIKit
 class SearchedRecipesViewController: UICollectionViewController {
 
     var recipes: [Recipe] = []
-    var rightBarButtonItem: UIBarButtonItem?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationItem.rightBarButtonItem = rightBarButtonItem
-        rightBarButtonItem?.isEnabled = false
         navigationItem.title = "By Complex Search"
     }
     

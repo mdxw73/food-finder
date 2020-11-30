@@ -59,24 +59,23 @@ class SelectedRecipeViewController: UIViewController {
         // If this is not a favourited recipe
         if self.recipe == nil {
             // Set up loading text in navigation bar
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Loading...")
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rays"))
             navigationItem.rightBarButtonItem?.isEnabled = false
             
             selectedRecipeAdaptor.getSelectedRecipe(mealId) { (selectedRecipe, error) in
                 // UI changes done on main thread
                 DispatchQueue.main.async {
+                    self.navigationItem.rightBarButtonItem = nil
                     if error == true {
-                        self.navigationItem.rightBarButtonItem?.title = "No Connection"
+                        self.displayAlert(title: "No Connection", message: "Please check your network connection.")
                     } else if let selectedRecipe = selectedRecipe {
-                        self.navigationItem.rightBarButtonItem = nil
                         self.unhideAllViews()
                         self.recipe = selectedRecipe
                         self.performUIAssignments()
                         self.prepareIngredientsText()
                         self.displayDescription()
                     } else {
-                        self.navigationItem.rightBarButtonItem = nil
-                        self.displayAlert(title: "No Recipe Found", message: "We couldn't find any recipe for this meal.", actionTitle: "Close")
+                        self.displayAlert(title: "No Recipe", message: "We couldn't find a recipe for this meal.")
                     }
                 }
             }
@@ -186,12 +185,12 @@ class SelectedRecipeViewController: UIViewController {
         return favourited
     }
     
-    func displayAlert(title: String, message: String, actionTitle: String) {
+    func displayAlert(title: String, message: String) {
         // Instantiate alert
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         // Add a button below the text field
-        alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: {_ in
-            if title == "No Recipe Found" {
+        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: {_ in
+            if title == "No Recipe" {
                 self.navigationController?.popViewController(animated: true)
             }
         }))
@@ -222,7 +221,7 @@ class SelectedRecipeViewController: UIViewController {
         let instructionsAdaptor = InstructionsAdaptor()
         
         // Set up loading text in navigation bar
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Loading...")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rays"))
         navigationItem.rightBarButtonItem?.isEnabled = false
         
         instructionsAdaptor.getInstructions(mealId) { (instructions, error) in
@@ -232,7 +231,7 @@ class SelectedRecipeViewController: UIViewController {
                 self.navigationItem.rightBarButtonItem = nil
                 
                 if error == true {
-                    self.displayAlert(title: "Please Check Your Internet Connection", message: "We couldn't establish a connection with the server.", actionTitle: "Close")
+                    self.displayAlert(title: "No Connection", message: "Please check your network connection.")
                     self.segmentedControl.selectedSegmentIndex = 0
                 } else if instructions?.count ?? 0 > 0 {
                     for instructionStep in instructions![0].steps {
@@ -243,7 +242,7 @@ class SelectedRecipeViewController: UIViewController {
                     }
                     self.textLabel.attributedText = self.addAttributes(formattedInstructions)
                 } else {
-                    self.displayAlert(title: "No Instructions Found", message: "We couldn't find any instructions for this meal.", actionTitle: "Close")
+                    self.displayAlert(title: "No Instructions", message: "We couldn't find any instructions for this meal.")
                     self.segmentedControl.selectedSegmentIndex = 0
                 }
             }

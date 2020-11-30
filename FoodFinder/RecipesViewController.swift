@@ -16,58 +16,17 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Search Button Setup
+        // Search button setup
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(displayComplexSearchAlert))
+        
+        // Refresh button setup
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"), style: .plain, target: self, action: #selector(refresh))
 
         // Generate search term and completion handler to send to instance of RecipeAdaptor.
         if ingredients.count > 0 {
-            // Set up loading text in navigation bar
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Loading...")
-            navigationItem.rightBarButtonItem?.isEnabled = false
-            
-            // Convert ingredients array into string separated by ,+ to conform to API syntax
-            var searchTerm = "\(ingredients[0].name)"
-            for count in 1 ..< ingredients.count {
-                searchTerm += ",+\(ingredients[count].name)"
-            }
-            recipeAdaptor.getRecipes(searchTerm, directory: "findByIngredients?ingredients=") { (recipes, error) in
-                // Update latest queried ingredients
-                self.latestIngredients = ingredients
-                
-                // If no internet connection or unable to parse JSON
-                if error == true {
-                    // UI changes done on main thread
-                    DispatchQueue.main.async {
-                        self.navigationItem.rightBarButtonItem?.title = "No Connection"
-                        self.displayAlert(title: "No Connection", message: "Please check your network connection.")
-                    }
-                } else if recipes == nil && error == false {
-                    // Run out of API queries
-                    DispatchQueue.main.async {
-                        self.navigationItem.rightBarButtonItem?.title = "Error"
-                        self.displayAlert(title: "Error Message", message: "We have run into a server-side problem. We aim to fix this as soon as possible; however, the app will be fully functioning from tomorrow morning, sorry for the inconvenience.")
-                    }
-                } else {
-                    self.recipes = recipes ?? [] // Create an array from the attribute strMeal of all returned recipes
-                    
-                    // UI change must be done on main thread
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                        
-                        // Check if no recipes found
-                        if self.recipes.count == 0 {
-                            self.navigationItem.rightBarButtonItem?.title = "No Recipes"
-                            self.displayAlert(title: "No Recipes", message: "We couldn't find any recipes for the ingredients in your home tab.")
-                        } else {
-                            self.navigationItem.rightBarButtonItem = nil
-                        }
-                    }
-                }
-            }
+            let searchTerm = getSearchTerm()
+            queryApi(searchTerm)
         } else {
-            // Set up no ingredients text in navigation bar
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "No Ingredients")
-            navigationItem.rightBarButtonItem?.isEnabled = false
             displayAlert(title: "No Ingredients", message: "To find recipes by ingredients, return to the home tab and add some using the search bar.")
             latestIngredients = ingredients
         }
@@ -87,6 +46,57 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         }
         if change == true {
             viewDidLoad()
+        }
+    }
+    
+    @objc func refresh() {
+        viewDidLoad()
+    }
+    
+    func getSearchTerm() -> String {
+        // Convert ingredients array into string separated by ,+ to conform to API syntax
+        var searchTerm = "\(ingredients[0].name)"
+        for count in 1 ..< ingredients.count {
+            searchTerm += ",+\(ingredients[count].name)"
+        }
+        return searchTerm
+    }
+    
+    func queryApi(_ searchTerm: String) {
+        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "rays")
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        recipeAdaptor.getRecipes(searchTerm, directory: "findByIngredients?ingredients=") { (recipes, error) in
+            // Update latest queried ingredients
+            self.latestIngredients = ingredients
+            
+            // If no internet connection or unable to parse JSON
+            if error == true {
+                // UI changes done on main thread
+                DispatchQueue.main.async {
+                    self.displayAlert(title: "No Connection", message: "Please check your network connection.")
+                }
+            } else if recipes == nil && error == false {
+                // Run out of API queries
+                DispatchQueue.main.async {
+                    self.displayAlert(title: "Error Message", message: "We have run into a server-side problem. We aim to fix this as soon as possible. Sorry for the inconvenience.")
+                }
+            } else {
+                self.recipes = recipes ?? [] // Create an array from the attribute strMeal of all returned recipes
+                
+                // UI change must be done on main thread
+                DispatchQueue.main.async {
+                    // Check if no recipes found
+                    if self.recipes.count == 0 {
+                        self.displayAlert(title: "No Recipes", message: "We couldn't find any recipes for the ingredients in your home tab.")
+                    } else {
+                        self.collectionView.reloadData()
+                    }
+                }
+            }
+            DispatchQueue.main.async {
+                self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "arrow.clockwise")
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+            }
         }
     }
     
@@ -126,17 +136,12 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             if error == true {
                 // UI changes done on main thread
                 DispatchQueue.main.async {
-                    self.navigationItem.rightBarButtonItem?.title = "No Connection"
+                    self.displayAlert(title: "No Connection", message: "Please check your network connection.")
                 }
             } else if recipes == nil && error == false {
                 // Run out of API queries
                 DispatchQueue.main.async {
-                    self.navigationItem.rightBarButtonItem?.title = "Error"
-                    // Instantiate alert
-                    let alert = UIAlertController(title: "Error Message", message: "We have run into a server-side problem. We aim to fix this as soon as possible; however, the app will be fully functioning from tomorrow morning, sorry for the inconvenience.", preferredStyle: .alert)
-                    // Add a button below the text field
-                    alert.addAction(UIAlertAction(title: "Close", style: .default))
-                    self.present(alert, animated: true, completion: nil)
+                    self.displayAlert(title: "Error Message", message: "We have run into a server-side problem. We aim to fix this as soon as possible. Sorry for the inconvenience.")
                 }
             } else {
                 DispatchQueue.main.async {
@@ -148,11 +153,10 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
                     
                     // Check if no recipes found
                     if viewController.recipes.count == 0 {
-                        viewController.rightBarButtonItem = UIBarButtonItem(title: "No Recipes")
+                        self.displayAlert(title: "No Recipes", message: "We couldn't find any recipes matching to your search.")
                     } else {
-                        viewController.rightBarButtonItem = nil
+                        self.navigationController?.pushViewController(viewController, animated: true)
                     }
-                    self.navigationController?.pushViewController(viewController, animated: true)
                 }
             }
         }
