@@ -19,6 +19,8 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.allowsSelectionDuringEditing = true
+        
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         searchBar.autocapitalizationType = .none
@@ -26,7 +28,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         
         self.clearsSelectionOnViewWillAppear = true
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear All", style: .plain, target: self, action: #selector(removeAllIngredients))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(removeAllIngredients))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.red
         
         if let savedIngredients = defaults.object(forKey: "savedIngredients") {
