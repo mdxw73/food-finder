@@ -131,6 +131,8 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     
     // Search API with search bar text
     func searchButtonPressed(_ searchTerm: String) {
+        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "rays")
+        navigationItem.rightBarButtonItem?.isEnabled = false
         recipeAdaptor.getRecipes(searchTerm, directory: "complexSearch?query=") { (recipes, error) in
             // If no internet connection or unable to parse JSON
             if error == true {
@@ -158,6 +160,10 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
                         self.navigationController?.pushViewController(viewController, animated: true)
                     }
                 }
+            }
+            DispatchQueue.main.async {
+                self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "arrow.clockwise")
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
         }
     }
