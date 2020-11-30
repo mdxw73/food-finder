@@ -163,12 +163,12 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         
         // Configure the cell...
         let selectedIngredient = filteredIngredients[indexPath.row]
+        cell.ingredientLabel?.textColor = UIColor.white
+        cell.ingredientLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
         if getIngredientNames().contains(selectedIngredient.name) == false {
-            cell.ingredientLabel?.textColor = UIColor.systemPink
-            cell.ingredientLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
+            cell.backgroundColor = UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1))
         } else {
-            cell.ingredientLabel?.textColor = UIColor.black
-            cell.ingredientLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
+            cell.backgroundColor = UIColor.init(cgColor: CGColor(red: 1, green: 0.5, blue: 0.5, alpha: 1))
         }
         cell.ingredientLabel?.text = selectedIngredient.name
         cell.ingredientImage?.load(url: URL(string: "https://spoonacular.com/cdn/ingredients_100x100/\(selectedIngredient.imageDirectory)") ?? URL(string: "https://spoonacular.com/cdn/ingredients_100x100.jpg")!)
