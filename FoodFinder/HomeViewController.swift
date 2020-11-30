@@ -268,6 +268,11 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         searchBar.setShowsScope(true, animated: true)
         searchBar.sizeToFit()
         tableView.tableHeaderView = searchBar
+        if searchBar.selectedScopeButtonIndex == 1 {
+            self.navigationItem.rightBarButtonItem!.isEnabled = false
+            self.navigationItem.leftBarButtonItem?.isEnabled = false
+            self.searchBar(self.searchBar, textDidChange: searchBar.text ?? "")
+        }
     }
     
     // Hide cancel and scope views
