@@ -116,7 +116,7 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
         DispatchQueue.main.async {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
-        navigationItem.rightBarButtonItem?.title = "Loading..."
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rays"))
         DispatchQueue.global(qos: .userInitiated).async {
             // Prepare an input image for Vision
             let ciImage = CIImage(image: image)!
@@ -147,7 +147,7 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
     //MARK: Image Classifier Methods
 //    func processObservations(for request: VNRequest) {
 //        DispatchQueue.main.async {
-//            self.navigationItem.rightBarButtonItem?.title = "Store"
+//            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Store", style: .plain, target: self, action: #selector(self.storeObject))
 //        }
 //
 //        // Process UI changes on main thread
@@ -173,7 +173,7 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
     //MARK: Object Detector Methods
     func processObservations(for request: VNRequest) {
         DispatchQueue.main.async {
-            self.navigationItem.rightBarButtonItem?.title = "Store"
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Store", style: .plain, target: self, action: #selector(self.storeObject))
         }
         
         // Process UI changes on main thread

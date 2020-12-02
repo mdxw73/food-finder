@@ -212,7 +212,7 @@
                                                 <state key="normal" backgroundImage="clock.arrow.circlepath" catalog="system"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0QG-23-1yJ">
-                                                <rect key="frame" x="344" y="287.5" width="50" height="38"/>
+                                                <rect key="frame" x="344" y="286" width="50" height="40.5"/>
                                                 <color key="tintColor" red="0.92211204769999999" green="0.3764045238" blue="0.55490905049999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <inset key="contentEdgeInsets" minX="25" minY="10" maxX="25" maxY="10"/>
                                                 <state key="normal" backgroundImage="heart" catalog="system"/>
