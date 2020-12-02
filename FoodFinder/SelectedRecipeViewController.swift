@@ -103,7 +103,7 @@ class SelectedRecipeViewController: UIViewController {
     func generateLoadingIcon() {
         let loadingButton = UIButton() // Create new button
         loadingButton.setImage(UIImage(systemName: "circle.grid.cross.fill"), for: .normal) // Assign an image
-        loadingButton.imageView?.tintColor = UIColor.systemPink
+        loadingButton.imageView?.tintColor = UIColor(red: 1, green: 0.5, blue: 0.5, alpha: 1)
         navigationItem.rightBarButtonItem = UIBarButtonItem()
         navigationItem.rightBarButtonItem?.customView = loadingButton // Set as barButton's customView
         UIView.animate(withDuration: 1, delay: 0, options: .repeat, animations: {

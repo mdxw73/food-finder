@@ -65,7 +65,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     func generateLoadingIcon() {
         let loadingButton = UIButton() // Create new button
         loadingButton.setImage(UIImage(systemName: "circle.grid.cross.fill"), for: .normal) // Assign an image
-        loadingButton.imageView?.tintColor = UIColor.systemPink
+        loadingButton.imageView?.tintColor = UIColor(red: 1, green: 0.5, blue: 0.5, alpha: 1)
         navigationItem.rightBarButtonItem?.customView = loadingButton // Set as barButton's customView
         UIView.animate(withDuration: 1, delay: 0, options: .repeat, animations: {
             self.navigationItem.rightBarButtonItem?.customView?.transform = CGAffineTransform(rotationAngle: .pi)
@@ -190,7 +190,6 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         
         // Edit UILabel
         cell.mealName.text = recipe.mealName
-        cell.mealName.adjustsFontSizeToFitWidth = true
         
         // Edit UIImage
         cell.imageView.load(url: recipe.mealImage)
@@ -244,6 +243,11 @@ extension UIImageView {
 
 extension RecipesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width/2-17, height: view.frame.width/2.25)
+        guard let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? RecipeCell else {
+            fatalError("Unable to decode the data source's cells.")
+        }
+        let scaleFactor = 18 / Double(view.frame.width) // Ratio of number of characters per line to screen width
+        let additionalSpace = CGFloat(Double(cell.mealName.text!.count) * scaleFactor) * 20 // Product of number of characters in label, scale factor and a constant
+        return CGSize(width: view.frame.width/2-17, height: view.frame.width/2.25 + additionalSpace)
     }
 }
