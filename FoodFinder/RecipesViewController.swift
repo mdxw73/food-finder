@@ -67,7 +67,6 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         loadingButton.setImage(UIImage(systemName: "circle.grid.cross.fill"), for: .normal) // Assign an image
         loadingButton.imageView?.tintColor = UIColor.systemPink
         navigationItem.rightBarButtonItem?.customView = loadingButton // Set as barButton's customView
-        navigationItem.rightBarButtonItem?.customView?.frame.size = CGSize(width: view.frame.width/11, height: view.frame.height/10)
         UIView.animate(withDuration: 1, delay: 0, options: .repeat, animations: {
             self.navigationItem.rightBarButtonItem?.customView?.transform = CGAffineTransform(rotationAngle: .pi)
                 }, completion: nil)
