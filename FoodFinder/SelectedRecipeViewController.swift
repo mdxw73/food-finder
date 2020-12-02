@@ -42,7 +42,7 @@ class SelectedRecipeViewController: UIViewController {
             similarRecipesConstraintOne.constant = 0
             similarRecipesConstraintTwo.constant = 0
         } else {
-            collectionViewHeightConstraint.constant = 200
+            collectionViewHeightConstraint.constant = 220
         }
         
         // Set up collection view
