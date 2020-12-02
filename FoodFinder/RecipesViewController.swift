@@ -62,9 +62,19 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         return searchTerm
     }
     
+    func generateLoadingIcon() {
+        let loadingButton = UIButton() // Create new button
+        loadingButton.setImage(UIImage(systemName: "circle.grid.cross.fill"), for: .normal) // Assign an image
+        loadingButton.imageView?.tintColor = UIColor.systemPink
+        navigationItem.rightBarButtonItem?.customView = loadingButton // Set as barButton's customView
+        navigationItem.rightBarButtonItem?.customView?.frame.size = CGSize(width: view.frame.width/11, height: view.frame.height/10)
+        UIView.animate(withDuration: 1, delay: 0, options: .repeat, animations: {
+            self.navigationItem.rightBarButtonItem?.customView?.transform = CGAffineTransform(rotationAngle: .pi)
+                }, completion: nil)
+    }
+    
     func queryApi(_ searchTerm: String) {
-        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "rays")
-        navigationItem.rightBarButtonItem?.isEnabled = false
+        generateLoadingIcon()
         recipeAdaptor.getRecipes(searchTerm, directory: "findByIngredients?ingredients=") { (recipes, error) in
             // Update latest queried ingredients
             self.latestIngredients = ingredients
@@ -94,8 +104,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
                 }
             }
             DispatchQueue.main.async {
-                self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "arrow.clockwise")
-                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"), style: .plain, target: self, action: #selector(self.refresh))
             }
         }
     }
@@ -131,8 +140,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     
     // Search API with search bar text
     func searchButtonPressed(_ searchTerm: String) {
-        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "rays")
-        navigationItem.rightBarButtonItem?.isEnabled = false
+        generateLoadingIcon()
         recipeAdaptor.getRecipes(searchTerm, directory: "complexSearch?query=") { (recipes, error) in
             // If no internet connection or unable to parse JSON
             if error == true {
@@ -162,8 +170,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
                 }
             }
             DispatchQueue.main.async {
-                self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "arrow.clockwise")
-                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"), style: .plain, target: self, action: #selector(self.refresh))
             }
         }
     }

@@ -112,11 +112,9 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
     // Create image request handler and perform requests
     func classify(image: UIImage) {
         self.imageView.layer.sublayers = nil // Remove old bounding boxes
+        navigationItem.rightBarButtonItem?.isEnabled = true
+        generateLoadingIcon()
         // Vision requests are time consuming and so send it on a background thread to avoid blocking main thread
-        DispatchQueue.main.async {
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
-        }
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rays"))
         DispatchQueue.global(qos: .userInitiated).async {
             // Prepare an input image for Vision
             let ciImage = CIImage(image: image)!
@@ -128,6 +126,16 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
             // Schedule requests and return results once all have been completed
             try! handler.perform([self.classificationRequest])
         }
+    }
+    
+    func generateLoadingIcon() {
+        let loadingButton = UIButton() // Create new button
+        loadingButton.setImage(UIImage(systemName: "circle.grid.cross.fill"), for: .normal) // Assign an image
+        loadingButton.imageView?.tintColor = UIColor.systemPink
+        navigationItem.rightBarButtonItem?.customView = loadingButton // Set as barButton's customView
+        UIView.animate(withDuration: 1, delay: 0, options: .repeat, animations: {
+            self.navigationItem.rightBarButtonItem?.customView?.transform = CGAffineTransform(rotationAngle: .pi)
+                }, completion: nil)
     }
     
     // Calculated when referenced (lazy) and returns the current request to be performed

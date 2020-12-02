@@ -58,10 +58,7 @@ class SelectedRecipeViewController: UIViewController {
         
         // If this is not a favourited recipe
         if self.recipe == nil {
-            // Set up loading text in navigation bar
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rays"))
-            navigationItem.rightBarButtonItem?.isEnabled = false
-            
+            generateLoadingIcon()
             selectedRecipeAdaptor.getSelectedRecipe(mealId) { (selectedRecipe, error) in
                 // UI changes done on main thread
                 DispatchQueue.main.async {
@@ -101,6 +98,17 @@ class SelectedRecipeViewController: UIViewController {
             }
         }
         favouriteButton.isSelected = state
+    }
+    
+    func generateLoadingIcon() {
+        let loadingButton = UIButton() // Create new button
+        loadingButton.setImage(UIImage(systemName: "circle.grid.cross.fill"), for: .normal) // Assign an image
+        loadingButton.imageView?.tintColor = UIColor.systemPink
+        navigationItem.rightBarButtonItem = UIBarButtonItem()
+        navigationItem.rightBarButtonItem?.customView = loadingButton // Set as barButton's customView
+        UIView.animate(withDuration: 1, delay: 0, options: .repeat, animations: {
+            self.navigationItem.rightBarButtonItem?.customView?.transform = CGAffineTransform(rotationAngle: .pi)
+                }, completion: nil)
     }
     
     func addAttributes(_ text: String) -> NSMutableAttributedString {
@@ -219,11 +227,7 @@ class SelectedRecipeViewController: UIViewController {
         // Get instructions from API
         var formattedInstructions = ""
         let instructionsAdaptor = InstructionsAdaptor()
-        
-        // Set up loading text in navigation bar
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rays"))
-        navigationItem.rightBarButtonItem?.isEnabled = false
-        
+        generateLoadingIcon()
         instructionsAdaptor.getInstructions(mealId) { (instructions, error) in
             // UI changes done on main thread
             DispatchQueue.main.async {
