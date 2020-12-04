@@ -308,7 +308,7 @@
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OU3-Tl-CgV">
                                                                     <rect key="frame" x="10" y="145" width="170" height="30"/>
-                                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                                     <color key="textColor" red="0.96861749890000004" green="0.96471267940000005" blue="0.98909741640000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>

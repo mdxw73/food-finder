@@ -247,7 +247,7 @@ extension RecipesViewController: UICollectionViewDelegateFlowLayout {
             fatalError("Unable to decode the data source's cells.")
         }
         let scaleFactor = 18 / Double(view.frame.width) // Ratio of number of characters per line to screen width
-        let additionalSpace = CGFloat(Double(cell.mealName.text!.count) * scaleFactor) * 20 // Product of number of characters in label, scale factor and a constant
+        let additionalSpace = CGFloat(pow(Double(cell.mealName.text!.count),2) * scaleFactor) / 3 // Product of number of characters in label, scale factor and a constant
         return CGSize(width: view.frame.width/2-17, height: view.frame.width/2.25 + additionalSpace)
     }
 }
