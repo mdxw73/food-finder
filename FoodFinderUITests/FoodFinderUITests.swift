@@ -38,7 +38,7 @@ class FoodFinderUITests: XCTestCase {
         app.launch()
         app.tabBars["Tab Bar"].buttons["Detector"].tap()
         app.buttons["photo"].tap()
-        XCUIApplication().scrollViews.otherElements.images["Photo, November 18, 9:31 AM"].tap()
+        app.scrollViews.otherElements.images["Photo, January 14, 12:40 PM"].tap()
         
         // Wait for loading text to be replaced by "Store"
         _ = app.navigationBars.buttons["Store"].waitForExistence(timeout: 5)
@@ -73,6 +73,7 @@ class FoodFinderUITests: XCTestCase {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
         _ = app.collectionViews.firstMatch.waitForExistence(timeout: 5)
         app.collectionViews.cells.firstMatch.tap()
+        _ = app.images.firstMatch.waitForExistence(timeout: 5)
         
         XCTAssert(app.staticTexts.matching(identifier: "ingredientsText").firstMatch.exists) // Ingredients text
         XCTAssert(app.staticTexts.matching(identifier: "durationLabel").firstMatch.exists) // Duration text
