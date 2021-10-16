@@ -137,10 +137,9 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
             self.navigationItem.rightBarButtonItem?.customView?.transform = CGAffineTransform(rotationAngle: .pi)
                 }, completion: nil)
     }
-    
+    //MARK: Choose Core ML Model
     // Calculated when referenced (lazy) and returns the current request to be performed
     lazy var classificationRequest: VNCoreMLRequest = {
-        //MARK: Choose Core ML Model
         let visionModel = try! VNCoreMLModel(for: YOLOv3(configuration: .init()).model)
         
         // Specify model to be used
