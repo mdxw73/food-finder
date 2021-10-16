@@ -327,6 +327,10 @@ extension SelectedRecipeViewController: UICollectionViewDataSource, UICollection
 
 extension SelectedRecipeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/2-17, height: collectionView.frame.width/2.25)
+        guard let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? RecipeCell else {
+            fatalError("Unable to decode the data source's cells.")
+        }
+        let height = 140 + 20 + 3 * cell.mealName.font.lineHeight // Image height + constraints + 3 available lines
+        return CGSize(width: view.frame.width / 2 - 17, height: height)
     }
 }

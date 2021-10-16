@@ -55,6 +55,7 @@ class FavouritesViewController: UICollectionViewController {
         
         // Edit UILabel
         cell.mealName.text = recipe.mealName
+        cell.mealName.adjustsFontSizeToFitWidth = true
         
         // Edit UIImage
         cell.imageView.load(url: recipe.mealImage)
@@ -92,8 +93,7 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
         guard let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? RecipeCell else {
             fatalError("Unable to decode the data source's cells.")
         }
-        let scaleFactor = 18 / Double(view.frame.width) // Ratio of number of characters per line to screen width
-        let additionalSpace = CGFloat(pow(Double(cell.mealName.text!.count),2) * scaleFactor) / 3 // Product of number of characters in label, scale factor and a constant
-        return CGSize(width: view.frame.width/2-17, height: view.frame.width/2.4 + additionalSpace)
+        let height = 130 + 20 + 3 * cell.mealName.font.lineHeight // Image height + constraints + 3 available lines
+        return CGSize(width: view.frame.width / 2 - 17, height: height)
     }
 }
