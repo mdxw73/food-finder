@@ -572,10 +572,10 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                             </imageView>
                             <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h29-wv-ifU">
-                                <rect key="frame" x="334" y="385" width="65" height="131"/>
+                                <rect key="frame" x="335" y="385.5" width="64" height="130"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pr8-iv-lsv">
-                                        <rect key="frame" x="10" y="10.5" width="45" height="34"/>
+                                        <rect key="frame" x="10" y="10.5" width="44" height="33.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Pr8-iv-lsv" secondAttribute="height" multiplier="5:4" id="Z0U-Ol-fY1"/>
                                         </constraints>
@@ -587,7 +587,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vom-wL-Jay">
-                                        <rect key="frame" x="10" y="87" width="45" height="32.5"/>
+                                        <rect key="frame" x="10" y="86.5" width="44" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Vom-wL-Jay" secondAttribute="height" multiplier="51:40" id="cKT-Xo-nVj"/>
                                         </constraints>
@@ -604,6 +604,7 @@
                                     <constraint firstAttribute="bottom" secondItem="Vom-wL-Jay" secondAttribute="bottom" constant="10" id="2Fn-xP-cdp"/>
                                     <constraint firstAttribute="trailing" secondItem="Pr8-iv-lsv" secondAttribute="trailing" constant="10" id="53Q-KN-qle"/>
                                     <constraint firstAttribute="trailing" secondItem="Vom-wL-Jay" secondAttribute="trailing" constant="10" id="AZt-XP-9T2"/>
+                                    <constraint firstAttribute="height" constant="130" id="Qwe-Pu-vJ6"/>
                                     <constraint firstItem="Vom-wL-Jay" firstAttribute="leading" secondItem="h29-wv-ifU" secondAttribute="leading" constant="10" id="TDU-Bb-l69"/>
                                     <constraint firstItem="Pr8-iv-lsv" firstAttribute="top" secondItem="h29-wv-ifU" secondAttribute="top" constant="10" id="Yre-6W-ybb"/>
                                     <constraint firstItem="Pr8-iv-lsv" firstAttribute="leading" secondItem="h29-wv-ifU" secondAttribute="leading" constant="10" id="hHE-oU-uSj"/>
@@ -624,7 +625,6 @@
                             <constraint firstItem="3Ce-hS-rut" firstAttribute="trailing" secondItem="h29-wv-ifU" secondAttribute="trailing" constant="15" id="DbX-w3-fyN"/>
                             <constraint firstItem="3Ce-hS-rut" firstAttribute="trailing" secondItem="7DB-33-dSe" secondAttribute="trailing" id="bSg-hA-Qrx"/>
                             <constraint firstItem="3Ce-hS-rut" firstAttribute="bottom" secondItem="7DB-33-dSe" secondAttribute="bottom" id="ddz-sa-Nbm"/>
-                            <constraint firstItem="h29-wv-ifU" firstAttribute="height" secondItem="7Dd-p7-aD5" secondAttribute="height" multiplier="0.135" constant="10" id="wpm-Q2-9gB"/>
                             <constraint firstItem="7DB-33-dSe" firstAttribute="top" secondItem="3Ce-hS-rut" secondAttribute="top" id="xai-ZV-E7t"/>
                         </constraints>
                     </view>
