@@ -110,13 +110,17 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     
     func displayAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.applyCustomStyle()
         // Add a button below the text field
-        alert.addAction(UIAlertAction(title: "Close", style: .default))
+        let closeAction = UIAlertAction(title: "Close", style: .default)
+        closeAction.setValue(UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)), forKey: "titleTextColor")
+        alert.addAction(closeAction)
         self.present(alert, animated: true, completion: nil)
     }
     
     @objc func displayComplexSearchAlert() {
         let alert = UIAlertController(title: "Complex Recipe Search", message: "Enter a meal name, style or genre.", preferredStyle: .alert)
+        alert.applyCustomStyle()
         // Add a text field
         alert.addTextField(configurationHandler: { textField in
             textField.autocapitalizationType = .none
@@ -124,7 +128,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             textField.placeholder = "Search"
             })
         // Add a button below the text field
-        alert.addAction(UIAlertAction(title: "Search", style: .default, handler: { (_) in
+        let searchAction = UIAlertAction(title: "Search", style: .default, handler: { (_) in
             let textField = alert.textFields![0]
             let response = textField.text ?? ""
             
@@ -132,8 +136,12 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             if response != "" {
                 self.searchButtonPressed(response)
             }
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        })
+        searchAction.setValue(UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)), forKey: "titleTextColor")
+        alert.addAction(searchAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        cancelAction.setValue(UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)), forKey: "titleTextColor")
+        alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -249,5 +257,33 @@ extension RecipesViewController: UICollectionViewDelegateFlowLayout {
         }
         let height = 140 + 20 + 3 * cell.mealName.font.lineHeight // Image height + constraints + 3 available lines
         return CGSize(width: view.frame.width / 2 - 17, height: height)
+    }
+}
+
+extension UIAlertController {
+    func applyCustomStyle() {
+        // Customize the title and message text color
+        if let title = self.title {
+            let attributedTitle = NSAttributedString(string: title, attributes: [
+                .foregroundColor: UIColor.white,
+                .font: UIFont.boldSystemFont(ofSize: 17)
+            ])
+            self.setValue(attributedTitle, forKey: "attributedTitle")
+        }
+        
+        if let message = self.message {
+            let attributedMessage = NSAttributedString(string: message, attributes: [
+                .foregroundColor: UIColor.white,
+                .font: UIFont.systemFont(ofSize: 14)
+            ])
+            self.setValue(attributedMessage, forKey: "attributedMessage")
+        }
+        
+        // Customize the background color and shape
+        if let backgroundView = self.view.subviews.first, let contentView = backgroundView.subviews.first {
+            contentView.backgroundColor = UIColor.systemPink
+            contentView.layer.cornerRadius = 30
+            contentView.layer.masksToBounds = true
+        }
     }
 }
