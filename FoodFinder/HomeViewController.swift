@@ -241,6 +241,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         } else {
             self.navigationItem.rightBarButtonItem!.isEnabled = false
             self.navigationItem.leftBarButtonItem?.isEnabled = false
+            self.isEditing = false
             
             // Get autocomplete ingredients
             AutocompleteIngredientsAdaptor().getAutocompleteIngredients(searchBar.text ?? "") { (autocompleteIngredients, error) in
