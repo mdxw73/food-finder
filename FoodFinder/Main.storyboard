@@ -485,7 +485,7 @@
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="Z8f-Dj-ypc" firstAttribute="centerY" secondItem="2Yp-Vf-uok" secondAttribute="centerY" id="3Bx-VJ-PDf"/>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="W09-VM-wgM"/>
+                                                <constraint firstAttribute="height" constant="50" id="W09-VM-wgM"/>
                                                 <constraint firstAttribute="width" constant="80" id="kgO-QL-enW"/>
                                                 <constraint firstItem="Z8f-Dj-ypc" firstAttribute="centerX" secondItem="2Yp-Vf-uok" secondAttribute="centerX" id="zYk-rK-H48"/>
                                             </constraints>
