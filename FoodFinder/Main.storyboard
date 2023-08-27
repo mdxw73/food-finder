@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3Qc-Ka-h9n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3Qc-Ka-h9n">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -16,7 +16,7 @@
                 <navigationController id="35T-EN-00a" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recipes" image="book.fill" catalog="system" id="aFF-gv-bOf"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ZIZ-Ht-cfL">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -178,7 +178,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJe-At-L29">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jnd-Yl-zTi">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="812.5"/>
@@ -449,7 +449,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" text="" id="niu-Fk-kZG">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="51"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                             <scopeButtonTitles>
@@ -459,7 +459,7 @@
                         </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Ingredient" id="sb5-b0-gWd" customClass="IngredientCell" customModule="FoodFinder" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="95.5" width="414" height="50.5"/>
+                                <rect key="frame" x="0.0" y="106" width="414" height="50.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sb5-b0-gWd" id="64Q-Jg-gE2">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50.5"/>
@@ -485,7 +485,7 @@
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="Z8f-Dj-ypc" firstAttribute="centerY" secondItem="2Yp-Vf-uok" secondAttribute="centerY" id="3Bx-VJ-PDf"/>
-                                                <constraint firstAttribute="height" constant="50" id="W09-VM-wgM"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="W09-VM-wgM"/>
                                                 <constraint firstAttribute="width" constant="80" id="kgO-QL-enW"/>
                                                 <constraint firstItem="Z8f-Dj-ypc" firstAttribute="centerX" secondItem="2Yp-Vf-uok" secondAttribute="centerX" id="zYk-rK-H48"/>
                                             </constraints>
@@ -532,7 +532,7 @@
                 <navigationController id="FFc-bu-xeN" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Home" image="house.fill" catalog="system" id="nUk-DD-dmv"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="I8D-MU-Zvh">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -549,7 +549,7 @@
                 <navigationController id="GFG-eG-X7H" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Favourites" image="star.fill" catalog="system" id="AzF-W8-cqb"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0Pf-EJ-CUD">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -569,10 +569,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7DB-33-dSe">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="721"/>
                             </imageView>
                             <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h29-wv-ifU">
-                                <rect key="frame" x="335" y="385.5" width="64" height="130"/>
+                                <rect key="frame" x="335" y="387.5" width="64" height="130"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pr8-iv-lsv">
                                         <rect key="frame" x="10" y="10.5" width="44" height="33.5"/>
@@ -646,7 +646,7 @@
                     <tabBarItem key="tabBarItem" title="Detector" image="smallcircle.circle.fill" catalog="system" id="Dib-Ib-5nj"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gXi-2P-wdT">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -785,16 +785,16 @@
     </scenes>
     <resources>
         <image name="book.fill" catalog="system" width="128" height="95"/>
-        <image name="camera" catalog="system" width="128" height="94"/>
-        <image name="cart.fill.badge.minus" catalog="system" width="128" height="106"/>
-        <image name="cart.fill.badge.plus" catalog="system" width="128" height="106"/>
-        <image name="clock.arrow.circlepath" catalog="system" width="128" height="110"/>
-        <image name="heart" catalog="system" width="128" height="109"/>
-        <image name="heart.fill" catalog="system" width="128" height="109"/>
-        <image name="house.fill" catalog="system" width="128" height="106"/>
-        <image name="person.2" catalog="system" width="128" height="81"/>
+        <image name="camera" catalog="system" width="128" height="93"/>
+        <image name="cart.fill.badge.minus" catalog="system" width="128" height="105"/>
+        <image name="cart.fill.badge.plus" catalog="system" width="128" height="105"/>
+        <image name="clock.arrow.circlepath" catalog="system" width="128" height="112"/>
+        <image name="heart" catalog="system" width="128" height="107"/>
+        <image name="heart.fill" catalog="system" width="128" height="107"/>
+        <image name="house.fill" catalog="system" width="128" height="104"/>
+        <image name="person.2" catalog="system" width="128" height="82"/>
         <image name="photo" catalog="system" width="128" height="93"/>
-        <image name="smallcircle.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="smallcircle.circle.fill" catalog="system" width="128" height="123"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

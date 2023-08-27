@@ -74,10 +74,6 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         setStateOfBarButtonItems()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        searchBarCancelButtonClicked(searchBar)
-    }
-    
     func setStateOfBarButtonItems() {
         // Disable bar buttons when there are no ingredients
         if ingredients.count == 0 {
