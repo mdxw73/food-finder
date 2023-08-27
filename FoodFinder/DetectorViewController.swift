@@ -20,7 +20,8 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Add navigation bar button
+        // Add navigation bar buttons
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(self.showTutorial))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Store", style: .plain, target: self, action: #selector(self.storeObject))
         navigationItem.rightBarButtonItem?.isEnabled = false
         
@@ -35,6 +36,13 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
         self.imageView.image = nil
         navigationItem.rightBarButtonItem?.isEnabled = false
         self.imageView.layer.sublayers = nil // Remove old bounding boxes
+    }
+    
+    @objc func showTutorial() {
+        if let tutorialVC = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController") as? TutorialViewController {
+            tutorialVC.modalPresentationStyle = .popover
+            present(tutorialVC, animated: true, completion: nil)
+        }
     }
     
     // Instantiate an image picker controller using the source type passed in
@@ -99,37 +107,38 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
         }
     }
     
-    func isImageLandscape(image: UIImage) -> Bool {
-        return image.size.width > image.size.height
-    }
-    
-    func rotateImage(image: UIImage) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(image.size, true, image.scale)
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        
-        context.translateBy(x: image.size.width / 2, y: image.size.height / 2)
-        context.rotate(by: CGFloat.pi / 2) // Rotate by 90 degrees clockwise
-        
-        context.scaleBy(x: 1.0, y: -1.0) // Flip vertically (optional, depending on desired output)
-        
-        context.draw(image.cgImage!, in: CGRect(x: -image.size.height / 2, y: -image.size.width / 2, width: image.size.height, height: image.size.width))
-        
-        let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()
+    private func fixImageOrientation(_ image: UIImage) -> UIImage {
+        if image.imageOrientation == .up {
+            return image
+        }
+
+        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+        image.draw(in: CGRect(origin: .zero, size: image.size))
+        let fixedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
-        return rotatedImage
+
+        return fixedImage ?? image
     }
     
     private func cropToSquare(image: UIImage) -> UIImage {
-        let sideLength = min(image.size.width, image.size.height)
-        let squareRect = CGRect(x: 0, y: 0, width: sideLength, height: sideLength)
+        let image = fixImageOrientation(image)
+        let originalWidth = image.size.width
+        let originalHeight = image.size.height
+        let sideLength = min(originalWidth, originalHeight)
+        
+        var xOffset: CGFloat = 0
+        var yOffset: CGFloat = 0
+        
+        if originalWidth > originalHeight {
+            xOffset = (originalWidth - sideLength) / 2
+        } else if originalHeight > originalWidth {
+            yOffset = (originalHeight - sideLength) / 2
+        }
+        
+        let squareRect = CGRect(x: xOffset, y: yOffset, width: sideLength, height: sideLength)
         
         if let cgImage = image.cgImage?.cropping(to: squareRect) {
-            if isImageLandscape(image: image) {
-                return UIImage(cgImage: cgImage)
-            } else {
-                return rotateImage(image: UIImage(cgImage: cgImage))!
-            }
+            return UIImage(cgImage: cgImage)
         }
         
         return image

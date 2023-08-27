@@ -40,6 +40,10 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        if !UserDefaults.standard.bool(forKey: "tutorialCompleted") {
+            showTutorial()
+        }
+        
         // Check whether each element in detectedIngredients is already in ingredients
         var elementsToDelete: [HomeIngredient] = []
         for count in 0..<detectedIngredients.count {
@@ -72,6 +76,13 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         }
         
         setStateOfBarButtonItems()
+    }
+    
+    func showTutorial() {
+        if let tutorialVC = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController") as? TutorialViewController {
+            tutorialVC.modalPresentationStyle = .popover
+            present(tutorialVC, animated: true, completion: nil)
+        }
     }
     
     func setStateOfBarButtonItems() {

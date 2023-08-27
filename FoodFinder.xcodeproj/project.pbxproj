@@ -34,6 +34,7 @@
 		D7055F6D255F3C97001DF3F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */; };
 		D799B3FF256428B3003805DF /* HomeIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D799B3FE256428B3003805DF /* HomeIngredient.swift */; };
 		D7AA95492A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D7AA95482A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel */; };
+		D7E6B8AD2A9BD86F004C0311 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */; };
 		D7F023DC2562ACC200B6A9DD /* RecipeSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F023DB2562ACC200B6A9DD /* RecipeSearchResults.swift */; };
 		D7F023E92562B32200B6A9DD /* SearchedRecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F023E82562B32200B6A9DD /* SearchedRecipesViewController.swift */; };
 /* End PBXBuildFile section */
@@ -89,6 +90,7 @@
 		D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D799B3FE256428B3003805DF /* HomeIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeIngredient.swift; sourceTree = "<group>"; };
 		D7AA95482A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = IngredientObjectDetector.mlmodel; path = ../../IngredientObjectDetector.mlmodel; sourceTree = "<group>"; };
+		D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		D7F023DB2562ACC200B6A9DD /* RecipeSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchResults.swift; sourceTree = "<group>"; };
 		D7F023E82562B32200B6A9DD /* SearchedRecipesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedRecipesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,6 +148,7 @@
 				D7055F47255F3C7B001DF3F2 /* TabBarController.swift */,
 				D7055F4E255F3C7B001DF3F2 /* DetectorViewController.swift */,
 				D7055F4F255F3C7B001DF3F2 /* HomeViewController.swift */,
+				D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */,
 				D799B3FE256428B3003805DF /* HomeIngredient.swift */,
 				D7055F43255F3C7A001DF3F2 /* AutocompleteIngredientsAdaptor.swift */,
 				D7055F40255F3C7A001DF3F2 /* AutocompleteIngredient.swift */,
@@ -338,6 +341,7 @@
 				D7055F57255F3C7C001DF3F2 /* InstructionsAdaptor.swift in Sources */,
 				D7055F63255F3C7C001DF3F2 /* SelectedRecipeViewController.swift in Sources */,
 				D799B3FF256428B3003805DF /* HomeIngredient.swift in Sources */,
+				D7E6B8AD2A9BD86F004C0311 /* TutorialViewController.swift in Sources */,
 				D7055F0A255F3C49001DF3F2 /* SceneDelegate.swift in Sources */,
 				D7055F59255F3C7C001DF3F2 /* RecipeAdaptor.swift in Sources */,
 				D7055F58255F3C7C001DF3F2 /* Recipe.swift in Sources */,

@@ -782,8 +782,94 @@
             </objects>
             <point key="canvasLocation" x="2139" y="333"/>
         </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="eBN-Qs-f5G">
+            <objects>
+                <viewController storyboardIdentifier="TutorialViewController" id="2OP-hq-w0f" customClass="TutorialViewController" customModule="FoodFinder" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oVu-x2-5jB">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="waL-6w-U2P">
+                                <rect key="frame" x="20" y="178.5" width="374" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cC4-JT-LAX">
+                                <rect key="frame" x="334" y="777" width="60" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Next"/>
+                                <connections>
+                                    <action selector="nextButtonTapped:" destination="2OP-hq-w0f" eventType="touchUpInside" id="wvF-dB-y7q"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fNb-es-CDw">
+                                <rect key="frame" x="50" y="219" width="314" height="538"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L72-bx-ban">
+                                <rect key="frame" x="20" y="777" width="89.5" height="35"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Previous"/>
+                                <connections>
+                                    <action selector="previousButtonTapped:" destination="2OP-hq-w0f" eventType="touchUpInside" id="02R-2Z-hLj"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="sE8-qQ-boc">
+                                <rect key="frame" x="182" y="68" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="WxO-he-Cz7"/>
+                                    <constraint firstAttribute="width" constant="50" id="hBk-tw-xB0"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GzU-4H-DpD">
+                                <rect key="frame" x="20" y="138" width="374" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ZdA-LE-V44"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ZdA-LE-V44" firstAttribute="bottom" secondItem="L72-bx-ban" secondAttribute="bottom" constant="50" id="3zl-io-MWO"/>
+                            <constraint firstItem="ZdA-LE-V44" firstAttribute="trailing" secondItem="GzU-4H-DpD" secondAttribute="trailing" constant="20" id="6Hr-WY-OzK"/>
+                            <constraint firstItem="L72-bx-ban" firstAttribute="top" secondItem="fNb-es-CDw" secondAttribute="bottom" constant="20" id="8Pf-sA-UX7"/>
+                            <constraint firstItem="GzU-4H-DpD" firstAttribute="leading" secondItem="ZdA-LE-V44" secondAttribute="leading" constant="20" id="Bag-Yu-hse"/>
+                            <constraint firstItem="ZdA-LE-V44" firstAttribute="bottom" secondItem="cC4-JT-LAX" secondAttribute="bottom" constant="50" id="DGy-zK-ydU"/>
+                            <constraint firstItem="cC4-JT-LAX" firstAttribute="top" secondItem="fNb-es-CDw" secondAttribute="bottom" constant="20" id="FI3-1R-YId"/>
+                            <constraint firstItem="sE8-qQ-boc" firstAttribute="top" secondItem="ZdA-LE-V44" secondAttribute="top" constant="20" id="Hgb-F2-BVp"/>
+                            <constraint firstItem="ZdA-LE-V44" firstAttribute="trailing" secondItem="waL-6w-U2P" secondAttribute="trailing" constant="20" id="JNN-Ii-shq"/>
+                            <constraint firstItem="waL-6w-U2P" firstAttribute="top" secondItem="GzU-4H-DpD" secondAttribute="bottom" constant="20" id="MtR-lc-iQh"/>
+                            <constraint firstItem="L72-bx-ban" firstAttribute="leading" secondItem="ZdA-LE-V44" secondAttribute="leading" constant="20" id="VwJ-Qx-Arq"/>
+                            <constraint firstItem="sE8-qQ-boc" firstAttribute="centerX" secondItem="ZdA-LE-V44" secondAttribute="centerX" id="bBg-NN-2j5"/>
+                            <constraint firstItem="GzU-4H-DpD" firstAttribute="top" secondItem="sE8-qQ-boc" secondAttribute="bottom" constant="20" id="hoi-7D-e4f"/>
+                            <constraint firstItem="ZdA-LE-V44" firstAttribute="trailing" secondItem="cC4-JT-LAX" secondAttribute="trailing" constant="20" id="jF6-aT-jAG"/>
+                            <constraint firstItem="ZdA-LE-V44" firstAttribute="trailing" secondItem="fNb-es-CDw" secondAttribute="trailing" constant="50" id="jM9-aW-IuC"/>
+                            <constraint firstItem="fNb-es-CDw" firstAttribute="leading" secondItem="ZdA-LE-V44" secondAttribute="leading" constant="50" id="oOD-fk-bPe"/>
+                            <constraint firstItem="waL-6w-U2P" firstAttribute="leading" secondItem="ZdA-LE-V44" secondAttribute="leading" constant="20" id="yWm-ct-u1c"/>
+                            <constraint firstItem="fNb-es-CDw" firstAttribute="top" secondItem="waL-6w-U2P" secondAttribute="bottom" constant="20" id="zkc-0n-OXz"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="waL-6w-U2P" id="Vg3-jS-o2z"/>
+                        <outlet property="imageView" destination="fNb-es-CDw" id="AeW-4s-PYF"/>
+                        <outlet property="nextButton" destination="cC4-JT-LAX" id="De7-rD-ry3"/>
+                        <outlet property="previousButton" destination="L72-bx-ban" id="g30-M1-Gf9"/>
+                        <outlet property="titleLabel" destination="GzU-4H-DpD" id="nGV-Tm-sDQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xpJ-a3-ndu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-717.39130434782612" y="1058.7053571428571"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="LaunchScreen" width="512" height="512"/>
         <image name="book.fill" catalog="system" width="128" height="95"/>
         <image name="camera" catalog="system" width="128" height="93"/>
         <image name="cart.fill.badge.minus" catalog="system" width="128" height="105"/>
