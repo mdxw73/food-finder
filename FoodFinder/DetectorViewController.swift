@@ -99,12 +99,48 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
         }
     }
     
+    func isImageLandscape(image: UIImage) -> Bool {
+        return image.size.width > image.size.height
+    }
+    
+    func rotateImage(image: UIImage) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(image.size, true, image.scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        
+        context.translateBy(x: image.size.width / 2, y: image.size.height / 2)
+        context.rotate(by: CGFloat.pi / 2) // Rotate by 90 degrees clockwise
+        
+        context.scaleBy(x: 1.0, y: -1.0) // Flip vertically (optional, depending on desired output)
+        
+        context.draw(image.cgImage!, in: CGRect(x: -image.size.height / 2, y: -image.size.width / 2, width: image.size.height, height: image.size.width))
+        
+        let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return rotatedImage
+    }
+    
+    private func cropToSquare(image: UIImage) -> UIImage {
+        let sideLength = min(image.size.width, image.size.height)
+        let squareRect = CGRect(x: 0, y: 0, width: sideLength, height: sideLength)
+        
+        if let cgImage = image.cgImage?.cropping(to: squareRect) {
+            if isImageLandscape(image: image) {
+                return UIImage(cgImage: cgImage)
+            } else {
+                return rotateImage(image: UIImage(cgImage: cgImage))!
+            }
+        }
+        
+        return image
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //Remove the picker view from the screen
         picker.dismiss(animated: true)
         
         // Set the chosen image to UIImageView's attribute image and classify it
-        let image = info[.originalImage] as! UIImage
+        let image = cropToSquare(image: info[.originalImage] as! UIImage)
         imageView.image = image
         classify(image: image)
     }
@@ -140,7 +176,7 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
     //MARK: Choose Core ML Model
     // Calculated when referenced (lazy) and returns the current request to be performed
     lazy var classificationRequest: VNCoreMLRequest = {
-        let visionModel = try! VNCoreMLModel(for: YOLOv3(configuration: .init()).model)
+        let visionModel = try! VNCoreMLModel(for: IngredientObjectDetector(configuration: .init()).model)
         
         // Specify model to be used
         let request = VNCoreMLRequest(model: visionModel) { [unowned self] request, _ in

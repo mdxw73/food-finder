@@ -32,8 +32,8 @@
 		D7055F64255F3C7C001DF3F2 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F51255F3C7C001DF3F2 /* FavouritesViewController.swift */; };
 		D7055F65255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F52255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift */; };
 		D7055F6D255F3C97001DF3F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */; };
-		D7055F72255F3D20001DF3F2 /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D7055F71255F3D20001DF3F2 /* YOLOv3.mlmodel */; };
 		D799B3FF256428B3003805DF /* HomeIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D799B3FE256428B3003805DF /* HomeIngredient.swift */; };
+		D7AA95492A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D7AA95482A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel */; };
 		D7F023DC2562ACC200B6A9DD /* RecipeSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F023DB2562ACC200B6A9DD /* RecipeSearchResults.swift */; };
 		D7F023E92562B32200B6A9DD /* SearchedRecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F023E82562B32200B6A9DD /* SearchedRecipesViewController.swift */; };
 /* End PBXBuildFile section */
@@ -87,8 +87,8 @@
 		D7055F51255F3C7C001DF3F2 /* FavouritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
 		D7055F52255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedRecipeAdaptor.swift; sourceTree = "<group>"; };
 		D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D7055F71255F3D20001DF3F2 /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = YOLOv3.mlmodel; path = ../../YOLOv3.mlmodel; sourceTree = "<group>"; };
 		D799B3FE256428B3003805DF /* HomeIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeIngredient.swift; sourceTree = "<group>"; };
+		D7AA95482A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = IngredientObjectDetector.mlmodel; path = ../../IngredientObjectDetector.mlmodel; sourceTree = "<group>"; };
 		D7F023DB2562ACC200B6A9DD /* RecipeSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchResults.swift; sourceTree = "<group>"; };
 		D7F023E82562B32200B6A9DD /* SearchedRecipesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedRecipesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -164,7 +164,7 @@
 				D7055F44255F3C7B001DF3F2 /* InstructionsAdaptor.swift */,
 				D7055F41255F3C7A001DF3F2 /* Instructions.swift */,
 				D7055F49255F3C7B001DF3F2 /* InstructionStep.swift */,
-				D7055F71255F3D20001DF3F2 /* YOLOv3.mlmodel */,
+				D7AA95482A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel */,
 				D7055F4B255F3C7B001DF3F2 /* Main.storyboard */,
 				D7055F10255F3C4A001DF3F2 /* Assets.xcassets */,
 				D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */,
@@ -331,7 +331,6 @@
 				D7055F5F255F3C7C001DF3F2 /* RecipeCell.swift in Sources */,
 				D7055F5C255F3C7C001DF3F2 /* InstructionStep.swift in Sources */,
 				D7055F56255F3C7C001DF3F2 /* AutocompleteIngredientsAdaptor.swift in Sources */,
-				D7055F72255F3D20001DF3F2 /* YOLOv3.mlmodel in Sources */,
 				D7055F5B255F3C7C001DF3F2 /* RecipesViewController.swift in Sources */,
 				D7055F5A255F3C7C001DF3F2 /* TabBarController.swift in Sources */,
 				D7055F53255F3C7C001DF3F2 /* AutocompleteIngredient.swift in Sources */,
@@ -343,6 +342,7 @@
 				D7055F59255F3C7C001DF3F2 /* RecipeAdaptor.swift in Sources */,
 				D7055F58255F3C7C001DF3F2 /* Recipe.swift in Sources */,
 				D7F023E92562B32200B6A9DD /* SearchedRecipesViewController.swift in Sources */,
+				D7AA95492A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel in Sources */,
 				D7055F65255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift in Sources */,
 				D7055F60255F3C7C001DF3F2 /* SelectedRecipe.swift in Sources */,
 			);
@@ -502,6 +502,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6T6QC27X4W;
 				INFOPLIST_FILE = FoodFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -520,6 +521,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6T6QC27X4W;
 				INFOPLIST_FILE = FoodFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
