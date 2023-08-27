@@ -90,7 +90,10 @@ class FavouritesViewController: UICollectionViewController {
 
 extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = 130 + 20 + 3 * UIFont.systemFont(ofSize: 14).lineHeight // Image height + constraints + 3 available lines
+        guard let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? RecipeCell else {
+            fatalError("Unable to decode the data source's cells.")
+        }
+        let height = 130 + 20 + 3 * cell.mealName.font.lineHeight // Image height + constraints + 3 available lines
         return CGSize(width: view.frame.width / 2 - 17, height: height)
     }
 }
