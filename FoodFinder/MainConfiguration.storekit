@@ -1,0 +1,55 @@
+{
+  "identifier" : "D3043BEB",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6463626359",
+    "_developerTeamID" : "6T6QC27X4W",
+    "_lastSynchronizedDate" : 714923800.56898999
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21377716",
+      "localizations" : [
+
+      ],
+      "name" : "Palate Vision Group",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6463631998",
+          "introductoryOffer" : {
+            "internalID" : "66446984",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1M"
+          },
+          "localizations" : [
+
+          ],
+          "productID" : "com.zackobied.palatevision.allaccess",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "All Access",
+          "subscriptionGroupID" : "21377716",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}

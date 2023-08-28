@@ -870,7 +870,6 @@
         <!--Subscription View Controller-->
         <scene sceneID="UZc-0t-eg4">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Lg9-B1-qXk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SubscriptionViewController" id="Mb3-Qx-Db1" customClass="SubscriptionViewController" customModule="FoodFinder" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kxE-LX-fKF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -879,6 +878,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lg9-B1-qXk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1430" y="1059"/>
         </scene>

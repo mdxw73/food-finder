@@ -86,7 +86,9 @@ class TutorialViewController: UIViewController {
         let step = tutorialSteps[currentStepIndex]
         titleLabel.text = step.title
         descriptionLabel.text = step.description
-        imageView.image = UIImage(named: step.imageName)
+        if step.imageName != "" {
+            imageView.image = UIImage(named: step.imageName)
+        }
         
         if currentStepIndex == tutorialSteps.count - 1 {
             nextButton.setTitle("Finish", for: .normal)
