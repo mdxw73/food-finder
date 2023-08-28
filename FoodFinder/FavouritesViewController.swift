@@ -44,8 +44,10 @@ class FavouritesViewController: UICollectionViewController {
     }
     
     @objc func showSubscription() {
-        let subscriptionVC = SubscriptionViewController()
-        self.navigationController?.pushViewController(subscriptionVC, animated: true)
+        if #available(iOS 15.0, *) {
+            let subscriptionVC = SubscriptionViewController()
+            self.navigationController?.pushViewController(subscriptionVC, animated: true)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

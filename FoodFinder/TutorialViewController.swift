@@ -20,7 +20,7 @@ class TutorialViewController: UIViewController {
         ("Home", "The home tab is where you can find all your ingredients. You can add new ones by pressing the search bar and selecting the store, or delete existing ones using the edit button.", "TutorialHome"),
         ("Detector", "The detector tab offers you the ability to take a photo and use that to add new ingredients to your pantry. Simply snap a photo of your fridge or counter and it'll identify everything it recognises.", "TutorialDetector"),
         ("Recipes", "The recipes tab automatically finds recipes that you can make with your ingredients. You can also search for specific recipes if that's what you'd prefer.", "TutorialRecipes"),
-        ("That's it!", "Now you're all caught up, you can dive in and start cooking up some masterpieces you didn't even know you could make. All new users get a one month free trial, after that you'll need to pay $2.99 a month. Enjoy!", "")
+        ("That's it!", "Now you're all caught up, you can dive in and start cooking up some masterpieces you didn't even know you could make. All new users get a one month free trial, after that you'll need to pay $4.99 a month. Enjoy!", "")
     ]
     
     override func viewDidLoad() {
@@ -111,7 +111,39 @@ class TutorialViewController: UIViewController {
             animateTransitionToNextStep()
         } else {
             UserDefaults.standard.set(true, forKey: "tutorialCompleted")
-            dismiss(animated: true, completion: nil)
+            if #available(iOS 15.0, *) {
+                Task.init {
+                    let purchaseManager = PurchaseManager()
+                    await purchaseManager.updatePurchasedProducts()
+                    do {
+                        try await purchaseManager.loadProducts()
+                    } catch {
+                        print(error)
+                    }
+                    if !purchaseManager.hasUnlockedAccess {
+                        do {
+                            try await purchaseManager.purchase(purchaseManager.products[0])
+                        } catch {
+                            print(error)
+                        }
+                    } else {
+                        dismiss(animated: true, completion: nil)
+                    }
+                }
+            } else {
+                let alertController = UIAlertController(
+                    title: "Update Required",
+                    message: "This app requires iOS 15.0 or later. Please update your iOS version to continue.",
+                    preferredStyle: .alert
+                )
+                
+                let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+                    // Handle the user's response here if needed
+                }
+                alertController.addAction(okAction)
+                
+                present(alertController, animated: true, completion: nil)
+            }
         }
     }
     

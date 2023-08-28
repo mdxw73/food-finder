@@ -9,6 +9,7 @@ import UIKit
 import SwiftUI
 import StoreKit
 
+@available(iOS 15.0, *)
 class SubscriptionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,7 @@ class SubscriptionViewController: UIViewController {
     }
 }
 
+@available(iOS 15.0, *)
 @MainActor
 class PurchaseManager: ObservableObject {
 
@@ -46,7 +48,7 @@ class PurchaseManager: ObservableObject {
         self.updates?.cancel()
     }
 
-    var hasUnlockedPro: Bool {
+    var hasUnlockedAccess: Bool {
        return !self.purchasedProductIDs.isEmpty
     }
 
@@ -67,6 +69,7 @@ class PurchaseManager: ObservableObject {
         case let .success(.unverified(_, error)):
             // Successful purchase but transaction/receipt can't be verified
             // Could be a jailbroken phone
+            print("Error: \(error)")
             break
         case .pending:
             // Transaction waiting on SCA (Strong Customer Authentication) or
@@ -98,23 +101,40 @@ class PurchaseManager: ObservableObject {
         Task(priority: .background) {
             for await verificationResult in Transaction.updates {
                 // Using verificationResult directly would be better
-                // but this way works for this tutorial
+                // but this way works for now
                 await self.updatePurchasedProducts()
+                
+                switch verificationResult {
+                case .verified(let transaction):
+                    print("Transaction verified:")
+                    print("Product ID: \(transaction.productID)")
+                    if let revocationDate = transaction.revocationDate {
+                        print("Revocation Date: \(revocationDate)")
+                    }
+                    if let expirationDate = transaction.expirationDate {
+                        print("Expiration Date: \(expirationDate)")
+                    }
+                    print("Is Upgraded: \(transaction.isUpgraded)")
+                case .unverified(_, let error):
+                    print("Transaction unverified:")
+                    print("Error: \(error)")
+                }
             }
         }
     }
 }
 
+@available(iOS 15.0, *)
 struct ContentView: View {
     @EnvironmentObject
     private var purchaseManager: PurchaseManager
 
     var body: some View {
         VStack(spacing: 20) {
-            if purchaseManager.hasUnlockedPro {
-                Text("Thank you for purchasing pro!")
+            if purchaseManager.hasUnlockedAccess {
+                Text("Thank you for subscribing!")
             } else {
-                Text("Products")
+                Text("Subscriptions")
                 ForEach(purchaseManager.products) { product in
                     Button {
                         _ = Task<Void, Never> {
