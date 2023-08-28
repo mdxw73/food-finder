@@ -17,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITableView.appearance().tintColor = UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1))
         UITabBar.appearance().tintColor = UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1))
         UINavigationBar.appearance().tintColor = UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1))
+        
+        UITabBar.appearance().barTintColor = UIColor(red: 1, green: 218/255, blue: 223/255, alpha: 1)
+        UITabBar.appearance().backgroundColor = UIColor(red: 1, green: 218/255, blue: 223/255, alpha: 1)
+        
         return true
     }
 
