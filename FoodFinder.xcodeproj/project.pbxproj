@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -259,8 +259,9 @@
 		D7055EFC255F3C49001DF3F2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1210;
-				LastUpgradeCheck = 1210;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					D7055F03255F3C49001DF3F2 = {
 						CreatedOnToolsVersion = 12.1;
@@ -512,11 +513,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6T6QC27X4W;
 				INFOPLIST_FILE = FoodFinder/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PalateVision;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = obiedz.FoodFinder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackobied.palatevision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -531,11 +533,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6T6QC27X4W;
 				INFOPLIST_FILE = FoodFinder/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PalateVision;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = obiedz.FoodFinder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackobied.palatevision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
