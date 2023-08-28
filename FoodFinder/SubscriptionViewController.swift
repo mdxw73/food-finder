@@ -25,6 +25,7 @@ class SubscriptionViewController: UIViewController {
     }
 }
 
+// tutorial: www.revenuecat.com/blog/engineering/ios-in-app-subscription-tutorial-with-storekit-2-and-swift
 @MainActor
 class PurchaseManager: ObservableObject {
 

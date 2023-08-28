@@ -185,7 +185,7 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
     //MARK: Choose Core ML Model
     // Calculated when referenced (lazy) and returns the current request to be performed
     lazy var classificationRequest: VNCoreMLRequest = {
-        let visionModel = try! VNCoreMLModel(for: IngredientObjectDetector(configuration: .init()).model)
+        let visionModel = try! VNCoreMLModel(for: IngredientDetector(configuration: .init()).model)
         
         // Specify model to be used
         let request = VNCoreMLRequest(model: visionModel) { [unowned self] request, _ in

@@ -20,7 +20,7 @@ class TutorialViewController: UIViewController {
         ("Home", "The home tab is where you can find all your ingredients. You can add new ones by pressing the search bar and selecting the store, or delete existing ones using the edit button.", "TutorialHome"),
         ("Detector", "The detector tab offers you the ability to take a photo and use that to add new ingredients to your pantry. Simply snap a photo of your fridge or counter and it'll identify everything it recognises.", "TutorialDetector"),
         ("Recipes", "The recipes tab automatically finds recipes that you can make with your ingredients. You can also search for specific recipes if that's what you'd prefer.", "TutorialRecipes"),
-        ("That's it!", "Now you're all caught up, you can dive in and start cooking up some masterpieces you didn't even know you could make. All new users get a one month free trial, after that you'll need to pay $4.99 a month. Enjoy!", "")
+        ("That's it!", "Now you're all caught up, you can dive in and start cooking up some masterpieces you didn't even know you could make. All new users get a 7 day free trial, after that you'll need to pay $4.99 a month. You can cancel the subscription at any time. Enjoy!", "")
     ]
     
     override func viewDidLoad() {
@@ -84,6 +84,8 @@ class TutorialViewController: UIViewController {
         descriptionLabel.text = step.description
         if step.imageName != "" {
             imageView.image = UIImage(named: step.imageName)
+        } else {
+            imageView.image = .none
         }
         
         if currentStepIndex == tutorialSteps.count - 1 {
