@@ -7,8 +7,6 @@
 
 import UIKit
 
-import UIKit
-
 class TutorialViewController: UIViewController {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!

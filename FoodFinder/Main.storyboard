@@ -867,6 +867,21 @@
             </objects>
             <point key="canvasLocation" x="-717.39130434782612" y="1058.7053571428571"/>
         </scene>
+        <!--Subscription View Controller-->
+        <scene sceneID="UZc-0t-eg4">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lg9-B1-qXk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="SubscriptionViewController" id="Mb3-Qx-Db1" customClass="SubscriptionViewController" customModule="FoodFinder" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kxE-LX-fKF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="L1r-Qe-b0j"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1430" y="1059"/>
+        </scene>
     </scenes>
     <resources>
         <image name="LaunchScreen" width="512" height="512"/>

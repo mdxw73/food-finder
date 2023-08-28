@@ -15,6 +15,8 @@ class FavouritesViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: #selector(self.showSubscription))
+        
         // If there are favourite recipes saved in the defaults database, copy them across
         if let savedFavouriteRecipes = defaults.object(forKey: "savedFavouriteRecipes") {
             // Type cast object of type Any
@@ -39,6 +41,11 @@ class FavouritesViewController: UICollectionViewController {
             self.recipes = favouriteRecipes
             collectionView.reloadData()
         }
+    }
+    
+    @objc func showSubscription() {
+        let subscriptionVC = SubscriptionViewController()
+        self.navigationController?.pushViewController(subscriptionVC, animated: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

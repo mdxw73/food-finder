@@ -33,6 +33,7 @@
 		D7055F65255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F52255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift */; };
 		D7055F6D255F3C97001DF3F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */; };
 		D799B3FF256428B3003805DF /* HomeIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D799B3FE256428B3003805DF /* HomeIngredient.swift */; };
+		D7A06AE62A9C9846009D6A9C /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A06AE52A9C9846009D6A9C /* SubscriptionViewController.swift */; };
 		D7AA95492A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D7AA95482A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel */; };
 		D7E6B8AD2A9BD86F004C0311 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */; };
 		D7F023DC2562ACC200B6A9DD /* RecipeSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F023DB2562ACC200B6A9DD /* RecipeSearchResults.swift */; };
@@ -89,6 +90,7 @@
 		D7055F52255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedRecipeAdaptor.swift; sourceTree = "<group>"; };
 		D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D799B3FE256428B3003805DF /* HomeIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeIngredient.swift; sourceTree = "<group>"; };
+		D7A06AE52A9C9846009D6A9C /* SubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
 		D7AA95482A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = IngredientObjectDetector.mlmodel; path = ../../IngredientObjectDetector.mlmodel; sourceTree = "<group>"; };
 		D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		D7F023DB2562ACC200B6A9DD /* RecipeSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchResults.swift; sourceTree = "<group>"; };
@@ -148,7 +150,6 @@
 				D7055F47255F3C7B001DF3F2 /* TabBarController.swift */,
 				D7055F4E255F3C7B001DF3F2 /* DetectorViewController.swift */,
 				D7055F4F255F3C7B001DF3F2 /* HomeViewController.swift */,
-				D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */,
 				D799B3FE256428B3003805DF /* HomeIngredient.swift */,
 				D7055F43255F3C7A001DF3F2 /* AutocompleteIngredientsAdaptor.swift */,
 				D7055F40255F3C7A001DF3F2 /* AutocompleteIngredient.swift */,
@@ -167,6 +168,8 @@
 				D7055F44255F3C7B001DF3F2 /* InstructionsAdaptor.swift */,
 				D7055F41255F3C7A001DF3F2 /* Instructions.swift */,
 				D7055F49255F3C7B001DF3F2 /* InstructionStep.swift */,
+				D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */,
+				D7A06AE52A9C9846009D6A9C /* SubscriptionViewController.swift */,
 				D7AA95482A9B60CA00A8F422 /* IngredientObjectDetector.mlmodel */,
 				D7055F4B255F3C7B001DF3F2 /* Main.storyboard */,
 				D7055F10255F3C4A001DF3F2 /* Assets.xcassets */,
@@ -334,6 +337,7 @@
 				D7055F5F255F3C7C001DF3F2 /* RecipeCell.swift in Sources */,
 				D7055F5C255F3C7C001DF3F2 /* InstructionStep.swift in Sources */,
 				D7055F56255F3C7C001DF3F2 /* AutocompleteIngredientsAdaptor.swift in Sources */,
+				D7A06AE62A9C9846009D6A9C /* SubscriptionViewController.swift in Sources */,
 				D7055F5B255F3C7C001DF3F2 /* RecipesViewController.swift in Sources */,
 				D7055F5A255F3C7C001DF3F2 /* TabBarController.swift in Sources */,
 				D7055F53255F3C7C001DF3F2 /* AutocompleteIngredient.swift in Sources */,
