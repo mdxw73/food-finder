@@ -9,7 +9,6 @@ import UIKit
 import SwiftUI
 import StoreKit
 
-@available(iOS 15.0, *)
 class SubscriptionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +25,6 @@ class SubscriptionViewController: UIViewController {
     }
 }
 
-@available(iOS 15.0, *)
 @MainActor
 class PurchaseManager: ObservableObject {
 
@@ -124,7 +122,6 @@ class PurchaseManager: ObservableObject {
     }
 }
 
-@available(iOS 15.0, *)
 struct ContentView: View {
     @EnvironmentObject
     private var purchaseManager: PurchaseManager

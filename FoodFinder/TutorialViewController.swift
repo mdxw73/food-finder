@@ -53,9 +53,7 @@ class TutorialViewController: UIViewController {
         
         // Style Next Button
         nextButton.backgroundColor = UIColor.init(cgColor: CGColor(red: 1, green: 0.5, blue: 0.5, alpha: 1))
-        nextButton.setTitleColor(UIColor.white, for: .normal)
-        nextButton.setTitleColor(UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)), for: .highlighted)
-        nextButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        nextButton.tintColor = .white
         nextButton.layer.cornerRadius = buttonCornerRadius
         nextButton.layer.shadowColor = UIColor.black.cgColor
         nextButton.layer.shadowOpacity = buttonShadowOpacity
@@ -64,9 +62,7 @@ class TutorialViewController: UIViewController {
         
         // Style Previous Button
         previousButton.backgroundColor = UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1))
-        previousButton.setTitleColor(UIColor.white, for: .normal)
-        previousButton.setTitleColor(UIColor.init(cgColor: CGColor(red: 1, green: 0.5, blue: 0.5, alpha: 1)), for: .highlighted)
-        previousButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        previousButton.tintColor = .white
         previousButton.layer.cornerRadius = buttonCornerRadius
         previousButton.layer.shadowColor = UIColor.black.cgColor
         previousButton.layer.shadowOpacity = buttonShadowOpacity
@@ -111,38 +107,23 @@ class TutorialViewController: UIViewController {
             animateTransitionToNextStep()
         } else {
             UserDefaults.standard.set(true, forKey: "tutorialCompleted")
-            if #available(iOS 15.0, *) {
-                Task.init {
-                    let purchaseManager = PurchaseManager()
-                    await purchaseManager.updatePurchasedProducts()
+            Task.init {
+                let purchaseManager = PurchaseManager()
+                await purchaseManager.updatePurchasedProducts()
+                do {
+                    try await purchaseManager.loadProducts()
+                } catch {
+                    print(error)
+                }
+                if !purchaseManager.hasUnlockedAccess {
                     do {
-                        try await purchaseManager.loadProducts()
+                        try await purchaseManager.purchase(purchaseManager.products[0])
                     } catch {
                         print(error)
                     }
-                    if !purchaseManager.hasUnlockedAccess {
-                        do {
-                            try await purchaseManager.purchase(purchaseManager.products[0])
-                        } catch {
-                            print(error)
-                        }
-                    } else {
-                        dismiss(animated: true, completion: nil)
-                    }
+                } else {
+                    dismiss(animated: true, completion: nil)
                 }
-            } else {
-                let alertController = UIAlertController(
-                    title: "Update Required",
-                    message: "This app requires iOS 15.0 or later. Please update your iOS version to continue.",
-                    preferredStyle: .alert
-                )
-                
-                let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-                    // Handle the user's response here if needed
-                }
-                alertController.addAction(okAction)
-                
-                present(alertController, animated: true, completion: nil)
             }
         }
     }
