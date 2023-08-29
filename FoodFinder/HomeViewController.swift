@@ -39,6 +39,8 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         }
         
         filteredIngredients = ingredients
+        
+        setStateOfBarButtonItems()
     }
     
     override func viewDidAppear(_ animated: Bool) {
