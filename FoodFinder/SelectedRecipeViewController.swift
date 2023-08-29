@@ -74,7 +74,7 @@ class SelectedRecipeViewController: UIViewController {
                         self.prepareIngredientsText()
                         self.displayDescription()
                     } else {
-                        self.displayAlert(title: "No Recipe", message: "We couldn't find a recipe for this meal.")
+                        self.displayAlert(title: "No Recipe", message: "We couldn't find a recipe for this meal. This could be due to it not existing or the servers being unavailable at the moment.")
                     }
                 }
             }
@@ -198,12 +198,15 @@ class SelectedRecipeViewController: UIViewController {
     func displayAlert(title: String, message: String) {
         // Instantiate alert
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.applyCustomStyle()
         // Add a button below the text field
-        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: {_ in
+        let closeAction = UIAlertAction(title: "Close", style: .default, handler: {_ in
             if title == "No Recipe" {
                 self.navigationController?.popViewController(animated: true)
             }
-        }))
+        })
+        closeAction.setValue(UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)), forKey: "titleTextColor")
+        alert.addAction(closeAction)
         self.present(alert, animated: true, completion: nil)
     }
 
@@ -241,18 +244,28 @@ class SelectedRecipeViewController: UIViewController {
                     self.segmentedControl.selectedSegmentIndex = 0
                 } else if instructions?.count ?? 0 > 0 {
                     for instructionStep in instructions![0].steps {
-                        formattedInstructions += " \u{2022} \(instructionStep.step)\n"
-                    }
-                    for _ in 0...1 {
-                        formattedInstructions.removeLast()
+                        formattedInstructions += " \u{2022} \(self.fixFullStops(instructionStep.step))\n"
                     }
                     self.textLabel.attributedText = self.addAttributes(formattedInstructions)
                 } else {
-                    self.displayAlert(title: "No Instructions", message: "We couldn't find any instructions for this meal.")
+                    self.displayAlert(title: "No Instructions", message: "We couldn't find any instructions for this meal. This could be due to them not existing or the servers being unavailable at the moment.")
                     self.segmentedControl.selectedSegmentIndex = 0
                 }
             }
         }
+    }
+    
+    func fixFullStops(_ input: String) -> String {
+        let pattern = "\\.([^\\s])"
+        let regex = try! NSRegularExpression(pattern: pattern)
+        
+        var modifiedString = regex.stringByReplacingMatches(
+            in: input,
+            options: [],
+            range: NSRange(location: 0, length: input.utf16.count),
+            withTemplate: ". $1"
+        )
+        return modifiedString
     }
     
     @IBAction func segmentedControlPress(_ sender: Any) {
