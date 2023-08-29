@@ -858,6 +858,9 @@
                     <connections>
                         <outlet property="descriptionLabel" destination="waL-6w-U2P" id="Vg3-jS-o2z"/>
                         <outlet property="imageView" destination="fNb-es-CDw" id="AeW-4s-PYF"/>
+                        <outlet property="logo" destination="sE8-qQ-boc" id="BVu-xw-JCH"/>
+                        <outlet property="logoBottomConstraint" destination="hoi-7D-e4f" id="yTk-7C-K5D"/>
+                        <outlet property="logoTopConstraint" destination="Hgb-F2-BVp" id="mp7-6s-nDH"/>
                         <outlet property="nextButton" destination="cC4-JT-LAX" id="De7-rD-ry3"/>
                         <outlet property="previousButton" destination="L72-bx-ban" id="g30-M1-Gf9"/>
                         <outlet property="titleLabel" destination="GzU-4H-DpD" id="nGV-Tm-sDQ"/>

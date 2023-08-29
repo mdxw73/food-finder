@@ -145,11 +145,77 @@ struct ContentView: View {
     private var purchaseManager: PurchaseManager
 
     var body: some View {
+        let lineWidth: CGFloat = 2
+        let gapWidth: CGFloat = 5
         VStack(spacing: 20) {
             if purchaseManager.hasUnlockedAccess {
-                Text("Thank you for subscribing!")
+                Text("Subscriptions")
+                    .font(.title)
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 20)
+                    .padding(.top, 20)
+                ForEach(purchaseManager.products) { product in
+                    VStack {
+                        HStack {
+                            Image("LaunchScreen")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .cornerRadius(10)
+                                .padding(.top, 20)
+                                .padding(.leading, 20)
+                            
+                            Spacer()
+                        }
+                        HStack {
+                            Text("\(product.displayPrice) - \(product.displayName)")
+                                .frame(alignment: .leading)
+                                .foregroundColor(.black)
+                                .padding(.leading, 20)
+                                .padding(.trailing, 20)
+                                .font(.headline)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(Color(red: 0.0, green: 0.6, blue: 0.0))
+                                .font(.system(size: 30))
+                                .padding(.leading, 20)
+                                .padding(.trailing, 20)
+                                .frame(alignment: .trailing)
+                        }
+                        Divider().background(Color.black.opacity(0.2))
+                        
+                        Text("\(product.description)")
+                            .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
+                            .foregroundColor(.black)
+                            .padding()
+                            .font(.body)
+                            .multilineTextAlignment(.leading)
+                    }
+                    .frame(width: UIScreen.main.bounds.width * 0.9, alignment: .center)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.green, lineWidth: lineWidth)
+                            .padding(lineWidth / 2)
+                            .background(
+                                RoundedRectangle(cornerRadius: 7)
+                                    .stroke(Color.green, lineWidth: lineWidth)
+                                    .padding(lineWidth / 2 + gapWidth)
+                            )
+                    )
+                    .shadow(color: .gray, radius: 5, x: 0, y: 2)
+                }
             } else {
                 Text("Subscriptions")
+                    .font(.title)
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 20)
+                    .padding(.top, 20)
                 ForEach(purchaseManager.products) { product in
                     Button {
                         _ = Task<Void, Never> {
@@ -160,12 +226,38 @@ struct ContentView: View {
                             }
                         }
                     } label: {
-                        Text("\(product.displayPrice) - \(product.displayName)")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(.blue)
-                            .clipShape(Capsule())
+                        VStack {
+                            HStack {
+                                Image("LaunchScreen")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .cornerRadius(10)
+                                    .padding(.top, 20)
+                                    .padding(.leading, 20)
+                                
+                                Spacer()
+                            }
+                            Text("\(product.displayPrice) - \(product.displayName)")
+                                .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
+                                .foregroundColor(.black)
+                                .padding()
+                                .font(.headline)
+                            
+                            Divider().background(Color.black.opacity(0.2))
+                            
+                            Text("\(product.description)")
+                                .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
+                                .foregroundColor(.black)
+                                .padding()
+                                .font(.body)
+                                .multilineTextAlignment(.leading)
+                        }
                     }
+                    .frame(width: UIScreen.main.bounds.width * 0.9, alignment: .center)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+                    .shadow(color: .gray, radius: 5, x: 0, y: 2)
                 }
 
                 Button {
@@ -180,6 +272,7 @@ struct ContentView: View {
                     Text("Restore Purchases")
                 }
             }
+            Spacer()
         }.task {
             await purchaseManager.updatePurchasedProducts()
         }.task {

@@ -7,6 +7,13 @@
 
 import UIKit
 
+let InTutorialDidChangeNotification = Notification.Name("InTutorialDidChangeNotification")
+var inTutorial = false {
+    didSet {
+        NotificationCenter.default.post(name: InTutorialDidChangeNotification, object: nil)
+    }
+}
+
 class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
@@ -23,6 +30,7 @@ class TabBarController: UITabBarController {
     func showTutorial() {
         if let tutorialVC = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController") as? TutorialViewController {
             tutorialVC.modalPresentationStyle = .popover
+            tutorialVC.isModalInPresentation = true
             present(tutorialVC, animated: true, completion: nil)
         }
     }

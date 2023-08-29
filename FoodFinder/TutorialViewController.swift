@@ -13,6 +13,9 @@ class TutorialViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var nextButton: UIButton!
     @IBOutlet weak var previousButton: UIButton!
+    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var logoTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var logoBottomConstraint: NSLayoutConstraint!
     
     var currentStepIndex: Int = 0
     var tutorialSteps: [(title: String, description: String, imageName: String)] = [
@@ -26,8 +29,15 @@ class TutorialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        inTutorial = true
+        
         styleUIElements()
         updateUIForCurrentStep()
+    }
+    
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        super.dismiss(animated: true)
+        inTutorial = false
     }
     
     func styleUIElements() {
@@ -98,8 +108,18 @@ class TutorialViewController: UIViewController {
         
         if currentStepIndex == 0 {
             previousButton.isHidden = true
+            logo.transform = CGAffineTransform(scaleX: 3, y: 3)
+            logoTopConstraint.constant = 80
+            logoBottomConstraint.constant = 80
+        } else if currentStepIndex == tutorialSteps.count - 1 {
+            logo.transform = CGAffineTransform(scaleX: 3, y: 3)
+            logoTopConstraint.constant = 80
+            logoBottomConstraint.constant = 80
         } else {
             previousButton.isHidden = false
+            logo.transform = .identity
+            logoTopConstraint.constant = 20
+            logoBottomConstraint.constant = 20
         }
     }
     

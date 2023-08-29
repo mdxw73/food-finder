@@ -267,7 +267,7 @@ extension UIAlertController {
         // Customize the title and message text color
         if let title = self.title {
             let attributedTitle = NSAttributedString(string: title, attributes: [
-                .foregroundColor: UIColor.white,
+                .foregroundColor: UIColor.darkGray,
                 .font: UIFont.boldSystemFont(ofSize: 17)
             ])
             self.setValue(attributedTitle, forKey: "attributedTitle")
@@ -275,7 +275,7 @@ extension UIAlertController {
         
         if let message = self.message {
             let attributedMessage = NSAttributedString(string: message, attributes: [
-                .foregroundColor: UIColor.white,
+                .foregroundColor: UIColor.darkGray,
                 .font: UIFont.systemFont(ofSize: 14)
             ])
             self.setValue(attributedMessage, forKey: "attributedMessage")

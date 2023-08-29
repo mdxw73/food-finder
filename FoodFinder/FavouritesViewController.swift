@@ -15,6 +15,8 @@ class FavouritesViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(lockoutUnsubscribedUser), name: InTutorialDidChangeNotification, object: nil)
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: #selector(self.showSubscription))
         
         // If there are favourite recipes saved in the defaults database, copy them across
@@ -27,6 +29,27 @@ class FavouritesViewController: UICollectionViewController {
     
     // Update recipes attribute when necessary
     override func viewDidAppear(_ animated: Bool) {
+        if !inTutorial {
+            lockoutUnsubscribedUser()
+        }
+        
+        var change = false
+        if recipes.count != favouriteRecipes.count {
+            change = true
+        } else {
+            for count in 0..<favouriteRecipes.count {
+                if recipes[count].mealId != favouriteRecipes[count].mealId {
+                    change = true
+                }
+            }
+        }
+        if change == true {
+            self.recipes = favouriteRecipes
+            collectionView.reloadData()
+        }
+    }
+    
+    @objc func lockoutUnsubscribedUser() {
         Task.init {
             let purchaseManager = PurchaseManager()
             await purchaseManager.updatePurchasedProducts()
@@ -45,21 +68,6 @@ class FavouritesViewController: UICollectionViewController {
                     item.isEnabled = true
                 }
             }
-        }
-        
-        var change = false
-        if recipes.count != favouriteRecipes.count {
-            change = true
-        } else {
-            for count in 0..<favouriteRecipes.count {
-                if recipes[count].mealId != favouriteRecipes[count].mealId {
-                    change = true
-                }
-            }
-        }
-        if change == true {
-            self.recipes = favouriteRecipes
-            collectionView.reloadData()
         }
     }
     
