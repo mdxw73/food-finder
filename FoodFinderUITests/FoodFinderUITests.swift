@@ -38,7 +38,7 @@ class FoodFinderUITests: XCTestCase {
         app.launch()
         app.tabBars["Tab Bar"].buttons["Detector"].tap()
         app.buttons["photo"].tap()
-        app.scrollViews.otherElements.images["Photo, January 14, 12:40 PM"].tap()
+        app.scrollViews.otherElements.images.firstMatch.tap()
         
         // Wait for loading text to be replaced by "Store"
         _ = app.navigationBars.buttons["Store"].waitForExistence(timeout: 5)
@@ -49,8 +49,9 @@ class FoodFinderUITests: XCTestCase {
         _ = app.buttons["Edit"].waitForExistence(timeout: 1)
         
         XCTAssertEqual(app.tabBars["Tab Bar"].buttons["Home"].isSelected, true)
+        XCTAssertTrue(app.tables.cells.count > 0)
         
-        removeIngredient(app: app)
+        clearIngredients(app: app)
     }
     
     //MARK: Home View
@@ -146,6 +147,12 @@ class FoodFinderUITests: XCTestCase {
         app.tables/*@START_MENU_TOKEN@*/.buttons["Delete carrot"]/*[[".cells.buttons[\"Delete carrot\"]",".buttons[\"Delete carrot\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         app.tables/*@START_MENU_TOKEN@*/.buttons["Delete"]/*[[".cells.buttons[\"Delete\"]",".buttons[\"Delete\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         app.navigationBars.buttons["Done"].tap()
+    }
+    
+    func clearIngredients(app: XCUIApplication) {
+        app.tabBars["Tab Bar"].buttons["Home"].tap()
+        app.navigationBars["Home"].buttons["Clear"].tap()
+        app.alerts.firstMatch.buttons["Clear"].tap()
     }
     
 }
