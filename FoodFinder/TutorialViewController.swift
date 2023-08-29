@@ -109,24 +109,7 @@ class TutorialViewController: UIViewController {
             animateTransitionToNextStep()
         } else {
             UserDefaults.standard.set(true, forKey: "tutorialCompleted")
-            Task.init {
-                let purchaseManager = PurchaseManager()
-                await purchaseManager.updatePurchasedProducts()
-                do {
-                    try await purchaseManager.loadProducts()
-                } catch {
-                    print(error)
-                }
-                if !purchaseManager.hasUnlockedAccess {
-                    do {
-                        try await purchaseManager.purchase(purchaseManager.products[0])
-                    } catch {
-                        print(error)
-                    }
-                } else {
-                    dismiss(animated: true, completion: nil)
-                }
-            }
+            dismiss(animated: true, completion: nil)
         }
     }
     

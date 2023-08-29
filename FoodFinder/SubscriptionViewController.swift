@@ -25,6 +25,23 @@ class SubscriptionViewController: UIViewController {
     }
 }
 
+extension UIViewController {
+    func checkSubscription() {
+        Task.init {
+            let purchaseManager = PurchaseManager()
+            await purchaseManager.updatePurchasedProducts()
+            do {
+                try await purchaseManager.loadProducts()
+            } catch {
+                print(error)
+            }
+            if !purchaseManager.hasUnlockedAccess {
+                tabBarController?.selectedIndex = 3
+            }
+        }
+    }
+}
+
 // tutorial: www.revenuecat.com/blog/engineering/ios-in-app-subscription-tutorial-with-storekit-2-and-swift
 @MainActor
 class PurchaseManager: ObservableObject {

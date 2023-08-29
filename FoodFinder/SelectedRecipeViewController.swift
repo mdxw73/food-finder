@@ -36,6 +36,8 @@ class SelectedRecipeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        checkSubscription()
+        
         if similarRecipes == nil || similarRecipes!.count == 0 {
             collectionViewHeightConstraint.constant = 0
             similarRecipesLabel.font = UIFont.systemFont(ofSize: 0)

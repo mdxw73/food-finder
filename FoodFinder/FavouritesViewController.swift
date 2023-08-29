@@ -27,6 +27,26 @@ class FavouritesViewController: UICollectionViewController {
     
     // Update recipes attribute when necessary
     override func viewDidAppear(_ animated: Bool) {
+        Task.init {
+            let purchaseManager = PurchaseManager()
+            await purchaseManager.updatePurchasedProducts()
+            do {
+                try await purchaseManager.loadProducts()
+            } catch {
+                print(error)
+            }
+            if !purchaseManager.hasUnlockedAccess {
+                self.showSubscription()
+                for item in tabBarController!.tabBar.items! {
+                    item.isEnabled = false
+                }
+            } else {
+                for item in tabBarController!.tabBar.items! {
+                    item.isEnabled = true
+                }
+            }
+        }
+        
         var change = false
         if recipes.count != favouriteRecipes.count {
             change = true
