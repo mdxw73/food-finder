@@ -32,9 +32,9 @@
 		D7055F64255F3C7C001DF3F2 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F51255F3C7C001DF3F2 /* FavouritesViewController.swift */; };
 		D7055F65255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F52255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift */; };
 		D7055F6D255F3C97001DF3F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */; };
+		D7588F862A9E2A0D009CE917 /* IngredientDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D7588F852A9E2A0D009CE917 /* IngredientDetector.mlmodel */; };
 		D799B3FF256428B3003805DF /* HomeIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D799B3FE256428B3003805DF /* HomeIngredient.swift */; };
 		D7A06AE62A9C9846009D6A9C /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A06AE52A9C9846009D6A9C /* SubscriptionViewController.swift */; };
-		D7AA95492A9B60CA00A8F422 /* IngredientDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D7AA95482A9B60CA00A8F422 /* IngredientDetector.mlmodel */; };
 		D7E6B8AD2A9BD86F004C0311 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */; };
 		D7F023DC2562ACC200B6A9DD /* RecipeSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F023DB2562ACC200B6A9DD /* RecipeSearchResults.swift */; };
 		D7F023E92562B32200B6A9DD /* SearchedRecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F023E82562B32200B6A9DD /* SearchedRecipesViewController.swift */; };
@@ -89,10 +89,10 @@
 		D7055F51255F3C7C001DF3F2 /* FavouritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
 		D7055F52255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedRecipeAdaptor.swift; sourceTree = "<group>"; };
 		D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D7588F852A9E2A0D009CE917 /* IngredientDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = IngredientDetector.mlmodel; path = ../../IngredientDetector.mlmodel; sourceTree = "<group>"; };
 		D778DF0E2A9CDF1500A65FEC /* MainConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = MainConfiguration.storekit; sourceTree = "<group>"; };
 		D799B3FE256428B3003805DF /* HomeIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeIngredient.swift; sourceTree = "<group>"; };
 		D7A06AE52A9C9846009D6A9C /* SubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
-		D7AA95482A9B60CA00A8F422 /* IngredientDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = IngredientDetector.mlmodel; path = ../../IngredientDetector.mlmodel; sourceTree = "<group>"; };
 		D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		D7F023DB2562ACC200B6A9DD /* RecipeSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchResults.swift; sourceTree = "<group>"; };
 		D7F023E82562B32200B6A9DD /* SearchedRecipesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedRecipesViewController.swift; sourceTree = "<group>"; };
@@ -172,7 +172,7 @@
 				D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */,
 				D7A06AE52A9C9846009D6A9C /* SubscriptionViewController.swift */,
 				D778DF0E2A9CDF1500A65FEC /* MainConfiguration.storekit */,
-				D7AA95482A9B60CA00A8F422 /* IngredientDetector.mlmodel */,
+				D7588F852A9E2A0D009CE917 /* IngredientDetector.mlmodel */,
 				D7055F4B255F3C7B001DF3F2 /* Main.storyboard */,
 				D7055F10255F3C4A001DF3F2 /* Assets.xcassets */,
 				D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */,
@@ -347,13 +347,13 @@
 				D7055F54255F3C7C001DF3F2 /* Instructions.swift in Sources */,
 				D7055F57255F3C7C001DF3F2 /* InstructionsAdaptor.swift in Sources */,
 				D7055F63255F3C7C001DF3F2 /* SelectedRecipeViewController.swift in Sources */,
+				D7588F862A9E2A0D009CE917 /* IngredientDetector.mlmodel in Sources */,
 				D799B3FF256428B3003805DF /* HomeIngredient.swift in Sources */,
 				D7E6B8AD2A9BD86F004C0311 /* TutorialViewController.swift in Sources */,
 				D7055F0A255F3C49001DF3F2 /* SceneDelegate.swift in Sources */,
 				D7055F59255F3C7C001DF3F2 /* RecipeAdaptor.swift in Sources */,
 				D7055F58255F3C7C001DF3F2 /* Recipe.swift in Sources */,
 				D7F023E92562B32200B6A9DD /* SearchedRecipesViewController.swift in Sources */,
-				D7AA95492A9B60CA00A8F422 /* IngredientDetector.mlmodel in Sources */,
 				D7055F65255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift in Sources */,
 				D7055F60255F3C7C001DF3F2 /* SelectedRecipe.swift in Sources */,
 			);
@@ -523,7 +523,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zackobied.foodfinder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackobied.FoodFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -546,7 +546,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zackobied.foodfinder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackobied.FoodFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -557,6 +557,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = FoodFinderTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -568,7 +569,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FoodFinder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FoodFinder";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FoodFinder.app/FoodFinder";
 			};
 			name = Debug;
 		};
@@ -576,6 +577,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = FoodFinderTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -587,7 +589,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FoodFinder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FoodFinder";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FoodFinder.app/FoodFinder";
 			};
 			name = Release;
 		};
