@@ -244,7 +244,7 @@ class SelectedRecipeViewController: UIViewController {
                     self.segmentedControl.selectedSegmentIndex = 0
                 } else if instructions?.count ?? 0 > 0 {
                     for instructionStep in instructions![0].steps {
-                        formattedInstructions += " \u{2022} \(self.fixFullStops(instructionStep.step))\n"
+                        formattedInstructions += " \u{2022} \(self.fixTypos(instructionStep.step))\n"
                     }
                     self.textLabel.attributedText = self.addAttributes(formattedInstructions)
                 } else {
@@ -255,16 +255,72 @@ class SelectedRecipeViewController: UIViewController {
         }
     }
     
-    func fixFullStops(_ input: String) -> String {
-        let pattern = "\\.([^\\s])"
-        let regex = try! NSRegularExpression(pattern: pattern)
-        
-        return regex.stringByReplacingMatches(
+    func fixTypos(_ input: String) -> String {
+        var pattern = "([\\.!?])([^\\s.!?])"
+        var regex = try! NSRegularExpression(pattern: pattern)
+        var modifiedInput = regex.stringByReplacingMatches(
             in: input,
             options: [],
             range: NSRange(location: 0, length: input.utf16.count),
-            withTemplate: ". $1"
+            withTemplate: "$1 $2"
         )
+        
+        pattern = "([a-zA-Z0-9])(\\s+)([.,;!?])"
+        regex = try! NSRegularExpression(pattern: pattern)
+        modifiedInput = regex.stringByReplacingMatches(
+            in: modifiedInput,
+            options: [],
+            range: NSRange(location: 0, length: input.utf16.count),
+            withTemplate: "$1$3"
+        )
+        
+        modifiedInput = replaceMultipleSpaces(removeUnpairedBrackets(from: modifiedInput).trimmingCharacters(in: .whitespacesAndNewlines))
+        
+        if !modifiedInput.isEmpty {
+            let lastChar = modifiedInput.last!
+            let terminatingPunctuation: Set<Character> = [".", "!", "?"]
+            
+            if !terminatingPunctuation.contains(lastChar) {
+                return modifiedInput + "."
+            }
+        }
+        
+        return modifiedInput
+    }
+    
+    func removeUnpairedBrackets(from input: String) -> String {
+        var bracket = ""
+        var temp = ""
+        var result = ""
+
+        for char in input {
+            if bracket != "" {
+                if (char == ")" && bracket == "(") || (char == "}" && bracket == "{") || (char == "]" && bracket == "[") {
+                    result.append(bracket)
+                    result.append(temp)
+                    result.append(char)
+                    bracket = ""
+                    temp = ""
+                } else {
+                    temp.append(char)
+                }
+            } else if char == "(" || char == "{" || char == "[" {
+                bracket = String(char)
+            } else if char != ")" && char != "}" && char != "]" {
+                result.append(char)
+            }
+        }
+        result.append(temp)
+        return result
+    }
+    
+    func replaceMultipleSpaces(_ input: String) -> String {
+        let pattern = "\\s+" // Regular expression pattern for matching one or more whitespace characters
+        let regex = try! NSRegularExpression(pattern: pattern)
+        let range = NSRange(location: 0, length: input.utf16.count)
+        
+        let modifiedString = regex.stringByReplacingMatches(in: input, options: [], range: range, withTemplate: " ")
+        return modifiedString
     }
     
     @IBAction func segmentedControlPress(_ sender: Any) {
