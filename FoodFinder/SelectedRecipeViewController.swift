@@ -74,7 +74,7 @@ class SelectedRecipeViewController: UIViewController {
                         self.prepareIngredientsText()
                         self.displayDescription()
                     } else {
-                        self.displayAlert(title: "No Recipe", message: "We couldn't find a recipe for this meal. This could be due to it not existing or the servers being unavailable at the moment.")
+                        self.displayAlert(title: "No Recipe", message: "We couldn't find a recipe for this meal. This could be due to it not existing yet or the servers being unavailable at the moment.")
                     }
                 }
             }
@@ -248,7 +248,7 @@ class SelectedRecipeViewController: UIViewController {
                     }
                     self.textLabel.attributedText = self.addAttributes(formattedInstructions)
                 } else {
-                    self.displayAlert(title: "No Instructions", message: "We couldn't find any instructions for this meal. This could be due to them not existing or the servers being unavailable at the moment.")
+                    self.displayAlert(title: "No Instructions", message: "We couldn't find any instructions for this meal. This could be due to them not existing yet or the servers being unavailable at the moment.")
                     self.segmentedControl.selectedSegmentIndex = 0
                 }
             }
@@ -259,13 +259,12 @@ class SelectedRecipeViewController: UIViewController {
         let pattern = "\\.([^\\s])"
         let regex = try! NSRegularExpression(pattern: pattern)
         
-        var modifiedString = regex.stringByReplacingMatches(
+        return regex.stringByReplacingMatches(
             in: input,
             options: [],
             range: NSRange(location: 0, length: input.utf16.count),
             withTemplate: ". $1"
         )
-        return modifiedString
     }
     
     @IBAction func segmentedControlPress(_ sender: Any) {

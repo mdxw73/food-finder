@@ -18,7 +18,7 @@ class RecipeAdaptor {
     
     // Establish URL path based on search string and initialise data session
     func getRecipes(_ search: String, directory: String, completion: @escaping ([Recipe]?, Bool) -> Void) {
-        let path = "\(search.replacingOccurrences(of: " ", with: "+"))&number=20&apiKey=\(apiKey)"
+        let path = "\(search.replacingOccurrences(of: " ", with: "+"))&number=20&apiKey=\(apiKey)&ranking=2"
         
         guard let url = URL(string: baseUrl + directory + path) else {
             print("Invalid URL")
