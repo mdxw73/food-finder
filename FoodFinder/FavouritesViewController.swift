@@ -17,6 +17,7 @@ class FavouritesViewController: UICollectionViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(lockoutUnsubscribedUser), name: InTutorialDidChangeNotification, object: nil)
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "book.circle"), style: .plain, target: self, action: #selector(self.showTutorial))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: #selector(self.showSubscription))
         
         // If there are favourite recipes saved in the defaults database, copy them across
@@ -74,6 +75,13 @@ class FavouritesViewController: UICollectionViewController {
     @objc func showSubscription() {
         let subscriptionVC = SubscriptionViewController()
         self.navigationController?.pushViewController(subscriptionVC, animated: true)
+    }
+    
+    @objc func showTutorial() {
+        if let tutorialVC = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController") as? TutorialViewController {
+            tutorialVC.modalPresentationStyle = .popover
+            present(tutorialVC, animated: true, completion: nil)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

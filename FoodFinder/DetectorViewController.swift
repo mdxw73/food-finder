@@ -23,7 +23,7 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
         checkSubscription()
         
         // Add navigation bar buttons
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(self.showTutorial))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(self.showAbout))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Store", style: .plain, target: self, action: #selector(self.storeObject))
         navigationItem.rightBarButtonItem?.isEnabled = false
         
@@ -40,11 +40,14 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
         self.imageView.layer.sublayers = nil // Remove old bounding boxes
     }
     
-    @objc func showTutorial() {
-        if let tutorialVC = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController") as? TutorialViewController {
-            tutorialVC.modalPresentationStyle = .popover
-            present(tutorialVC, animated: true, completion: nil)
-        }
+    @objc func showAbout() {
+        let alert = UIAlertController(title: "About", message: "The detector is a quick and easy way to add new ingredients to your pantry. This feature is still under development, so we apologize for any inaccuracies or missing ingredients. Your feedback is valuable in helping us improve, so please don't hesitate to share your suggestions and report any issues you encounter. Thank you for being part of our development journey!", preferredStyle: .alert)
+        alert.applyCustomStyle()
+        // Add a button below the text field
+        let closeAction = UIAlertAction(title: "Close", style: .default)
+        closeAction.setValue(UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)), forKey: "titleTextColor")
+        alert.addAction(closeAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     // Instantiate an image picker controller using the source type passed in
