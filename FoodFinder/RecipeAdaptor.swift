@@ -7,10 +7,7 @@
 
 import Foundation
 
-let apiKey = "057dc14550194bba943af6b075031715"
-
-// temp: 057dc14550194bba943af6b075031715
-// mine: 45216d9690b142a6921321f38ce6dfd1
+let apiKey = "64878309292b4875b14e980eae9c6496"
 
 class RecipeAdaptor {
     let baseUrl = "https://api.spoonacular.com/recipes/"

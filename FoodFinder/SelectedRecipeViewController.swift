@@ -256,7 +256,7 @@ class SelectedRecipeViewController: UIViewController {
     }
     
     func fixTypos(_ input: String) -> String {
-        var pattern = "([\\.!?])([^\\s.!?])"
+        var pattern = "([a-z][\\.!?])([^\\s.!?])"
         var regex = try! NSRegularExpression(pattern: pattern)
         var modifiedInput = regex.stringByReplacingMatches(
             in: input,
