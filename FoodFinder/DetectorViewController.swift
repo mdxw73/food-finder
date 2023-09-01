@@ -23,7 +23,7 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
         checkSubscription()
         
         // Add navigation bar buttons
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(self.showAbout))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action: #selector(self.showAbout))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Store", style: .plain, target: self, action: #selector(self.storeObject))
         navigationItem.rightBarButtonItem?.isEnabled = false
         

@@ -46,7 +46,7 @@ extension UIViewController {
 @MainActor
 class PurchaseManager: ObservableObject {
 
-    private let productIds = ["com.zackobied.palatevision.allaccess"]
+    private let productIds = ["com.zackobied.PantryView.AllAccess"]
 
     @Published
     private(set) var products: [Product] = []
@@ -184,6 +184,7 @@ struct ContentView: View {
                                 .padding(.leading, 20)
                                 .padding(.trailing, 20)
                                 .frame(alignment: .trailing)
+                                .shadow(color: .gray, radius: 5, x: 0, y: 2)
                         }
                         Divider().background(Color.black.opacity(0.2))
                         
@@ -191,7 +192,7 @@ struct ContentView: View {
                             .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
                             .foregroundColor(.black)
                             .padding()
-                            .font(.body)
+                            .font(.system(size: 14))
                             .multilineTextAlignment(.leading)
                     }
                     .frame(width: UIScreen.main.bounds.width * 0.9, alignment: .center)
@@ -207,7 +208,6 @@ struct ContentView: View {
                                     .padding(lineWidth / 2 + gapWidth)
                             )
                     )
-                    .shadow(color: .gray, radius: 5, x: 0, y: 2)
                 }
             } else {
                 Text("Subscriptions")
@@ -250,14 +250,13 @@ struct ContentView: View {
                                 .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
                                 .foregroundColor(.black)
                                 .padding()
-                                .font(.body)
+                                .font(.system(size: 14))
                                 .multilineTextAlignment(.leading)
                         }
                     }
                     .frame(width: UIScreen.main.bounds.width * 0.9, alignment: .center)
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(10)
-                    .shadow(color: .gray, radius: 5, x: 0, y: 2)
                 }
 
                 Button {

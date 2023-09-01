@@ -89,8 +89,8 @@
 		D7055F51255F3C7C001DF3F2 /* FavouritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
 		D7055F52255F3C7C001DF3F2 /* SelectedRecipeAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedRecipeAdaptor.swift; sourceTree = "<group>"; };
 		D7055F6C255F3C97001DF3F2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D744D2FE2AA23D5E004EB770 /* MainConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = MainConfiguration.storekit; sourceTree = "<group>"; };
 		D7588F852A9E2A0D009CE917 /* IngredientDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = IngredientDetector.mlmodel; path = ../../IngredientDetector.mlmodel; sourceTree = "<group>"; };
-		D778DF0E2A9CDF1500A65FEC /* MainConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = MainConfiguration.storekit; sourceTree = "<group>"; };
 		D799B3FE256428B3003805DF /* HomeIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeIngredient.swift; sourceTree = "<group>"; };
 		D7A06AE52A9C9846009D6A9C /* SubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
 		D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
@@ -171,7 +171,7 @@
 				D7055F49255F3C7B001DF3F2 /* InstructionStep.swift */,
 				D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */,
 				D7A06AE52A9C9846009D6A9C /* SubscriptionViewController.swift */,
-				D778DF0E2A9CDF1500A65FEC /* MainConfiguration.storekit */,
+				D744D2FE2AA23D5E004EB770 /* MainConfiguration.storekit */,
 				D7588F852A9E2A0D009CE917 /* IngredientDetector.mlmodel */,
 				D7055F4B255F3C7B001DF3F2 /* Main.storyboard */,
 				D7055F10255F3C4A001DF3F2 /* Assets.xcassets */,
@@ -516,7 +516,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6T6QC27X4W;
 				INFOPLIST_FILE = FoodFinder/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = FoodFinder;
+				INFOPLIST_KEY_CFBundleDisplayName = "Pantry View";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -524,7 +524,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zackobied.FoodFinder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackobied.PantryView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -540,7 +540,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6T6QC27X4W;
 				INFOPLIST_FILE = FoodFinder/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = FoodFinder;
+				INFOPLIST_KEY_CFBundleDisplayName = "Pantry View";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -548,7 +548,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zackobied.FoodFinder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackobied.PantryView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

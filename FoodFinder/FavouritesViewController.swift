@@ -17,7 +17,7 @@ class FavouritesViewController: UICollectionViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(lockoutUnsubscribedUser), name: InTutorialDidChangeNotification, object: nil)
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "book.circle"), style: .plain, target: self, action: #selector(self.showTutorial))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(self.showTutorial))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: #selector(self.showSubscription))
         
         // If there are favourite recipes saved in the defaults database, copy them across
