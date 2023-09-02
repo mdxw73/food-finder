@@ -13,10 +13,9 @@
 		D7055F1F255F3C4A001DF3F2 /* FoodFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F1E255F3C4A001DF3F2 /* FoodFinderTests.swift */; };
 		D7055F2A255F3C4A001DF3F2 /* FoodFinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F29255F3C4A001DF3F2 /* FoodFinderUITests.swift */; };
 		D7055F53255F3C7C001DF3F2 /* AutocompleteIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F40255F3C7A001DF3F2 /* AutocompleteIngredient.swift */; };
-		D7055F54255F3C7C001DF3F2 /* Instructions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F41255F3C7A001DF3F2 /* Instructions.swift */; };
+		D7055F54255F3C7C001DF3F2 /* Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F41255F3C7A001DF3F2 /* Instruction.swift */; };
 		D7055F55255F3C7C001DF3F2 /* IngredientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F42255F3C7A001DF3F2 /* IngredientCell.swift */; };
 		D7055F56255F3C7C001DF3F2 /* AutocompleteIngredientsAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F43255F3C7A001DF3F2 /* AutocompleteIngredientsAdaptor.swift */; };
-		D7055F57255F3C7C001DF3F2 /* InstructionsAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F44255F3C7B001DF3F2 /* InstructionsAdaptor.swift */; };
 		D7055F58255F3C7C001DF3F2 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F45255F3C7B001DF3F2 /* Recipe.swift */; };
 		D7055F59255F3C7C001DF3F2 /* RecipeAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F46255F3C7B001DF3F2 /* RecipeAdaptor.swift */; };
 		D7055F5A255F3C7C001DF3F2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7055F47255F3C7B001DF3F2 /* TabBarController.swift */; };
@@ -70,10 +69,9 @@
 		D7055F29255F3C4A001DF3F2 /* FoodFinderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodFinderUITests.swift; sourceTree = "<group>"; };
 		D7055F2B255F3C4A001DF3F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7055F40255F3C7A001DF3F2 /* AutocompleteIngredient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteIngredient.swift; sourceTree = "<group>"; };
-		D7055F41255F3C7A001DF3F2 /* Instructions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instructions.swift; sourceTree = "<group>"; };
+		D7055F41255F3C7A001DF3F2 /* Instruction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
 		D7055F42255F3C7A001DF3F2 /* IngredientCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientCell.swift; sourceTree = "<group>"; };
 		D7055F43255F3C7A001DF3F2 /* AutocompleteIngredientsAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteIngredientsAdaptor.swift; sourceTree = "<group>"; };
-		D7055F44255F3C7B001DF3F2 /* InstructionsAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsAdaptor.swift; sourceTree = "<group>"; };
 		D7055F45255F3C7B001DF3F2 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		D7055F46255F3C7B001DF3F2 /* RecipeAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeAdaptor.swift; sourceTree = "<group>"; };
 		D7055F47255F3C7B001DF3F2 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -166,8 +164,7 @@
 				D7055F4D255F3C7B001DF3F2 /* SelectedRecipe.swift */,
 				D7055F4A255F3C7B001DF3F2 /* Ingredient.swift */,
 				D7055F42255F3C7A001DF3F2 /* IngredientCell.swift */,
-				D7055F44255F3C7B001DF3F2 /* InstructionsAdaptor.swift */,
-				D7055F41255F3C7A001DF3F2 /* Instructions.swift */,
+				D7055F41255F3C7A001DF3F2 /* Instruction.swift */,
 				D7055F49255F3C7B001DF3F2 /* InstructionStep.swift */,
 				D7E6B8AC2A9BD86F004C0311 /* TutorialViewController.swift */,
 				D7A06AE52A9C9846009D6A9C /* SubscriptionViewController.swift */,
@@ -344,8 +341,7 @@
 				D7055F5B255F3C7C001DF3F2 /* RecipesViewController.swift in Sources */,
 				D7055F5A255F3C7C001DF3F2 /* TabBarController.swift in Sources */,
 				D7055F53255F3C7C001DF3F2 /* AutocompleteIngredient.swift in Sources */,
-				D7055F54255F3C7C001DF3F2 /* Instructions.swift in Sources */,
-				D7055F57255F3C7C001DF3F2 /* InstructionsAdaptor.swift in Sources */,
+				D7055F54255F3C7C001DF3F2 /* Instruction.swift in Sources */,
 				D7055F63255F3C7C001DF3F2 /* SelectedRecipeViewController.swift in Sources */,
 				D7588F862A9E2A0D009CE917 /* IngredientDetector.mlmodel in Sources */,
 				D799B3FF256428B3003805DF /* HomeIngredient.swift in Sources */,

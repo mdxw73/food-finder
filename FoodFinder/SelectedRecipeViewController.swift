@@ -229,31 +229,17 @@ class SelectedRecipeViewController: UIViewController {
     }
     
     func displayInstructions() {
-        // Get instructions from API
         var formattedInstructions = ""
-        let instructionsAdaptor = InstructionsAdaptor()
-        generateLoadingIcon()
-        instructionsAdaptor.getInstructions(mealId) { (instructions, error) in
-            // UI changes done on main thread
-            DispatchQueue.main.async {
-                // Remove loading text from navigation bar
-                self.navigationItem.rightBarButtonItem = nil
-                
-                if error == true {
-                    self.displayAlert(title: "No Connection", message: "Please check your network connection.")
-                    self.segmentedControl.selectedSegmentIndex = 0
-                } else if instructions?.count ?? 0 > 0 {
-                    for instruction in instructions! {
-                        for instructionStep in instruction.steps {
-                            formattedInstructions += " \u{2022} \(self.fixTypos(instructionStep.step))\n"
-                        }
-                        self.textLabel.attributedText = self.addAttributes(formattedInstructions)
-                    }
-                } else {
-                    self.displayAlert(title: "No Instructions", message: "We couldn't find any instructions for this meal. This could be due to them not existing yet or the servers being unavailable at the moment.")
-                    self.segmentedControl.selectedSegmentIndex = 0
+        if self.recipe!.analyzedInstructions.count > 0 {
+            for instruction in self.recipe!.analyzedInstructions {
+                for instructionStep in instruction.steps {
+                    formattedInstructions += " \u{2022} \(self.fixTypos(instructionStep.step))\n"
                 }
+                self.textLabel.attributedText = self.addAttributes(formattedInstructions)
             }
+        } else {
+            self.displayAlert(title: "No Instructions", message: "We couldn't find any instructions for this meal. Sorry for the inconvenience.")
+            self.segmentedControl.selectedSegmentIndex = 0
         }
     }
     

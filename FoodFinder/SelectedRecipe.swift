@@ -17,6 +17,7 @@ class SelectedRecipe: NSObject, Codable, NSCoding {
         coder.encode(ingredients, forKey: "ingredients")
         coder.encode(mealId, forKey: "mealId")
         coder.encode(servings, forKey: "servings")
+        coder.encode(analyzedInstructions, forKey: "analyzedInstructions")
     }
     
     required init?(coder: NSCoder) {
@@ -24,9 +25,10 @@ class SelectedRecipe: NSObject, Codable, NSCoding {
         mealImage = coder.decodeObject(forKey: "mealImage") as! URL
         summary = coder.decodeObject(forKey: "summary") as? String ?? ""
         duration = coder.decodeInteger(forKey: "duration")
-        ingredients = coder.decodeObject(forKey: "ingredients") as! [Ingredient]
+        ingredients = coder.decodeObject(forKey: "ingredients") as? [Ingredient] ?? []
         mealId = coder.decodeInteger(forKey: "mealId")
         servings = coder.decodeInteger(forKey: "servings")
+        analyzedInstructions = coder.decodeObject(forKey: "analyzedInstructions") as? [Instruction] ?? []
     }
     
     var mealName: String
@@ -36,6 +38,7 @@ class SelectedRecipe: NSObject, Codable, NSCoding {
     var ingredients: [Ingredient]
     var mealId: Int
     var servings: Int
+    var analyzedInstructions: [Instruction]
     
     private enum CodingKeys: String, CodingKey {
         case mealName = "title"
@@ -45,5 +48,6 @@ class SelectedRecipe: NSObject, Codable, NSCoding {
         case ingredients = "extendedIngredients"
         case mealId = "id"
         case servings = "servings"
+        case analyzedInstructions = "analyzedInstructions"
     }
 }
