@@ -160,7 +160,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             } else if recipes == nil && error == false {
                 // Run out of API queries
                 DispatchQueue.main.async {
-                    self.displayAlert(title: "Error", message: "We have run into a server-side problem. We aim to fix this as soon as possible. Sorry for the inconvenience.")
+                    self.displayAlert(title: "Error", message: "We have run into a server-side error. Please try again tomorrow. Sorry for the inconvenience.")
                 }
             } else {
                 DispatchQueue.main.async {

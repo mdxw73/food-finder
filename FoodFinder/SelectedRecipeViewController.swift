@@ -90,6 +90,13 @@ class SelectedRecipeViewController: UIViewController {
             // Type cast object of type Any
             favouriteRecipes = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedFavouriteRecipes as! Data) as! [SelectedRecipe]
         }
+        
+        if view.frame.width > 500 {
+            imageView.constraints.forEach { constraint in
+                constraint.isActive = false
+            }
+            imageView.backgroundColor = UIColor.systemPink.withAlphaComponent(0.2)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

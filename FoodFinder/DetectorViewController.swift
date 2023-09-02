@@ -78,8 +78,12 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
                 }
                 AutocompleteIngredientsAdaptor().getAutocompleteIngredients(String(formattedQueries[count])+"&number=1") { (autocompleteIngredients, error) in // Create an autocomplete query and get the first response
                     if error == false {
-                        if autocompleteIngredients?.count != 0 { // Unwrap response
-                            detectedIngredients.append(HomeIngredient(name: autocompleteIngredients![0].name, imageDirectory: autocompleteIngredients![0].image)) // Successful response
+                        if let autocompleteIngredients = autocompleteIngredients { // Unwrap response
+                            if autocompleteIngredients.count != 0 {
+                                detectedIngredients.append(HomeIngredient(name: autocompleteIngredients[0].name, imageDirectory: autocompleteIngredients[0].image)) // Successful response
+                            } else {
+                                detectedIngredients.append(HomeIngredient(name: String(formattedQueries[count]), imageDirectory: "\(String(formattedQueries[count])).jpg")) // Unsuccessful response
+                            }
                         } else {
                             detectedIngredients.append(HomeIngredient(name: String(formattedQueries[count]), imageDirectory: "\(String(formattedQueries[count])).jpg")) // Unsuccessful response
                         }
@@ -88,7 +92,7 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
                     }
                     if detectedIngredients.count == formattedQueries.count {
                         DispatchQueue.main.async {
-                            self.tabBarController?.selectedIndex = 1 // Return to home view if last ingredient
+                            self.tabBarController?.selectedIndex = 1 // Return to home view if last ingredient (must be done from completion since it's executed later than this method)
                         }
                     }
                 }
