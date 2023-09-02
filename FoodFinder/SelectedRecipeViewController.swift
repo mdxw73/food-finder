@@ -283,7 +283,7 @@ class SelectedRecipeViewController: UIViewController {
     }
     
     func fixTypos(_ input: String) -> String {
-        var pattern = "([a-z][\\.!?:;,])([^\\s.!?\\)\\]\\}\"])"
+        var pattern = "([a-zFCLS][\\.!?:;,])([^\\s.!?\\)\\]\\}\"])"
         var regex = try! NSRegularExpression(pattern: pattern)
         var modifiedInput = regex.stringByReplacingMatches(
             in: input,
@@ -427,7 +427,11 @@ extension SelectedRecipeViewController: UICollectionViewDelegateFlowLayout {
         guard let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? RecipeCell else {
             fatalError("Unable to decode the data source's cells.")
         }
+        var numberOfColumns = CGFloat(2)
+        if view.frame.width > 500 {
+            numberOfColumns = view.frame.width / 250
+        }
         let height = 140 + 20 + 3 * cell.mealName.font.lineHeight // Image height + constraints + 3 available lines
-        return CGSize(width: view.frame.width / 2 - 17, height: height)
+        return CGSize(width: view.frame.width / numberOfColumns - 17, height: height)
     }
 }

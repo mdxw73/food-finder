@@ -80,6 +80,7 @@ class FavouritesViewController: UICollectionViewController {
     @objc func showTutorial() {
         if let tutorialVC = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController") as? TutorialViewController {
             tutorialVC.modalPresentationStyle = .popover
+            tutorialVC.popoverPresentationController?.sourceView = self.tabBarController?.tabBar
             present(tutorialVC, animated: true, completion: nil)
         }
     }
@@ -136,7 +137,11 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
         guard let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? RecipeCell else {
             fatalError("Unable to decode the data source's cells.")
         }
+        var numberOfColumns = CGFloat(2)
+        if view.frame.width > 500 {
+            numberOfColumns = view.frame.width / 250
+        }
         let height = 130 + 20 + 3 * cell.mealName.font.lineHeight // Image height + constraints + 3 available lines
-        return CGSize(width: view.frame.width / 2 - 17, height: height)
+        return CGSize(width: view.frame.width / numberOfColumns - 17, height: height)
     }
 }

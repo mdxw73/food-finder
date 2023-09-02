@@ -31,6 +31,7 @@ class TabBarController: UITabBarController {
         if let tutorialVC = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController") as? TutorialViewController {
             tutorialVC.modalPresentationStyle = .popover
             tutorialVC.isModalInPresentation = true
+            tutorialVC.popoverPresentationController?.sourceView = self.tabBar
             present(tutorialVC, animated: true, completion: nil)
         }
     }
