@@ -146,14 +146,32 @@ class SelectedRecipeViewController: UIViewController {
     }
     
     func prepareIngredientsText() {
+        let formattedIngredients = NSMutableAttributedString()
+        var index = 1
         self.ingredientsTextLabel.text = ""
         var lineBreak = "\n"
         for ingredient in self.recipe!.ingredients {
-            if self.recipe?.ingredients.last?.name == ingredient.name {
+            if self.recipe!.ingredients.last!.name == ingredient.name {
                 lineBreak = ""
             }
-            self.ingredientsTextLabel.text! += "\u{2022} \(ingredient.name): \(ingredient.original.htmlToString)\(lineBreak)"
+            // Create an attachment with the system icon
+            let attachment = NSTextAttachment()
+            attachment.image = UIImage(systemName: "\(index).circle")
+            let attachmentString = NSAttributedString(attachment: attachment)
+            
+            // Create a string with the instruction step
+            let ingredientString = NSAttributedString(string: " \(ingredient.name): \(ingredient.original.htmlToString)\(lineBreak)")
+            
+            // Combine the attachment and instruction string
+            let combinedString = NSMutableAttributedString()
+            combinedString.append(attachmentString)
+            combinedString.append(ingredientString)
+            
+            // Append the combined string to the formattedInstructions
+            formattedIngredients.append(combinedString)
+            index += 1
         }
+        self.ingredientsTextLabel.attributedText = formattedIngredients
         self.navigationItem.title = self.recipe!.mealName
     }
     
@@ -229,14 +247,35 @@ class SelectedRecipeViewController: UIViewController {
     }
     
     func displayInstructions() {
-        var formattedInstructions = ""
+        let formattedInstructions = NSMutableAttributedString()
+        var index = 1
+        var lineBreak = "\n"
         if self.recipe!.analyzedInstructions.count > 0 {
             for instruction in self.recipe!.analyzedInstructions {
                 for instructionStep in instruction.steps {
-                    formattedInstructions += " \u{2022} \(self.fixTypos(instructionStep.step))\n"
+                    if self.recipe!.analyzedInstructions.last!.steps.last! == instructionStep {
+                        lineBreak = ""
+                    }
+                    // Create an attachment with the system icon
+                    let attachment = NSTextAttachment()
+                    attachment.image = UIImage(systemName: "\(index).circle")
+                    let attachmentString = NSAttributedString(attachment: attachment)
+                    
+                    // Create a string with the instruction step
+                    let instructionString = NSAttributedString(string: " \(self.fixTypos(instructionStep.step))\(lineBreak)")
+                    
+                    // Combine the attachment and instruction string
+                    let combinedString = NSMutableAttributedString()
+                    combinedString.append(attachmentString)
+                    combinedString.append(instructionString)
+                    
+                    // Append the combined string to the formattedInstructions
+                    formattedInstructions.append(combinedString)
+                    index += 1
                 }
-                self.textLabel.attributedText = self.addAttributes(formattedInstructions)
             }
+            // Set the attributed text for the label
+            self.textLabel.attributedText = formattedInstructions
         } else {
             self.displayAlert(title: "No Instructions", message: "We couldn't find any instructions for this meal. Sorry for the inconvenience.")
             self.segmentedControl.selectedSegmentIndex = 0
