@@ -243,10 +243,12 @@ class SelectedRecipeViewController: UIViewController {
                     self.displayAlert(title: "No Connection", message: "Please check your network connection.")
                     self.segmentedControl.selectedSegmentIndex = 0
                 } else if instructions?.count ?? 0 > 0 {
-                    for instructionStep in instructions![0].steps {
-                        formattedInstructions += " \u{2022} \(self.fixTypos(instructionStep.step))\n"
+                    for instruction in instructions! {
+                        for instructionStep in instruction.steps {
+                            formattedInstructions += " \u{2022} \(self.fixTypos(instructionStep.step))\n"
+                        }
+                        self.textLabel.attributedText = self.addAttributes(formattedInstructions)
                     }
-                    self.textLabel.attributedText = self.addAttributes(formattedInstructions)
                 } else {
                     self.displayAlert(title: "No Instructions", message: "We couldn't find any instructions for this meal. This could be due to them not existing yet or the servers being unavailable at the moment.")
                     self.segmentedControl.selectedSegmentIndex = 0
@@ -256,7 +258,7 @@ class SelectedRecipeViewController: UIViewController {
     }
     
     func fixTypos(_ input: String) -> String {
-        var pattern = "([a-z][\\.!?])([^\\s.!?])"
+        var pattern = "([a-z][\\.!?:;,])([^\\s.!?])"
         var regex = try! NSRegularExpression(pattern: pattern)
         var modifiedInput = regex.stringByReplacingMatches(
             in: input,
