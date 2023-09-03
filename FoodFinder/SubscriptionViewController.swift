@@ -10,18 +10,31 @@ import SwiftUI
 import StoreKit
 
 class SubscriptionViewController: UIViewController {
+    var swiftUIHostingController: UIHostingController<AnyView>?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Create a UIHostingController with the SwiftUI view
         let contentView = ContentView().environmentObject(PurchaseManager())
-        let swiftUIHostingController = UIHostingController(rootView: contentView)
-        
-        // Embed the UIHostingController's view in the current view controller
-        addChild(swiftUIHostingController)
-        view.addSubview(swiftUIHostingController.view)
-        swiftUIHostingController.view.frame = view.bounds
-        swiftUIHostingController.didMove(toParent: self)
+        swiftUIHostingController = UIHostingController(rootView: AnyView(contentView))
+
+        if let hostingController = swiftUIHostingController {
+            // Embed the UIHostingController's view in the current view controller
+            addChild(hostingController)
+            view.addSubview(hostingController.view)
+            hostingController.view.frame = view.bounds
+            hostingController.didMove(toParent: self)
+        }
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            // Update the frame of the embedded UIHostingController's view
+            self?.swiftUIHostingController?.view.frame = CGRect(origin: CGPoint.zero, size: size)
+        }, completion: nil)
     }
 }
 
@@ -143,10 +156,19 @@ class PurchaseManager: ObservableObject {
 struct ContentView: View {
     @EnvironmentObject
     private var purchaseManager: PurchaseManager
+    
+    private func getCardWidth() -> CGFloat {
+        var cardWidth = UIScreen.main.bounds.width * 0.9
+        if UIScreen.main.bounds.width > 500 {
+            cardWidth = CGFloat(500)
+        }
+        return cardWidth
+    }
 
     var body: some View {
         let lineWidth: CGFloat = 2
         let gapWidth: CGFloat = 5
+        let cardWidth = getCardWidth()
         VStack(spacing: 20) {
             if purchaseManager.hasUnlockedAccess {
                 Text("Subscriptions")
@@ -167,35 +189,33 @@ struct ContentView: View {
                                 .padding(.leading, 20)
                             
                             Spacer()
-                        }
-                        HStack {
-                            Text("\(product.displayPrice) - \(product.displayName)")
-                                .frame(alignment: .leading)
-                                .foregroundColor(.black)
-                                .padding(.leading, 20)
-                                .padding(.trailing, 20)
-                                .font(.headline)
-                            
-                            Spacer()
                             
                             Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(Color(red: 0.0, green: 0.6, blue: 0.0))
-                                .font(.system(size: 30))
-                                .padding(.leading, 20)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30, height: 30)
+                                .cornerRadius(10)
+                                .padding(.top, 20)
                                 .padding(.trailing, 20)
-                                .frame(alignment: .trailing)
-                                .shadow(color: .gray, radius: 5, x: 0, y: 2)
+                                .foregroundColor(Color(red: 0.0, green: 0.6, blue: 0.0))
+                                .shadow(color: .gray, radius: 10, x: 0, y: 2)
                         }
+                        Text("\(product.displayPrice) - \(product.displayName)")
+                            .frame(width: cardWidth * 0.8, alignment: .leading)
+                            .foregroundColor(.black)
+                            .padding(20)
+                            .font(.headline)
+                            
                         Divider().background(Color.black.opacity(0.2))
                         
                         Text("\(product.description)")
-                            .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
+                            .frame(width: cardWidth * 0.8, alignment: .leading)
                             .foregroundColor(.black)
-                            .padding()
+                            .padding(20)
                             .font(.system(size: 14))
                             .multilineTextAlignment(.leading)
                     }
-                    .frame(width: UIScreen.main.bounds.width * 0.9, alignment: .center)
+                    .frame(width: cardWidth * 0.9, alignment: .center)
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(10)
                     .overlay(
@@ -239,22 +259,22 @@ struct ContentView: View {
                                 Spacer()
                             }
                             Text("\(product.displayPrice) - \(product.displayName)")
-                                .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
+                                .frame(width: cardWidth * 0.8, alignment: .leading)
                                 .foregroundColor(.black)
-                                .padding()
+                                .padding(20)
                                 .font(.headline)
                             
                             Divider().background(Color.black.opacity(0.2))
                             
                             Text("\(product.description)")
-                                .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
+                                .frame(width: cardWidth * 0.8, alignment: .leading)
                                 .foregroundColor(.black)
-                                .padding()
+                                .padding(20)
                                 .font(.system(size: 14))
                                 .multilineTextAlignment(.leading)
                         }
                     }
-                    .frame(width: UIScreen.main.bounds.width * 0.9, alignment: .center)
+                    .frame(width: cardWidth * 0.9, alignment: .center)
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(10)
                 }

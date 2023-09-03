@@ -24,7 +24,7 @@ class TutorialViewController: UIViewController {
         ("Detector", "The Detector tab offers you the ability to take a photo of your fridge/pantry and use that to add new ingredients. We're constantly improving the accuracy and ingredients recognised.", "TutorialDetector"),
         ("Recipes", "The Recipes tab automatically finds recipes that you can make with your ingredients. You can also search for specific recipes if that's what you'd prefer.", "TutorialRecipes"),
         ("Selected Recipes", "Select a recipe to view its description, instructions, and more. You can favourite recipes you love so that they can be quickly accessed in the future.", "TutorialSelectedRecipes"),
-        ("That's it!", "Now you're all caught up, you can dive in and start cooking up some masterpieces you didn't even know you could make. All new users get a 7-day free trial, after that you'll need to pay $4.99 a month. You can cancel the subscription at any time. Enjoy!", "")
+        ("That's it!", "Now you're all caught up, you can dive in and start cooking up some masterpieces you didn't even know you could make. No need to create an account, we'll just use your Apple ID. All new users get a 7-day free trial, after that you'll need to pay $4.99 a month. You can cancel the subscription at any time. Enjoy!", "")
     ]
     
     override func viewDidLoad() {
@@ -51,11 +51,13 @@ class TutorialViewController: UIViewController {
         titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
         titleLabel.textColor = UIColor.black
         titleLabel.textAlignment = .center
+        titleLabel.adjustsFontSizeToFitWidth = true
         
         descriptionLabel.font = UIFont.systemFont(ofSize: 16)
         descriptionLabel.textColor = UIColor.darkGray
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
+        descriptionLabel.adjustsFontSizeToFitWidth = true
     }
     
     func styleButtons() {
