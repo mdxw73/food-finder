@@ -431,14 +431,15 @@ extension SelectedRecipeViewController: UICollectionViewDataSource, UICollection
 
 extension SelectedRecipeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? RecipeCell else {
-            fatalError("Unable to decode the data source's cells.")
-        }
-        var numberOfColumns = CGFloat(2)
-        if view.frame.width > 500 {
-            numberOfColumns = view.frame.width / 250
-        }
-        let height = 140 + 20 + 3 * cell.mealName.font.lineHeight // Image height + constraints + 3 available lines
-        return CGSize(width: view.frame.width / numberOfColumns - 17, height: height)
+        let minSpacing: CGFloat = 14 // from storyboard
+        let sectionInset: CGFloat = 10 // from storyboard
+        let minWidth: CGFloat = 190
+        let numberOfColumns = floor(collectionView.bounds.width / minWidth)
+        let availableWidth = collectionView.bounds.width - ((numberOfColumns-1) * minSpacing) - (2 * sectionInset)
+        let width = (availableWidth / numberOfColumns) - 1 // subtract 1 to account for overflows
+        
+        let height = 140 + 20 + 3 * UIFont.systemFont(ofSize: 14).lineHeight // Image height + constraints + 3 available lines
+        
+        return CGSize(width: width, height: height)
     }
 }

@@ -12,6 +12,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     let recipeAdaptor = RecipeAdaptor()
     var recipes: [Recipe] = []
     var latestIngredients: [HomeIngredient] = ingredients
+    let noneLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,8 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             displayAlert(title: "No Ingredients", message: "To find recipes by ingredients, return to the home tab and add some using the search bar.")
             latestIngredients = ingredients
         }
+        
+        addNoneLabel()
     }
     
     // Check if latest query used current ingredients
@@ -49,6 +52,22 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         if change == true {
             viewDidLoad()
         }
+    }
+    
+    func addNoneLabel() {
+        // Add a UILabel
+        noneLabel.text = "No Recipes"
+        noneLabel.textColor = .gray
+        noneLabel.font = UIFont.systemFont(ofSize: 18)
+        noneLabel.textAlignment = .center
+        
+        // Add constraints to center the UILabel
+        noneLabel.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.addSubview(noneLabel)
+        NSLayoutConstraint.activate([
+            noneLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            noneLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+        ])
     }
     
     @objc func refresh() {
@@ -187,6 +206,11 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     //MARK: Collection View Config
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if recipes.count == 0 {
+            noneLabel.isHidden = false
+        } else {
+            noneLabel.isHidden = true
+        }
         return recipes.count
     }
     
@@ -254,15 +278,16 @@ extension UIImageView {
 
 extension RecipesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? RecipeCell else {
-            fatalError("Unable to decode the data source's cells.")
-        }
-        var numberOfColumns = CGFloat(2)
-        if view.frame.width > 500 {
-            numberOfColumns = view.frame.width / 250
-        }
-        let height = 140 + 20 + 3 * cell.mealName.font.lineHeight // Image height + constraints + 3 available lines
-        return CGSize(width: view.frame.width / numberOfColumns - 17, height: height)
+        let minSpacing: CGFloat = 14 // from storyboard
+        let sectionInset: CGFloat = 10 // from storyboard
+        let minWidth: CGFloat = 190
+        let numberOfColumns = floor(collectionView.bounds.width / minWidth)
+        let availableWidth = collectionView.bounds.width - ((numberOfColumns-1) * minSpacing) - (2 * sectionInset)
+        let width = (availableWidth / numberOfColumns) - 1 // subtract 1 to account for overflows
+        
+        let height = 140 + 20 + 3 * UIFont.systemFont(ofSize: 14).lineHeight // Image height + constraints + 3 available lines
+        
+        return CGSize(width: width, height: height)
     }
 }
 

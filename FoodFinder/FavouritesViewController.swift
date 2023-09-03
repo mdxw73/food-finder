@@ -11,6 +11,7 @@ class FavouritesViewController: UICollectionViewController {
 
     var recipes: [SelectedRecipe] = []
     let defaults = UserDefaults.standard
+    let noneLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,8 @@ class FavouritesViewController: UICollectionViewController {
             favouriteRecipes = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedFavouriteRecipes as! Data) as! [SelectedRecipe]
         }
         self.recipes = favouriteRecipes
+        
+        addNoneLabel()
     }
     
     // Update recipes attribute when necessary
@@ -48,6 +51,22 @@ class FavouritesViewController: UICollectionViewController {
             self.recipes = favouriteRecipes
             collectionView.reloadData()
         }
+    }
+    
+    func addNoneLabel() {
+        // Add a UILabel
+        noneLabel.text = "No Favourites"
+        noneLabel.textColor = .gray
+        noneLabel.font = UIFont.systemFont(ofSize: 18)
+        noneLabel.textAlignment = .center
+        
+        // Add constraints to center the UILabel
+        noneLabel.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.addSubview(noneLabel)
+        NSLayoutConstraint.activate([
+            noneLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            noneLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+        ])
     }
     
     @objc func lockoutUnsubscribedUser() {
@@ -86,6 +105,11 @@ class FavouritesViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if recipes.count == 0 {
+            noneLabel.isHidden = false
+        } else {
+            noneLabel.isHidden = true
+        }
         return recipes.count
     }
     
@@ -134,14 +158,15 @@ class FavouritesViewController: UICollectionViewController {
 
 extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? RecipeCell else {
-            fatalError("Unable to decode the data source's cells.")
-        }
-        var numberOfColumns = CGFloat(2)
-        if view.frame.width > 500 {
-            numberOfColumns = view.frame.width / 250
-        }
-        let height = 130 + 20 + 3 * cell.mealName.font.lineHeight // Image height + constraints + 3 available lines
-        return CGSize(width: view.frame.width / numberOfColumns - 17, height: height)
+        let minSpacing: CGFloat = 14 // from storyboard
+        let sectionInset: CGFloat = 10 // from storyboard
+        let minWidth: CGFloat = 190
+        let numberOfColumns = floor(collectionView.bounds.width / minWidth)
+        let availableWidth = collectionView.bounds.width - ((numberOfColumns-1) * minSpacing) - (2 * sectionInset)
+        let width = (availableWidth / numberOfColumns) - 1 // subtract 1 to account for overflows
+        
+        let height = 130 + 20 + 3 * UIFont.systemFont(ofSize: 14).lineHeight // Image height + constraints + 3 available lines
+        
+        return CGSize(width: width, height: height)
     }
 }

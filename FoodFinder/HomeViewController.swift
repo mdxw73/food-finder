@@ -15,6 +15,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
     
     let defaults = UserDefaults.standard
     var filteredIngredients: [HomeIngredient]!
+    let noneLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +42,8 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         filteredIngredients = ingredients
         
         setStateOfBarButtonItems()
+        
+        addNoneLabel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,6 +83,22 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         searchBarCancelButtonClicked(searchBar)
+    }
+    
+    func addNoneLabel() {
+        // Add a UILabel
+        noneLabel.text = "No Ingredients"
+        noneLabel.textColor = .gray
+        noneLabel.font = UIFont.systemFont(ofSize: 18)
+        noneLabel.textAlignment = .center
+        
+        // Add constraints to center the UILabel
+        noneLabel.translatesAutoresizingMaskIntoConstraints = false
+        tableView.addSubview(noneLabel)
+        NSLayoutConstraint.activate([
+            noneLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            noneLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+        ])
     }
     
     func setStateOfBarButtonItems() {
@@ -155,6 +174,11 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if filteredIngredients.count == 0 {
+            noneLabel.isHidden = false
+        } else {
+            noneLabel.isHidden = true
+        }
         // return the number of rows
         return filteredIngredients.count
     }
