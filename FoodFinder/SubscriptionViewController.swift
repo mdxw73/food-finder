@@ -16,7 +16,9 @@ class SubscriptionViewController: UIViewController {
         super.viewDidLoad()
 
         // Create a UIHostingController with the SwiftUI view
-        let contentView = ContentView().environmentObject(PurchaseManager())
+        let purchaseManager = PurchaseManager()
+        purchaseManager.tabBarController = self.tabBarController!
+        let contentView = ContentView().environmentObject(purchaseManager)
         swiftUIHostingController = UIHostingController(rootView: AnyView(contentView))
 
         if let hostingController = swiftUIHostingController {
@@ -60,11 +62,22 @@ extension UIViewController {
 class PurchaseManager: ObservableObject {
 
     private let productIDs = ["com.zackobied.PantryView.AllAccess"]
+    weak var tabBarController: UITabBarController?
 
     @Published
     private(set) var products: [Product] = []
     @Published
-    private(set) var purchasedProductIDs = Set<String>()
+    private(set) var purchasedProductIDs = Set<String>() {
+        didSet {
+            if hasUnlockedAccess {
+                if let tabBarController = tabBarController {
+                    for item in tabBarController.tabBar.items! {
+                        item.isEnabled = true
+                    }
+                }
+            }
+        }
+    }
 
     private var productsLoaded = false
     private var updates: Task<Void, Never>? = nil

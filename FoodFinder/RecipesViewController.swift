@@ -31,8 +31,8 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             queryApi(searchTerm)
         } else {
             displayAlert(title: "No Ingredients", message: "To find recipes by ingredients, return to the home tab and add some using the search bar.")
-            latestIngredients = ingredients
         }
+        latestIngredients = ingredients
         
         addNoneLabel()
     }
@@ -108,7 +108,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             } else if recipes == nil && error == false {
                 // Run out of API queries
                 DispatchQueue.main.async {
-                    self.displayAlert(title: "Error Message", message: "We have run into a server-side problem. We aim to fix this as soon as possible. Sorry for the inconvenience.")
+                    self.displayAlert(title: "Limit Reached", message: "You have reached your recipe limit for today. Please try again tomorrow.")
                 }
             } else {
                 self.recipes = recipes ?? [] // Create an array from the attribute strMeal of all returned recipes
@@ -117,7 +117,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
                 DispatchQueue.main.async {
                     // Check if no recipes found
                     if self.recipes.count == 0 {
-                        self.displayAlert(title: "No Recipes", message: "We couldn't find any recipes for the ingredients in your home tab.")
+                        self.displayAlert(title: "No Recipes", message: "We couldn't find any recipes matching your ingredients.")
                     } else {
                         self.collectionView.reloadData()
                     }
@@ -179,7 +179,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
             } else if recipes == nil && error == false {
                 // Run out of API queries
                 DispatchQueue.main.async {
-                    self.displayAlert(title: "Error", message: "We have run into a server-side error. Please try again tomorrow. Sorry for the inconvenience.")
+                    self.displayAlert(title: "Limit Reached", message: "You have reached your recipe limit for today. Please try again tomorrow.")
                 }
             } else {
                 DispatchQueue.main.async {
@@ -191,7 +191,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
                     
                     // Check if no recipes found
                     if viewController.recipes.count == 0 {
-                        self.displayAlert(title: "No Recipes", message: "We couldn't find any recipes matching to your search.")
+                        self.displayAlert(title: "No Recipes", message: "We couldn't find any recipes matching your search.")
                     } else {
                         self.navigationController?.pushViewController(viewController, animated: true)
                     }
@@ -254,6 +254,10 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewController = storyboard?.instantiateViewController(identifier: "SelectedRecipeViewController") as? SelectedRecipeViewController else {
             fatalError("Failed to load Selected Recipe View Controller from Storyboard")
+        }
+        guard UserDefaults.standard.double(forKey: "userTokens") != -1 else {
+            displayAlert(title: "Limit Reached", message: "You have reached your recipe limit for today. Please try again tomorrow.")
+            return
         }
         viewController.mealId = self.recipes[indexPath.item].mealId
         viewController.similarRecipes = recipes.filter({$0.mealId != viewController.mealId})

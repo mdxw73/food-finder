@@ -127,7 +127,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             filteredIngredients = ingredients
             setStateOfBarButtonItems()
         } else {
-            self.navigationItem.rightBarButtonItem!.isEnabled = false
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
             self.navigationItem.leftBarButtonItem?.isEnabled = false
             
             for ingredient in ingredients {
@@ -271,18 +271,28 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         if searchBar.selectedScopeButtonIndex == 0 {
             filterIngredients(searchText)
         } else {
-            self.navigationItem.rightBarButtonItem!.isEnabled = false
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
             self.navigationItem.leftBarButtonItem?.isEnabled = false
             self.isEditing = false
             
+            guard searchText != "" else {
+                self.filteredIngredients = []
+                DispatchQueue.main.async {
+                    self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                }
+                return
+            }
+            
             // Get autocomplete ingredients
-            AutocompleteIngredientsAdaptor().getAutocompleteIngredients(searchBar.text ?? "") { (autocompleteIngredients, error) in
+            AutocompleteIngredientsAdaptor().getAutocompleteIngredients(searchText) { (autocompleteIngredients, error) in
                 // If no internet connection or unable to parse JSON
-                if error == false {
+                if error == false && autocompleteIngredients != nil {
                     self.filteredIngredients = []
                     for ingredient in autocompleteIngredients ?? [] {
                         self.filteredIngredients.append(HomeIngredient(name: ingredient.name, imageDirectory: ingredient.image))
                     }
+                } else {
+                    self.filteredIngredients.append(HomeIngredient(name: searchText, imageDirectory: "\(searchText).jpg"))
                 }
                 DispatchQueue.main.async {
                     self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
@@ -298,8 +308,6 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         searchBar.sizeToFit()
         tableView.tableHeaderView = searchBar
         if searchBar.selectedScopeButtonIndex == 1 {
-            self.navigationItem.rightBarButtonItem!.isEnabled = false
-            self.navigationItem.leftBarButtonItem?.isEnabled = false
             self.searchBar(self.searchBar, textDidChange: searchBar.text ?? "")
         }
     }

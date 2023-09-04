@@ -20,6 +20,11 @@ class AutocompleteIngredientsAdaptor {
             return
         }
         
+        if updateUserTokens(cost: 0.1) == -1 {
+            completion(nil, false)
+            return
+        }
+        
         let request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in

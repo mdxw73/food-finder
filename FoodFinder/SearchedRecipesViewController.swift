@@ -16,6 +16,16 @@ class SearchedRecipesViewController: UICollectionViewController {
         navigationItem.title = "By Complex Search"
     }
     
+    func displayAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.applyCustomStyle()
+        // Add a button below the text field
+        let closeAction = UIAlertAction(title: "Close", style: .default)
+        closeAction.setValue(UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)), forKey: "titleTextColor")
+        alert.addAction(closeAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     //MARK: Collection View Config
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -58,6 +68,10 @@ class SearchedRecipesViewController: UICollectionViewController {
         guard let viewController = storyboard?.instantiateViewController(identifier: "SelectedRecipeViewController") as? SelectedRecipeViewController else {
             fatalError("Failed to load Selected Recipe View Controller from Storyboard")
         }
+        guard UserDefaults.standard.double(forKey: "userTokens") != -1 else {
+            displayAlert(title: "Limit Reached", message: "You have reached your recipe limit for today. Please try again tomorrow.")
+            return
+        }
         viewController.mealId = self.recipes[indexPath.item].mealId
         viewController.similarRecipes = recipes.filter({$0.mealId != viewController.mealId})
         navigationController?.pushViewController(viewController, animated: true)
@@ -67,10 +81,15 @@ class SearchedRecipesViewController: UICollectionViewController {
 
 extension SearchedRecipesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? RecipeCell else {
-            fatalError("Unable to decode the data source's cells.")
-        }
-        let height = 140 + 20 + 3 * cell.mealName.font.lineHeight // Image height + constraints + 3 available lines
-        return CGSize(width: view.frame.width / 2 - 17, height: height)
+        let minSpacing: CGFloat = 14 // from storyboard
+        let sectionInset: CGFloat = 10 // from storyboard
+        let minWidth: CGFloat = 190
+        let numberOfColumns = round(collectionView.bounds.width / minWidth)
+        let availableWidth = collectionView.bounds.width - ((numberOfColumns-1) * minSpacing) - (2 * sectionInset)
+        let width = (availableWidth / numberOfColumns) - 1 // subtract 1 to account for overflows
+        
+        let height = 140 + 20 + 3 * UIFont.systemFont(ofSize: 14).lineHeight // Image height + constraints + 3 available lines
+        
+        return CGSize(width: width, height: height)
     }
 }

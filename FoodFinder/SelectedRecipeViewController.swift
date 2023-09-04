@@ -74,7 +74,7 @@ class SelectedRecipeViewController: UIViewController {
                         self.prepareIngredientsText()
                         self.displayDescription()
                     } else {
-                        self.displayAlert(title: "No Recipe", message: "We couldn't find a recipe for this meal. This could be due to it not existing yet or the servers being unavailable at the moment.")
+                        self.displayAlert(title: "No Recipe", message: "We couldn't find a recipe for this meal. Sorry for the inconvenience.")
                     }
                 }
             }
