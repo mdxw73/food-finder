@@ -161,7 +161,7 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
         let minSpacing: CGFloat = 14 // from storyboard
         let sectionInset: CGFloat = 10 // from storyboard
         let minWidth: CGFloat = 190
-        let numberOfColumns = floor(collectionView.bounds.width / minWidth)
+        let numberOfColumns = round(collectionView.bounds.width / minWidth)
         let availableWidth = collectionView.bounds.width - ((numberOfColumns-1) * minSpacing) - (2 * sectionInset)
         let width = (availableWidth / numberOfColumns) - 1 // subtract 1 to account for overflows
         
