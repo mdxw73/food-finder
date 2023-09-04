@@ -9,7 +9,7 @@
   "settings" : {
     "_applicationInternalID" : "6463626359",
     "_developerTeamID" : "6T6QC27X4W",
-    "_lastSynchronizedDate" : 715276254.15959895
+    "_lastSynchronizedDate" : 715523835.26781297
   },
   "subscriptionGroups" : [
     {
@@ -26,12 +26,12 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "4.99",
+          "displayPrice" : "2.99",
           "familyShareable" : false,
           "groupNumber" : 1,
           "internalID" : "6464068765",
           "introductoryOffer" : {
-            "internalID" : "8A143F8E",
+            "internalID" : "054FB883",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"

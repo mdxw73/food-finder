@@ -59,7 +59,7 @@ extension UIViewController {
 @MainActor
 class PurchaseManager: ObservableObject {
 
-    private let productIds = ["com.zackobied.PantryView.AllAccess"]
+    private let productIDs = ["com.zackobied.PantryView.AllAccess"]
 
     @Published
     private(set) var products: [Product] = []
@@ -83,7 +83,7 @@ class PurchaseManager: ObservableObject {
 
     func loadProducts() async throws {
         guard !self.productsLoaded else { return }
-        self.products = try await Product.products(for: productIds)
+        self.products = try await Product.products(for: productIDs)
         self.productsLoaded = true
     }
 
