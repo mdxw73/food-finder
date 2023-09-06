@@ -440,6 +440,10 @@ extension SelectedRecipeViewController: UICollectionViewDataSource, UICollection
         guard let viewController = storyboard?.instantiateViewController(identifier: "SelectedRecipeViewController") as? SelectedRecipeViewController else {
             fatalError("Failed to load Selected Recipe View Controller from Storyboard")
         }
+        guard UserDefaults.standard.double(forKey: "userTokens") != -1 else {
+            displayAlert(title: "Limit Reached", message: "You have reached your recipe limit for today. Please try again tomorrow.")
+            return
+        }
         viewController.mealId = self.similarRecipes![indexPath.item].mealId
         viewController.similarRecipes = similarRecipes?.filter({$0.mealId != self.similarRecipes![indexPath.item].mealId})
         navigationController?.pushViewController(viewController, animated: true)
