@@ -152,13 +152,27 @@ class SelectedRecipeViewController: UIViewController {
         self.servingsLabel.text = "\(recipe!.servings) persons"
     }
     
+    func uniqueIngredients(from ingredients: [Ingredient]) -> [Ingredient] {
+        var uniqueIngredientsSet = Set<String>()
+        var uniqueIngredients = [Ingredient]()
+        for ingredient in ingredients {
+            let ingredientIdentifier = "\(ingredient.name)-\(ingredient.original)"
+            if !uniqueIngredientsSet.contains(ingredientIdentifier) {
+                uniqueIngredientsSet.insert(ingredientIdentifier)
+                uniqueIngredients.append(ingredient)
+            }
+        }
+        return uniqueIngredients
+    }
+    
     func prepareIngredientsText() {
         let formattedIngredients = NSMutableAttributedString()
         var index = 1
         self.ingredientsTextLabel.text = ""
         var lineBreak = "\n"
-        for ingredient in self.recipe!.ingredients {
-            if self.recipe!.ingredients.last!.name == ingredient.name {
+        let recipeIngredients = uniqueIngredients(from: self.recipe!.ingredients)
+        for ingredient in recipeIngredients {
+            if recipeIngredients.last == ingredient {
                 lineBreak = ""
             }
             // Create an attachment with the system icon
@@ -290,25 +304,28 @@ class SelectedRecipeViewController: UIViewController {
     }
     
     func fixTypos(_ input: String) -> String {
-        var pattern = "([a-zFCLS][\\.!?:;,])([^\\s.!?\\)\\]\\}\"])"
+        // compress multiple whitespaces
+        var modifiedInput = replaceMultipleSpaces(removeUnpairedBrackets(from: input).trimmingCharacters(in: .whitespacesAndNewlines))
+        
+        // remove whitespace before punctuation
+        var pattern = "([a-zA-Z0-9])(\\s+)([\\.,;!?])"
         var regex = try! NSRegularExpression(pattern: pattern)
-        var modifiedInput = regex.stringByReplacingMatches(
-            in: input,
+        modifiedInput = regex.stringByReplacingMatches(
+            in: modifiedInput,
             options: [],
-            range: NSRange(location: 0, length: input.utf16.count),
-            withTemplate: "$1 $2"
+            range: NSRange(location: 0, length: modifiedInput.utf16.count),
+            withTemplate: "$1$3"
         )
         
-        pattern = "([a-zA-Z0-9])(\\s+)([.,;!?])"
+        // add whitespace after punctuation if not an acronym (except Fahrenheit, Celcius, Litres, Seconds) or in brackets
+        pattern = "([a-zFCLS][\\.!?:;,])([^\\s.!?\\)\\]\\}\"])"
         regex = try! NSRegularExpression(pattern: pattern)
         modifiedInput = regex.stringByReplacingMatches(
             in: modifiedInput,
             options: [],
-            range: NSRange(location: 0, length: input.utf16.count),
-            withTemplate: "$1$3"
+            range: NSRange(location: 0, length: modifiedInput.utf16.count),
+            withTemplate: "$1 $2"
         )
-        
-        modifiedInput = replaceMultipleSpaces(removeUnpairedBrackets(from: modifiedInput).trimmingCharacters(in: .whitespacesAndNewlines))
         
         if !modifiedInput.isEmpty {
             let lastChar = modifiedInput.last!

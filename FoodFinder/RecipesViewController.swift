@@ -20,7 +20,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         checkSubscription()
         
         // Search button setup
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(displayComplexSearchAlert))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(displayRecipeSearchAlert))
         
         // Refresh button setup
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"), style: .plain, target: self, action: #selector(refresh))
@@ -139,8 +139,8 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    @objc func displayComplexSearchAlert() {
-        let alert = UIAlertController(title: "Complex Recipe Search", message: "Enter a meal name, style or genre.", preferredStyle: .alert)
+    @objc func displayRecipeSearchAlert() {
+        let alert = UIAlertController(title: "Recipe Search", message: "Enter a meal name, style, or genre.", preferredStyle: .alert)
         alert.applyCustomStyle()
         // Add a text field
         alert.addTextField(configurationHandler: { textField in

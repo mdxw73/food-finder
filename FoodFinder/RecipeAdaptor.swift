@@ -11,7 +11,7 @@ let apiKey = "64878309292b4875b14e980eae9c6496"
 
 // safeguard against scripts that abuse API access
 func updateUserTokens(cost: Double) -> Double {
-    let dailyTokenLimit: Double = 100
+    let dailyTokenLimit: Double = 50
     let currentDate = Date()
     let initialUserTokens = UserDefaults.standard.double(forKey: "userTokens")
     

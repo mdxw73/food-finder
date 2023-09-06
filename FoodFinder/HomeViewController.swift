@@ -199,7 +199,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             cell.backgroundColor = UIColor.init(cgColor: CGColor(red: 1, green: 0.5, blue: 0.5, alpha: 1))
         }
         cell.ingredientLabel?.text = selectedIngredient.name
-        cell.ingredientImage?.load(url: URL(string: "https://spoonacular.com/cdn/ingredients_100x100/\(selectedIngredient.imageDirectory)") ?? URL(string: "https://spoonacular.com/cdn/ingredients_100x100.jpg")!)
+        cell.ingredientImage?.load(url: URL(string: "https://spoonacular.com/cdn/ingredients_100x100/\(selectedIngredient.imageDirectory.replacingOccurrences(of: " ", with: "-"))") ?? URL(string: "https://spoonacular.com/cdn/ingredients_100x100.jpg")!)
         
         return cell
     }
@@ -236,6 +236,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
             // Reset views
             view.endEditing(true)
             searchBar.text = ""
+            searchBar.selectedScopeButtonIndex = 0
             
             // Add and store ingredient and display the ingredients before the addition
             ingredients.append(filteredIngredients[indexPath.row])

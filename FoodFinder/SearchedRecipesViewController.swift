@@ -13,7 +13,7 @@ class SearchedRecipesViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "By Complex Search"
+        navigationItem.title = "By Search"
     }
     
     func displayAlert(title: String, message: String) {
