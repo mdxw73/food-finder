@@ -26,6 +26,8 @@ class SelectedRecipeViewController: UIViewController {
     @IBOutlet var similarRecipesLabel: UILabel!
     @IBOutlet var similarRecipesConstraintOne: NSLayoutConstraint!
     @IBOutlet var similarRecipesConstraintTwo: NSLayoutConstraint!
+    @IBOutlet var sourceLabel: UILabel!
+    @IBOutlet var scrollView: UIScrollView!
     
     var mealId: Int = 0
     let selectedRecipeAdaptor = SelectedRecipeAdaptor()
@@ -73,6 +75,7 @@ class SelectedRecipeViewController: UIViewController {
                         self.performUIAssignments()
                         self.prepareIngredientsText()
                         self.displayDescription()
+                        self.displaySource()
                     } else {
                         self.displayAlert(title: "No Recipe", message: "We couldn't find a recipe for this meal. Sorry for the inconvenience.")
                     }
@@ -83,6 +86,7 @@ class SelectedRecipeViewController: UIViewController {
             performUIAssignments()
             prepareIngredientsText()
             displayDescription()
+            displaySource()
         }
         
         // If there are favourite recipes saved in the defaults database, copy them across
@@ -208,6 +212,7 @@ class SelectedRecipeViewController: UIViewController {
         servingsLabel.isHidden = true
         collectionView.isHidden = true
         similarRecipesLabel.isHidden = true
+        sourceLabel.isHidden = true
     }
     
     func unhideAllViews() {
@@ -222,6 +227,7 @@ class SelectedRecipeViewController: UIViewController {
         servingsLabel.isHidden = false
         collectionView.isHidden = false
         similarRecipesLabel.isHidden = false
+        sourceLabel.isHidden = false
     }
     
     func checkIfFavourited() -> Bool {
@@ -298,8 +304,64 @@ class SelectedRecipeViewController: UIViewController {
             // Set the attributed text for the label
             self.textLabel.attributedText = formattedInstructions
         } else {
-            self.displayAlert(title: "No Instructions", message: "We couldn't find any instructions for this meal. Sorry for the inconvenience.")
+            if scrollView.contentSize.height > scrollView.bounds.size.height {
+                // Scroll to the bottom of the page
+                let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height)
+                scrollView.setContentOffset(bottomOffset, animated: true)
+            }
+            
+            UIView.animateKeyframes(withDuration: 0.2, delay: 0, options: [.autoreverse], animations: {
+                // Bounce up
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
+                    self.sourceLabel.transform = CGAffineTransform(translationX: 0, y: -5)
+                }
+                // Bounce down
+                UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5) {
+                    self.sourceLabel.transform = .identity
+                }
+                
+            }, completion: nil)
+            
             self.segmentedControl.selectedSegmentIndex = 0
+        }
+    }
+
+    func displaySource() {
+        guard let sourceName = recipe?.sourceName, let sourceUrl = recipe?.sourceUrl else {
+            sourceLabel.font = UIFont.systemFont(ofSize: 0)
+            similarRecipesConstraintOne.constant = 0
+            return
+        }
+        
+        let attributedText = NSMutableAttributedString()
+        
+        let sourceNameString = NSAttributedString(string: sourceName, attributes: [
+            .font: UIFont.boldSystemFont(ofSize: 14),
+            .foregroundColor: UIColor.darkGray
+        ])
+        attributedText.append(sourceNameString)
+        attributedText.append(NSAttributedString(string: " - "))
+        
+        // Create a clickable link for the URL
+        let urlLink = NSAttributedString(string: "Read more", attributes: [
+            .link: sourceUrl,
+            .font: UIFont.boldSystemFont(ofSize: 14),
+            .foregroundColor: UIColor.link,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ])
+        attributedText.append(urlLink)
+        
+        sourceLabel.attributedText = attributedText
+        sourceLabel.isUserInteractionEnabled = true
+        
+        // Add a tap gesture recognizer to open the URL
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openURL))
+        sourceLabel.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    @objc func openURL(_ sender: UITapGestureRecognizer) {
+        if let url = recipe?.sourceUrl {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
