@@ -19,7 +19,7 @@ class TutorialViewController: UIViewController {
     
     var currentStepIndex: Int = 0
     var tutorialSteps: [(title: String, description: String, imageName: String)] = [
-        ("Welcome!", "Hello and welcome to the only cooking companion you'll ever need, complete with state of the art machine learning to help save you time and money. This tutorial will walk you through some of the basic features the app has to offer.", ""),
+        ("Welcome!", "Hello and welcome to the only cooking companion you'll ever need, complete with machine learning to help save you time and money. This tutorial will walk you through some of the basic features the app has to offer.", ""),
         ("Home", "The Home tab is where you can find all your ingredients. You can add new ones by pressing the search bar and selecting the store, or delete existing ones using the edit button.", "TutorialHome"),
         ("Detector", "The Detector tab offers you the ability to take a photo of your fridge/pantry and use that to add new ingredients. We're constantly improving the accuracy and ingredients recognised.", "TutorialDetector"),
         ("Recipes", "The Recipes tab automatically finds recipes that you can make with your ingredients. You can also search for specific recipes if that's what you'd prefer.", "TutorialRecipes"),

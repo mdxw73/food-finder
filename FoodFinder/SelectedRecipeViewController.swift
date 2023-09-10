@@ -52,6 +52,7 @@ class SelectedRecipeViewController: UIViewController {
         // Set up collection view
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.clipsToBounds = false // prevents cell shadow being cropped
         
         // Set initial button states
         clockButton.isEnabled = false
