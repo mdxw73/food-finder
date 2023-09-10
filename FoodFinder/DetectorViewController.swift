@@ -41,7 +41,7 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     @objc func showAbout() {
-        let alert = UIAlertController(title: "About", message: "The detector is a quick and easy way to add new ingredients to your pantry. This feature is still under development, so we apologize for any inaccuracies or missing ingredients. Your feedback is valuable in helping us improve, so please don't hesitate to share your suggestions and report any issues you encounter. Thank you for being part of our development journey!", preferredStyle: .alert)
+        let alert = UIAlertController(title: "About", message: "The detector is a quick and easy way to add new ingredients to your pantry. This feature is still under development, so we apologize for any inaccuracies or missing ingredients.", preferredStyle: .alert)
         alert.applyCustomStyle()
         // Add a button below the text field
         let closeAction = UIAlertAction(title: "Close", style: .default)
