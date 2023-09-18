@@ -9,7 +9,7 @@
   "settings" : {
     "_applicationInternalID" : "6463626359",
     "_developerTeamID" : "6T6QC27X4W",
-    "_lastSynchronizedDate" : 715523835.26781297
+    "_lastSynchronizedDate" : 716747952.21707499
   },
   "subscriptionGroups" : [
     {
@@ -31,14 +31,14 @@
           "groupNumber" : 1,
           "internalID" : "6464068765",
           "introductoryOffer" : {
-            "internalID" : "054FB883",
+            "internalID" : "E4BD1F3B",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
           },
           "localizations" : [
             {
-              "description" : "Unlock all features with a 7-day free trial",
+              "description" : "Unlock all features with a 7-day free trial.",
               "displayName" : "All Access",
               "locale" : "en_GB"
             }

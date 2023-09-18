@@ -213,7 +213,7 @@ struct ContentView: View {
                                 .foregroundColor(Color(red: 0.0, green: 0.6, blue: 0.0))
                                 .shadow(color: .gray, radius: 10, x: 0, y: 2)
                         }
-                        Text("\(product.displayPrice) - \(product.displayName)")
+                        Text("\(product.displayPrice) / Month - \(product.displayName)")
                             .frame(width: cardWidth * 0.8, alignment: .leading)
                             .foregroundColor(.black)
                             .padding(20)
@@ -271,7 +271,7 @@ struct ContentView: View {
                                 
                                 Spacer()
                             }
-                            Text("\(product.displayPrice) - \(product.displayName)")
+                            Text("\(product.displayPrice) / Month - \(product.displayName)")
                                 .frame(width: cardWidth * 0.8, alignment: .leading)
                                 .foregroundColor(.black)
                                 .padding(20)
@@ -301,10 +301,28 @@ struct ContentView: View {
                         }
                     }
                 } label: {
-                    Text("Restore Purchases")
+                    Text("Already subscribed? Sign in.")
                 }
             }
             Spacer()
+            
+            VStack {
+                Button {
+                    openURL(URL(string: "https://pantryview.co.uk/#privacy")!)
+                } label: {
+                    Text("Privacy Policy")
+                }
+                .font(.system(size: 14))
+                .padding(.bottom, 10)
+
+                Button {
+                    openURL(URL(string: "https://pantryview.co.uk/#terms")!)
+                } label: {
+                    Text("Terms of Use")
+                }
+                .font(.system(size: 14))
+            }
+            .padding(.bottom, 20)
         }.task {
             await purchaseManager.updatePurchasedProducts()
         }.task {
@@ -315,6 +333,15 @@ struct ContentView: View {
                     print(error)
                 }
             }
+        }
+    }
+    
+    func openURL(_ url: URL) {
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            // Handle the case when the URL can't be opened
+            print("Cannot open the URL: \(url)")
         }
     }
 }
