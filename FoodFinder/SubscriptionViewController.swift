@@ -182,83 +182,35 @@ struct ContentView: View {
         let lineWidth: CGFloat = 2
         let gapWidth: CGFloat = 5
         let cardWidth = getCardWidth()
-        VStack(spacing: 20) {
-            if purchaseManager.hasUnlockedAccess {
+        ScrollView {
+            VStack(spacing: 20) {
                 Text("Subscriptions")
                     .font(.title)
                     .bold()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 20)
                     .padding(.top, 20)
-                ForEach(purchaseManager.products) { product in
+                
+                ZStack {
+                    Color.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1))
+                        .frame(maxWidth: .infinity)
                     VStack {
-                        HStack {
-                            Image("LaunchScreen")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                                .cornerRadius(10)
-                                .padding(.top, 20)
-                                .padding(.leading, 20)
-                            
-                            Spacer()
-                            
-                            Image(systemName: "checkmark.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 30, height: 30)
-                                .cornerRadius(10)
-                                .padding(.top, 20)
-                                .padding(.trailing, 20)
-                                .foregroundColor(Color(red: 0.0, green: 0.6, blue: 0.0))
-                                .shadow(color: .gray, radius: 10, x: 0, y: 2)
-                        }
-                        Text("\(product.displayPrice) / Month - \(product.displayName)")
-                            .frame(width: cardWidth * 0.8, alignment: .leading)
-                            .foregroundColor(.black)
-                            .padding(20)
-                            .font(.headline)
-                            
-                        Divider().background(Color.black.opacity(0.2))
-                        
-                        Text("\(product.description)")
-                            .frame(width: cardWidth * 0.8, alignment: .leading)
-                            .foregroundColor(.black)
-                            .padding(20)
-                            .font(.system(size: 14))
-                            .multilineTextAlignment(.leading)
+                        Text("Features")
+                            .font(.title.italic())
+                            .bold()
+                            .foregroundColor(.white)
+                            .padding(.top, 20)
+                        FeatureRow(systemImageName: "checkmark.circle.fill", featureText: "Ingredient detector to identify ingredients in an image")
+                        FeatureRow(systemImageName: "checkmark.circle.fill", featureText: "Recipe search by ingredients")
+                        FeatureRow(systemImageName: "checkmark.circle.fill", featureText: "Recipe search by meal name, style, or genre")
+                        FeatureRow(systemImageName: "checkmark.circle.fill", featureText: "Recipe images, cooking time, ingredients, description, and instructions")
+                        FeatureRow(systemImageName: "checkmark.circle.fill", featureText: "Favorites to save the recipes you love")
+                            .padding(.bottom, 20)
                     }
-                    .frame(width: cardWidth * 0.9, alignment: .center)
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.green, lineWidth: lineWidth)
-                            .padding(lineWidth / 2)
-                            .background(
-                                RoundedRectangle(cornerRadius: 7)
-                                    .stroke(Color.green, lineWidth: lineWidth)
-                                    .padding(lineWidth / 2 + gapWidth)
-                            )
-                    )
                 }
-            } else {
-                Text("Subscriptions")
-                    .font(.title)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 20)
-                    .padding(.top, 20)
-                ForEach(purchaseManager.products) { product in
-                    Button {
-                        _ = Task<Void, Never> {
-                            do {
-                                try await purchaseManager.purchase(product)
-                            } catch {
-                                print(error)
-                            }
-                        }
-                    } label: {
+                
+                if purchaseManager.hasUnlockedAccess {
+                    ForEach(purchaseManager.products) { product in
                         VStack {
                             HStack {
                                 Image("LaunchScreen")
@@ -270,6 +222,16 @@ struct ContentView: View {
                                     .padding(.leading, 20)
                                 
                                 Spacer()
+                                
+                                Image(systemName: "checkmark.circle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 30, height: 30)
+                                    .cornerRadius(10)
+                                    .padding(.top, 20)
+                                    .padding(.trailing, 20)
+                                    .foregroundColor(Color(red: 0.0, green: 0.6, blue: 0.0))
+                                    .shadow(color: .gray, radius: 10, x: 0, y: 2)
                             }
                             Text("\(product.displayPrice) / Month - \(product.displayName)")
                                 .frame(width: cardWidth * 0.8, alignment: .leading)
@@ -286,51 +248,107 @@ struct ContentView: View {
                                 .font(.system(size: 14))
                                 .multilineTextAlignment(.leading)
                         }
+                        .frame(width: cardWidth * 0.9, alignment: .center)
+                        .background(Color.gray.opacity(0.2))
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.green, lineWidth: lineWidth)
+                                .padding(lineWidth / 2)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 7)
+                                        .stroke(Color.green, lineWidth: lineWidth)
+                                        .padding(lineWidth / 2 + gapWidth)
+                                )
+                        )
                     }
-                    .frame(width: cardWidth * 0.9, alignment: .center)
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(10)
-                }
-
-                Button {
-                    _ = Task<Void, Never> {
-                        do {
-                            try await AppStore.sync()
-                        } catch {
-                            print(error)
+                } else {
+                    ForEach(purchaseManager.products) { product in
+                        Button {
+                            _ = Task<Void, Never> {
+                                do {
+                                    try await purchaseManager.purchase(product)
+                                } catch {
+                                    print(error)
+                                }
+                            }
+                        } label: {
+                            VStack {
+                                HStack {
+                                    Image("LaunchScreen")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .cornerRadius(10)
+                                        .padding(.top, 20)
+                                        .padding(.leading, 20)
+                                    
+                                    Spacer()
+                                }
+                                Text("\(product.displayPrice) / Month - \(product.displayName)")
+                                    .frame(width: cardWidth * 0.8, alignment: .leading)
+                                    .foregroundColor(.black)
+                                    .padding(20)
+                                    .font(.headline)
+                                
+                                Divider().background(Color.black.opacity(0.2))
+                                
+                                Text("\(product.description)")
+                                    .frame(width: cardWidth * 0.8, alignment: .leading)
+                                    .foregroundColor(.black)
+                                    .padding(20)
+                                    .font(.system(size: 14))
+                                    .multilineTextAlignment(.leading)
+                            }
                         }
+                        .frame(width: cardWidth * 0.9, alignment: .center)
+                        .background(Color.gray.opacity(0.2))
+                        .cornerRadius(10)
                     }
-                } label: {
-                    Text("Already subscribed? Sign in.")
+                    
+                    Button {
+                        _ = Task<Void, Never> {
+                            do {
+                                try await AppStore.sync()
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    } label: {
+                        Text("Already subscribed? Sign in.")
+                            .foregroundColor(Color.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)))
+                    }
                 }
-            }
-            Spacer()
-            
-            VStack {
-                Button {
-                    openURL(URL(string: "https://pantryview.co.uk/#privacy")!)
-                } label: {
-                    Text("Privacy Policy")
+                Spacer()
+                
+                VStack {
+                    Button {
+                        openURL(URL(string: "https://pantryview.co.uk/#privacy")!)
+                    } label: {
+                        Text("Privacy Policy")
+                            .foregroundColor(Color.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)))
+                    }
+                    .font(.system(size: 14))
+                    .padding(.bottom, 10)
+                    
+                    Button {
+                        openURL(URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+                    } label: {
+                        Text("Terms of Use")
+                            .foregroundColor(Color.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)))
+                    }
+                    .font(.system(size: 14))
                 }
-                .font(.system(size: 14))
-                .padding(.bottom, 10)
-
-                Button {
-                    openURL(URL(string: "https://pantryview.co.uk/#terms")!)
-                } label: {
-                    Text("Terms of Use")
-                }
-                .font(.system(size: 14))
-            }
-            .padding(.bottom, 20)
-        }.task {
-            await purchaseManager.updatePurchasedProducts()
-        }.task {
-            _ = Task<Void, Never> {
-                do {
-                    try await purchaseManager.loadProducts()
-                } catch {
-                    print(error)
+                .padding(.bottom, 20)
+            }.task {
+                await purchaseManager.updatePurchasedProducts()
+            }.task {
+                _ = Task<Void, Never> {
+                    do {
+                        try await purchaseManager.loadProducts()
+                    } catch {
+                        print(error)
+                    }
                 }
             }
         }
@@ -342,6 +360,31 @@ struct ContentView: View {
         } else {
             // Handle the case when the URL can't be opened
             print("Cannot open the URL: \(url)")
+        }
+    }
+}
+
+struct FeatureRow: View {
+    let systemImageName: String
+    let featureText: String
+    
+    init(systemImageName: String, featureText: String) {
+        self.systemImageName = systemImageName
+        self.featureText = featureText
+    }
+    
+    var body: some View {
+        HStack {
+            Image(systemName: systemImageName)
+                .foregroundColor(.white)
+                .padding(.leading, 20)
+                .padding(.top, 2)
+            Text(featureText)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.trailing, 20)
+                .font(.system(size: 14).bold().italic())
+            Spacer()
         }
     }
 }
