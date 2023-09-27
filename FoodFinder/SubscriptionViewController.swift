@@ -315,7 +315,7 @@ struct ContentView: View {
                             }
                         }
                     } label: {
-                        Text("Already subscribed? Sign in.")
+                        Text("Restore Purchases")
                             .foregroundColor(Color.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)))
                     }
                 }
