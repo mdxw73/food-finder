@@ -38,8 +38,6 @@ class SelectedRecipeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        checkSubscription()
-        
         if similarRecipes == nil || similarRecipes!.count == 0 {
             collectionViewHeightConstraint.constant = 0
             similarRecipesLabel.font = UIFont.systemFont(ofSize: 0)
@@ -503,7 +501,7 @@ extension SelectedRecipeViewController: UICollectionViewDataSource, UICollection
         guard let viewController = storyboard?.instantiateViewController(identifier: "SelectedRecipeViewController") as? SelectedRecipeViewController else {
             fatalError("Failed to load Selected Recipe View Controller from Storyboard")
         }
-        guard UserDefaults.standard.double(forKey: "userTokens") != -1 else {
+        guard tokenManager.updateUserTokens(cost: 0) != -1 else {
             displayAlert(title: "Limit Reached", message: "You have reached your recipe limit for today. Please try again tomorrow.")
             return
         }

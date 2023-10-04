@@ -6,36 +6,112 @@
 //
 
 import Foundation
+import Security
 
-let apiKey = "64878309292b4875b14e980eae9c6496"
+class TokenManager {
+    private let userTokensKey = "com.PantryView.userTokens"
+    private let lastResetDateKey = "com.PantryView.lastResetDate"
+    let dailyTokenLimit: Double = 50.0
 
-// safeguard against scripts that abuse API access
-func updateUserTokens(cost: Double) -> Double {
-    let dailyTokenLimit: Double = 50
-    let currentDate = Date()
-    let initialUserTokens = UserDefaults.standard.double(forKey: "userTokens")
-    
-    if let lastResetDate = UserDefaults.standard.object(forKey: "lastResetDate") as? Date {
-        // Check if a new day has started
-        if Calendar.current.isDate(currentDate, inSameDayAs: lastResetDate) {
-            // Tokens have already been reset today
-            if initialUserTokens > cost {
-                UserDefaults.standard.set(initialUserTokens - cost, forKey: "userTokens")
+    func updateUserTokens(cost: Double) -> Double {
+        let currentDate = Date()
+        var initialUserTokens = readUserTokensFromKeychain()
+
+        if let lastResetDate = readLastResetDateFromKeychain() {
+            if Calendar.current.isDate(currentDate, inSameDayAs: lastResetDate) || lastResetDate > currentDate {
+                // Tokens have already been reset today
+                if initialUserTokens > cost {
+                    initialUserTokens -= cost
+                    saveUserTokensToKeychain(initialUserTokens)
+                } else {
+                    saveUserTokensToKeychain(-1.0)
+                }
             } else {
-                UserDefaults.standard.set(-1, forKey: "userTokens")
+                // Reset tokens for the new day
+                initialUserTokens = dailyTokenLimit - cost
+                saveUserTokensToKeychain(initialUserTokens)
+                saveLastResetDateToKeychain(currentDate)
             }
         } else {
-            // Reset tokens for the new day
-            UserDefaults.standard.set(dailyTokenLimit - cost, forKey: "userTokens")
-            UserDefaults.standard.set(currentDate, forKey: "lastResetDate")
+            // First-time setup or if "lastResetDate" doesn't exist
+            initialUserTokens = dailyTokenLimit - cost
+            saveUserTokensToKeychain(initialUserTokens)
+            saveLastResetDateToKeychain(currentDate)
         }
-    } else {
-        // First-time setup or if "lastResetDate" doesn't exist
-        UserDefaults.standard.set(dailyTokenLimit - cost, forKey: "userTokens")
-        UserDefaults.standard.set(currentDate, forKey: "lastResetDate")
+
+        return initialUserTokens
     }
-    return initialUserTokens
+
+    private func readUserTokensFromKeychain() -> Double {
+        guard let data = readFromKeychain(key: userTokensKey) else {
+            return 0.0 // Default value when the key is not found
+        }
+
+        return (data as AnyObject).doubleValue ?? 0.0
+    }
+
+    private func saveUserTokensToKeychain(_ tokens: Double) {
+        writeToKeychain(key: userTokensKey, value: NSNumber(value: tokens))
+    }
+
+    private func readLastResetDateFromKeychain() -> Date? {
+        return readFromKeychain(key: lastResetDateKey) as? Date
+    }
+
+    private func saveLastResetDateToKeychain(_ date: Date) {
+        writeToKeychain(key: lastResetDateKey, value: date)
+    }
+
+    private func readFromKeychain(key: String) -> Any? {
+        let query = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: key,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecReturnAttributes as String: true,
+            kSecReturnData as String: true
+        ] as [String: Any]
+
+        var item: CFTypeRef?
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
+
+        guard status == errSecSuccess,
+            let existingItem = item as? [String: Any],
+            let data = existingItem[kSecValueData as String] as? Data,
+            let value = NSKeyedUnarchiver.unarchiveObject(with: data) else {
+                return nil
+        }
+
+        return value
+    }
+
+    private func writeToKeychain(key: String, value: Any) {
+        let data = NSKeyedArchiver.archivedData(withRootObject: value)
+        let query = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: key
+        ] as [String: Any]
+
+        let update = [
+            kSecValueData as String: data
+        ] as [String: Any]
+
+        var status = SecItemUpdate(query as CFDictionary, update as CFDictionary)
+
+        if status == errSecItemNotFound {
+            var newQuery = query
+            newQuery[kSecValueData as String] = data
+            status = SecItemAdd(newQuery as CFDictionary, nil)
+        }
+
+        guard status == errSecSuccess else {
+            print("Error writing to Keychain: \(status)")
+            return
+        }
+    }
 }
+
+let apiKey = "64878309292b4875b14e980eae9c6496"
+let tokenManager = TokenManager()
 
 class RecipeAdaptor {
     let baseUrl = "https://api.spoonacular.com/recipes/"
@@ -51,7 +127,7 @@ class RecipeAdaptor {
             return
         }
         
-        if updateUserTokens(cost: 1.1) == -1 {
+        if tokenManager.updateUserTokens(cost: 1.1) == -1 {
             completion(nil, false)
             return
         }

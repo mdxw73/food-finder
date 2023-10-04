@@ -20,28 +20,32 @@ class SelectedRecipeAdaptor {
             return
         }
         
-        if updateUserTokens(cost: 1.1) == -1 {
-            completion(nil, false)
-            return
-        }
-        
-        let request = URLRequest(url: url)
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let data = data {
-                if let response = self.parseJson(json: data) {
-                    // Return recipes and false for error
-                    completion(response, false)
-                } else {
-                    // Return false for error and no recipes
-                    completion(nil, false)
+        Task.init {
+            let purchaseManager = await PurchaseManager()
+            await purchaseManager.updatePurchasedProducts()
+            if await tokenManager.updateUserTokens(cost: purchaseManager.hasUnlockedAccess ? 1.1 : 20) == -1 {
+                completion(nil, false)
+                return
+            }
+            
+            let request = URLRequest(url: url)
+            
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let data = data {
+                    if let response = self.parseJson(json: data) {
+                        // Return recipes and false for error
+                        completion(response, false)
+                    } else {
+                        // Return false for error and no recipes
+                        completion(nil, false)
+                    }
                 }
-            }
-            // Return true for error and no recipes
-            if error != nil {
-                completion(nil, true)
-            }
-        }.resume()
+                // Return true for error and no recipes
+                if error != nil {
+                    completion(nil, true)
+                }
+            }.resume()
+        }
     }
     
     func parseJson(json: Data) -> SelectedRecipe? {

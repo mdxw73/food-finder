@@ -17,8 +17,6 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        checkSubscription()
-        
         // Search button setup
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(displayRecipeSearchAlert))
         
@@ -140,30 +138,38 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
     }
     
     @objc func displayRecipeSearchAlert() {
-        let alert = UIAlertController(title: "Recipe Search", message: "Enter a meal name, style, or genre.", preferredStyle: .alert)
-        alert.applyCustomStyle()
-        // Add a text field
-        alert.addTextField(configurationHandler: { textField in
-            textField.autocapitalizationType = .none
-            textField.autocorrectionType = .yes
-            textField.placeholder = "Search"
-            })
-        // Add a button below the text field
-        let searchAction = UIAlertAction(title: "Search", style: .default, handler: { (_) in
-            let textField = alert.textFields![0]
-            let response = textField.text ?? ""
-            
-            // Check if ingredient already exists
-            if response != "" {
-                self.searchButtonPressed(response)
+        Task.init {
+            let purchaseManager = PurchaseManager()
+            await purchaseManager.updatePurchasedProducts()
+            guard purchaseManager.hasUnlockedAccess else {
+                displayAlert(title: "Upgrade Needed", message: "Upgrade your subscription in order to search for recipes by meal name, style, or genre.")
+                return
             }
-        })
-        searchAction.setValue(UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)), forKey: "titleTextColor")
-        alert.addAction(searchAction)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        cancelAction.setValue(UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)), forKey: "titleTextColor")
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Recipe Search", message: "Enter a meal name, style, or genre.", preferredStyle: .alert)
+            alert.applyCustomStyle()
+            // Add a text field
+            alert.addTextField(configurationHandler: { textField in
+                textField.autocapitalizationType = .none
+                textField.autocorrectionType = .yes
+                textField.placeholder = "Search"
+            })
+            // Add a button below the text field
+            let searchAction = UIAlertAction(title: "Search", style: .default, handler: { (_) in
+                let textField = alert.textFields![0]
+                let response = textField.text ?? ""
+                
+                // Check if ingredient already exists
+                if response != "" {
+                    self.searchButtonPressed(response)
+                }
+            })
+            searchAction.setValue(UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)), forKey: "titleTextColor")
+            alert.addAction(searchAction)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            cancelAction.setValue(UIColor.init(cgColor: CGColor(red: 0.5, green: 0.5, blue: 1, alpha: 1)), forKey: "titleTextColor")
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     // Search API with search bar text
@@ -255,7 +261,7 @@ class RecipesViewController: UICollectionViewController, UISearchBarDelegate {
         guard let viewController = storyboard?.instantiateViewController(identifier: "SelectedRecipeViewController") as? SelectedRecipeViewController else {
             fatalError("Failed to load Selected Recipe View Controller from Storyboard")
         }
-        guard UserDefaults.standard.double(forKey: "userTokens") != -1 else {
+        guard tokenManager.updateUserTokens(cost: 0) != -1 else {
             displayAlert(title: "Limit Reached", message: "You have reached your recipe limit for today. Please try again tomorrow.")
             return
         }

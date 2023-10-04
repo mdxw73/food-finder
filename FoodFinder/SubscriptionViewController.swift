@@ -40,23 +40,6 @@ class SubscriptionViewController: UIViewController {
     }
 }
 
-extension UIViewController {
-    func checkSubscription() {
-        Task.init {
-            let purchaseManager = PurchaseManager()
-            await purchaseManager.updatePurchasedProducts()
-            do {
-                try await purchaseManager.loadProducts()
-            } catch {
-                print(error)
-            }
-            if !purchaseManager.hasUnlockedAccess {
-                tabBarController?.selectedIndex = 3
-            }
-        }
-    }
-}
-
 // tutorial: www.revenuecat.com/blog/engineering/ios-in-app-subscription-tutorial-with-storekit-2-and-swift
 @MainActor
 class PurchaseManager: ObservableObject {
@@ -108,6 +91,7 @@ class PurchaseManager: ObservableObject {
             // Successful purchase
             await transaction.finish()
             await self.updatePurchasedProducts()
+            _ = tokenManager.updateUserTokens(cost: -tokenManager.dailyTokenLimit)
         case let .success(.unverified(_, error)):
             // Successful purchase but transaction/receipt can't be verified
             // Could be a jailbroken phone
@@ -202,7 +186,7 @@ struct ContentView: View {
                             .padding(.top, 20)
                         FeatureRow(systemImageName: "checkmark.circle.fill", featureText: "Ingredient detector to identify ingredients in an image")
                         FeatureRow(systemImageName: "checkmark.circle.fill", featureText: "Recipe search by ingredients")
-                        FeatureRow(systemImageName: "checkmark.circle.fill", featureText: "Recipe search by meal name, style, or genre")
+                        FeatureRow(systemImageName: "dollarsign.circle.fill", featureText: "Recipe search by meal name, style, or genre")
                         FeatureRow(systemImageName: "checkmark.circle.fill", featureText: "Recipe images, cooking time, ingredients, description, and instructions")
                         FeatureRow(systemImageName: "checkmark.circle.fill", featureText: "Favorites to save the recipes you love")
                             .padding(.bottom, 20)
@@ -263,6 +247,57 @@ struct ContentView: View {
                         )
                     }
                 } else {
+                    VStack {
+                        HStack {
+                            Image("LaunchScreen")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .cornerRadius(10)
+                                .padding(.top, 20)
+                                .padding(.leading, 20)
+
+                            Spacer()
+
+                            Image(systemName: "checkmark.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30, height: 30)
+                                .cornerRadius(10)
+                                .padding(.top, 20)
+                                .padding(.trailing, 20)
+                                .foregroundColor(Color(red: 0.0, green: 0.6, blue: 0.0))
+                                .shadow(color: .gray, radius: 10, x: 0, y: 2)
+                        }
+                        Text("Free Tier")
+                            .frame(width: cardWidth * 0.8, alignment: .leading)
+                            .foregroundColor(.black)
+                            .padding(20)
+                            .font(.headline)
+
+                        Divider().background(Color.black.opacity(0.2))
+
+                        Text("Up To Three Recipes Per Day")
+                            .frame(width: cardWidth * 0.8, alignment: .leading)
+                            .foregroundColor(.black)
+                            .padding(20)
+                            .font(.system(size: 14))
+                            .multilineTextAlignment(.leading)
+                    }
+                    .frame(width: cardWidth * 0.9, alignment: .center)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.green, lineWidth: lineWidth)
+                            .padding(lineWidth / 2)
+                            .background(
+                                RoundedRectangle(cornerRadius: 7)
+                                    .stroke(Color.green, lineWidth: lineWidth)
+                                    .padding(lineWidth / 2 + gapWidth)
+                            )
+                    )
+                    
                     ForEach(purchaseManager.products) { product in
                         Button {
                             _ = Task<Void, Never> {
@@ -376,7 +411,7 @@ struct FeatureRow: View {
     var body: some View {
         HStack {
             Image(systemName: systemImageName)
-                .foregroundColor(.white)
+                .foregroundColor(systemImageName == "dollarsign.circle.fill" ? .yellow : .white)
                 .padding(.leading, 20)
                 .padding(.top, 2)
             Text(featureText)

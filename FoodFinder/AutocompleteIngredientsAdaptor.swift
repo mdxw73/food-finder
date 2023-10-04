@@ -20,7 +20,7 @@ class AutocompleteIngredientsAdaptor {
             return
         }
         
-        if updateUserTokens(cost: 0.1) == -1 {
+        if tokenManager.updateUserTokens(cost: 0.1) == -1 {
             completion(nil, false)
             return
         }

@@ -24,7 +24,7 @@ class TutorialViewController: UIViewController {
         ("Detector", "The Detector tab offers you the ability to take a photo of your fridge/pantry and use that to add new ingredients. We're constantly improving the accuracy and ingredients recognised.", "TutorialDetector"),
         ("Recipes", "The Recipes tab automatically finds recipes that you can make with your ingredients. You can also search for specific recipes if that's what you'd prefer.", "TutorialRecipes"),
         ("Selected Recipes", "Select a recipe to view its description, instructions, and more. You can favourite recipes you love so that they can be quickly accessed in the future.", "TutorialSelectedRecipes"),
-        ("That's it!", "Now you're all caught up, you can dive in and start cooking up some masterpieces you didn't even know you could make. No need to create an account, we'll just use your Apple ID. All new users get a 7-day free trial, after that you'll need to pay $2.99 a month. You can cancel the subscription at any time. Enjoy!", "")
+        ("That's it!", "Now you're all caught up, you can dive in and start cooking up some masterpieces you didn't even know you could make. No need to create an account, we'll just use your Apple ID. The free tier limits you to up to three recipes per day, if you'd like more in addition to other perks then check out the paid tier. All new users get a 7-day free trial, after that you'll need to pay a monthly fee. You can cancel the subscription at any time from the Settings app. Enjoy!", "")
     ]
     
     override func viewDidLoad() {

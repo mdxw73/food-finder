@@ -10,7 +10,9 @@ import UIKit
 let InTutorialDidChangeNotification = Notification.Name("InTutorialDidChangeNotification")
 var inTutorial = false {
     didSet {
-        NotificationCenter.default.post(name: InTutorialDidChangeNotification, object: nil)
+        if !inTutorial {
+            NotificationCenter.default.post(name: InTutorialDidChangeNotification, object: nil)
+        }
     }
 }
 

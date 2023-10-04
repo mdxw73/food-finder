@@ -17,10 +17,10 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
     @IBOutlet var cameraButton: UIButton!
     @IBOutlet var photosButton: UIButton!
     
+    let noneLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        checkSubscription()
         
         // Add navigation bar buttons
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action: #selector(self.showAbout))
@@ -30,14 +30,33 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         navigationItem.title = "Choose or Take a Photo"
         navigationItem.rightBarButtonItem?.isEnabled = false
+        
+        addNoneLabel()
     }
     
     // Reset label, image view and disable button
     override func viewDidDisappear(_ animated: Bool) {
         self.navigationItem.title = "Choose or Take a Photo"
         self.imageView.image = nil
+        noneLabel.isHidden = false
         navigationItem.rightBarButtonItem?.isEnabled = false
         self.imageView.layer.sublayers = nil // Remove old bounding boxes
+    }
+    
+    func addNoneLabel() {
+        // Add a UILabel
+        noneLabel.text = "No Image"
+        noneLabel.textColor = .gray
+        noneLabel.font = UIFont.systemFont(ofSize: 18)
+        noneLabel.textAlignment = .center
+        
+        // Add constraints to center the UILabel
+        noneLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(noneLabel)
+        NSLayoutConstraint.activate([
+            noneLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            noneLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+        ])
     }
     
     @objc func showAbout() {
@@ -160,6 +179,7 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
         // Set the chosen image to UIImageView's attribute image and classify it
         let image = cropToSquare(image: info[.originalImage] as! UIImage)
         imageView.image = image
+        noneLabel.isHidden = true
         classify(image: image)
     }
     

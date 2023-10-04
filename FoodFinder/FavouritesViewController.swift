@@ -16,7 +16,7 @@ class FavouritesViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(lockoutUnsubscribedUser), name: InTutorialDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showSubscription), name: InTutorialDidChangeNotification, object: nil)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(self.showTutorial))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: #selector(self.showSubscription))
@@ -33,10 +33,6 @@ class FavouritesViewController: UICollectionViewController {
     
     // Update recipes attribute when necessary
     override func viewDidAppear(_ animated: Bool) {
-        if !inTutorial {
-            lockoutUnsubscribedUser()
-        }
-        
         var change = false
         if recipes.count != favouriteRecipes.count {
             change = true
@@ -67,28 +63,6 @@ class FavouritesViewController: UICollectionViewController {
             noneLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             noneLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
-    }
-    
-    @objc func lockoutUnsubscribedUser() {
-        Task.init {
-            let purchaseManager = PurchaseManager()
-            await purchaseManager.updatePurchasedProducts()
-            do {
-                try await purchaseManager.loadProducts()
-            } catch {
-                print(error)
-            }
-            if !purchaseManager.hasUnlockedAccess {
-                self.showSubscription()
-                for item in tabBarController!.tabBar.items! {
-                    item.isEnabled = false
-                }
-            } else {
-                for item in tabBarController!.tabBar.items! {
-                    item.isEnabled = true
-                }
-            }
-        }
     }
     
     @objc func showSubscription() {

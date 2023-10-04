@@ -20,7 +20,15 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        checkSubscription()
+        if !UserDefaults.standard.bool(forKey: "tutorialCompleted") {
+            Task.init {
+                let purchaseManager = PurchaseManager()
+                await purchaseManager.updatePurchasedProducts()
+                if !purchaseManager.hasUnlockedAccess {
+                    tabBarController?.selectedIndex = 3
+                }
+            }
+        }
         
         tableView.allowsSelectionDuringEditing = true
         
