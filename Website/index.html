@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantry View</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="ItunesArtwork@2x.png" type="image/png">
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            line-height: 1.6;
+            color: #333;
+            margin-top: 50px; /* account for nav bar height */
+        }
+
+        /* Header styles */
+        header {
+            background-color: #eb6091;
+            color: white;
+            text-align: center;
+            display: flex; /* use flexbox for centering */
+            justify-content: center; /* center horizontally */
+            align-items: center; /* center vertically */
+            flex-direction: column;
+            width: 100%;
+            height: 75vh;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: #eb6091;
+            text-align: center;
+            background-color: white;
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Navigation styles */
+        nav {
+            background-color: #f0f55f;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            height: 50px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav li a {
+            display: block;
+            color: #555;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        nav li a:hover {
+            background-color: #555;
+            color: white;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px; /* account for nav bar height */
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .container h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .container p, h3 {
+            font-size: 1rem;
+            line-height: 1.4;
+            padding: 10px;
+        }
+        
+        .container ul {
+            padding-left: 40px;
+        }
+        
+        /* Icon styles */
+        .icon {
+            display: block;
+            margin: 0 auto;
+            max-width: 100px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10%;
+        }
+        
+        /* Slideshow container */
+        .slideshow-container {
+            max-width: 100%;
+            position: relative;
+            margin-top: 20px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Style the individual slides */
+        .mySlides {
+            display: none;
+        }
+
+        /* Style the images */
+        .mySlides img {
+            height: 75vh;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Feature container */
+        .features {
+            background-color: #eb6091; /* Green background color */
+            color: white; /* White text color */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <!--<li><a href="#">Contact</a></li>-->
+            <li><a href="#privacy">Privacy</a></li>
+            <!--<li><a href="#terms">Term of Use</a></li>-->
+            <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Term of Use</a></li>
+        </ul>
+    </nav>
+    
+    <header>
+        <h1>Pantry View</h1>
+    </header>
+    
+    <br><img src="ItunesArtwork@2x.png" alt="Pantry View Icon" class="icon">
+    
+    <div class="container">
+        <h2>Welcome</h2>
+        <p>Pantry View offers users a revolutionary new way to cook for themselves. Instead of planning what to eat before a grocery trip and worrying whether you have enough at home, we give you the ability to instantly get recipes that you already have all the ingredients for. Use the built-in ingredient detector to identify ingredients from a photo of your fridge/pantry. Then instantly get recipes for those ingredients for everything from desserts to cocktails.</p>
+    </div>
+    
+    <div class="features container" id="features">
+        <h2>Features</h2>
+        <p>
+            <i class="fas fa-check-circle"></i> Ingredient detector to identify ingredients in an image<br>
+            <i class="fas fa-check-circle"></i> Recipe search by ingredients<br>
+            <i class="fas fa-check-circle"></i> Recipe search by meal name, style, or genre<br>
+            <i class="fas fa-check-circle"></i> Recipe images, cooking time, ingredients, description, and instructions<br>
+            <i class="fas fa-check-circle"></i> Favorites to save the recipes you love</p>
+    </div>
+    
+    <div class="slideshow-container">
+        <div class="mySlides">
+            <img src="TutorialHome.png" alt="Image 1">
+        </div>
+
+        <div class="mySlides">
+            <img src="TutorialDetector.png" alt="Image 2">
+        </div>
+
+        <div class="mySlides">
+            <img src="TutorialRecipes.png" alt="Image 3">
+        </div>
+        
+        <div class="mySlides">
+            <img src="TutorialSelectedRecipes.png" alt="Image 3">
+        </div>
+    </div>
+    
+    <div class="container" id="privacy">
+        <h2>Privacy Policy</h2>
+
+        <p><strong>Effective Date:</strong> 16/09/2023</p>
+
+        <h3>1. Introduction</h3>
+        <p>Thank you for choosing Pantry View! This Privacy Policy is designed to inform you about how we protect your privacy while using our mobile app for iOS.</p>
+
+        <h3>2. Information We Do Not Collect</h3>
+        <p>We respect your privacy and want to assure you that Pantry View does not collect, store, or transmit any personal or sensitive user data, including but not limited to:</p>
+        <ul>
+            <li>Personal Identifiable Information (PII)</li>
+            <li>Contact Information</li>
+            <li>Location Information</li>
+            <li>Device Information</li>
+            <li>Usage Information</li>
+        </ul>
+
+        <h3>3. Information Sharing</h3>
+        <p>Since we do not collect any user data, we do not share your personal information with third parties.</p>
+
+        <h3>4. Analytics and Crash Reporting</h3>
+        <p>Pantry View may utilize anonymous analytics and crash reporting services, which do not capture any personally identifiable information. These services help us identify and fix issues within the app for a better user experience.</p>
+
+        <h3>5. Changes to this Privacy Policy</h3>
+        <p>We reserve the right to update this Privacy Policy to reflect changes in our practices or for other operational, legal, or regulatory reasons. Any changes made will be posted on our website.</p>
+
+        <h3>6. Contact Us</h3>
+        <p>If you have any questions, concerns, or requests related to this Privacy Policy or Pantry View, please contact us at ingredientdetector@protonmail.com.</p>
+
+        <h3>7. Your Consent</h3>
+        <p>By using Pantry View, you consent to the terms outlined in this Privacy Policy.</p>
+
+        <h3>8. Effective Date</h3>
+        <p>This Privacy Policy is effective as of 16/09/2023.</p>
+    </div>
+    
+    <!--<div class="container" id="terms">-->
+    <!--    <h2>Terms of Use (EULA)</h2>-->
+    
+    <!--    <p><strong>Effective Date:</strong> 16/09/2023</p>-->
+    
+    <!--    <h3>1. License</h3>-->
+    <!--    <p>Subject to your compliance with the terms of this Agreement, we grant you a limited, non-exclusive, non-transferable, revocable license to use the Pantry View mobile application ("App") solely for your personal, non-commercial purposes. You may not sublicense, transfer, or assign this license.</p>-->
+    
+    <!--    <h3>2. Restrictions</h3>-->
+    <!--    <p>You may not:</p>-->
+    <!--    <ul>-->
+    <!--        <li>Modify, adapt, translate, reverse engineer, decompile, or disassemble the App.</li>-->
+    <!--        <li>Use the App in a way that violates any applicable laws, regulations, or third-party rights.</li>-->
+    <!--        <li>Use the App for any unlawful or unauthorized purpose.</li>-->
+    <!--        <li>Remove or alter any copyright, trademark, or other proprietary notices from the App.</li>-->
+    <!--    </ul>-->
+    
+    <!--    <h3>3. Updates</h3>-->
+    <!--    <p>We may, from time to time, release updates or new versions of the App. You agree to promptly install and use the latest version provided by us.</p>-->
+    
+    <!--    <h3>4. Privacy</h3>-->
+    <!--    <p>Your use of the App is also governed by our Privacy Policy, which is incorporated by reference into this Agreement. Please review the Privacy Policy to understand our practices regarding the collection and use of your personal information.</p>-->
+    
+    <!--    <h3>5. Termination</h3>-->
+    <!--    <p>This Agreement is effective until terminated by you or us. You may terminate this Agreement at any time by uninstalling the App and ceasing all use. We may terminate this Agreement at our sole discretion without notice if you fail to comply with its terms. Upon termination, you must cease all use of the App.</p>-->
+        
+    <!--    <h3>6. Responsible API Usage</h3>-->
+    <!--    <p>You agree to use our App and its associated API access responsibly and within the designated token limits. Any actions intended to circumvent or evade the token limits imposed by the App are strictly prohibited. Violation of this provision may result in the suspension or termination of your access to our services.</p>-->
+        
+    <!--    <h3>7. Disclaimer of Warranties</h3>-->
+    <!--    <p>THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.</p>-->
+    
+    <!--    <h3>8. Limitation of Liability</h3>-->
+    <!--    <p>TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL WE BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF YOUR USE OR INABILITY TO USE THE APP.</p>-->
+    
+    <!--    <h3>9. Governing Law</h3>-->
+    <!--    <p>This Agreement is governed by and construed in accordance with the laws of a mutually agreed-upon jurisdiction, without regard to its conflict of law principles.</p>-->
+    
+    <!--    <h3>10. Changes to this Agreement</h3>-->
+    <!--    <p>We reserve the right to modify or update this Agreement at any time. Any changes will be effective upon posting a revised version of this Agreement within the App. Your continued use of the App after any such changes constitutes your acceptance of the updated Agreement.</p>-->
+    
+    <!--    <h3>11. Contact Information</h3>-->
+    <!--    <p>If you have any questions or concerns about this Agreement, please contact us at ingredientdetector@protonmail.com.</p>-->
+    
+    <!--    <h3>12. Your Consent</h3>-->
+    <!--    <p>By using the Pantry View, you consent to the terms outlined in this Agreement.</p>-->
+        
+    <!--    <h3>13. In-App Subscriptions</h3>-->
+    <!--    <p><u>Auto-Renewable Subscriptions</u></p>-->
+    <!--    <p>If you choose to subscribe to our premium services within the App, you acknowledge and agree to the following terms:</p>-->
+    <!--    <p><u>Billing and Payment</u></p>-->
+    <!--    <p>Subscriptions are billed through your app store account. Payment will be charged to your account at the confirmation of purchase.</p>-->
+    <!--    <p><u>Renewal</u></p>-->
+    <!--    <p>Subscriptions automatically renew unless canceled at least 24 hours before the end of the current subscription period.</p>-->
+    <!--    <p><u>Cancellation</u></p>-->
+    <!--    <p>You can manage and cancel your subscription by going to your app store account settings. Cancellation takes effect at the end of the current subscription period.</p>-->
+    <!--    <p><u>No Refunds</u></p>-->
+    <!--    <p>Subscription fees are non-refundable. Any unused portion of a free trial period, if offered, will be forfeited upon purchase of a subscription.</p>-->
+    <!--    <p><u>Changes</u></p>-->
+    <!--    <p>We reserve the right to change subscription terms, pricing, or features at any time. Notice of changes will be provided within the App or through the app store.</p>-->
+    <!--    <p><u>Agreement</u></p>-->
+    <!--    <p>By subscribing to premium services within the App, you agree to these subscription terms and acknowledge that you have read and understood our Privacy Policy.</p>-->
+    
+    <!--    <h3>14. Effective Date</h3>-->
+    <!--    <p>This Agreement is effective as of 16/09/2023.</p>-->
+    <!--</div>-->
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 pantryview.co.uk. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var slides = document.getElementsByClassName("mySlides");
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 3000);
+        }
+    </script>
+</body>
+</html>
