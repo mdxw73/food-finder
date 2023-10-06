@@ -24,7 +24,7 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
         
         // Add navigation bar buttons
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action: #selector(self.showAbout))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Store", style: .plain, target: self, action: #selector(self.storeObject))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "checkmark"), style: .plain, target: self, action: #selector(self.storeObject))
         navigationItem.rightBarButtonItem?.isEnabled = false
         
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
@@ -254,7 +254,8 @@ class DetectorViewController: UIViewController, UIImagePickerControllerDelegate,
     //MARK: Object Detector Methods
     func processObservations(for request: VNRequest) {
         DispatchQueue.main.async {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Store", style: .plain, target: self, action: #selector(self.storeObject))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "checkmark"), style: .plain, target: self, action: #selector(self.storeObject))
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.systemGreen
         }
         
         // Process UI changes on main thread
