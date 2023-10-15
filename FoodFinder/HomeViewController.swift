@@ -7,7 +7,11 @@
 
 import UIKit
 
-var ingredients: [HomeIngredient] = []
+var ingredients: [HomeIngredient] = [
+    HomeIngredient(name: "avocado", imageDirectory: "avocado.jpg"),
+    HomeIngredient(name: "egg", imageDirectory: "egg.jpg"),
+    HomeIngredient(name: "strawberries", imageDirectory: "strawberries.jpg")
+]
 
 class HomeViewController: UITableViewController, UISearchBarDelegate {
     
@@ -33,7 +37,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
         
         tableView.allowsSelectionDuringEditing = true
         
-        searchBar.placeholder = "Search"
+        searchBar.placeholder = "Find Ingredients"
         searchBar.delegate = self
         searchBar.autocapitalizationType = .none
         searchBar.scopeButtonTitles = ["Pantry", "Store"]
