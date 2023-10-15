@@ -19,6 +19,7 @@ class HomeViewController: UITableViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .light
         
         if !UserDefaults.standard.bool(forKey: "tutorialCompleted") {
             Task.init {

@@ -20,6 +20,7 @@ class SubscriptionViewController: UIViewController {
         purchaseManager.tabBarController = self.tabBarController!
         let contentView = ContentView().environmentObject(purchaseManager)
         swiftUIHostingController = UIHostingController(rootView: AnyView(contentView))
+        swiftUIHostingController?.overrideUserInterfaceStyle = .light
 
         if let hostingController = swiftUIHostingController {
             // Embed the UIHostingController's view in the current view controller

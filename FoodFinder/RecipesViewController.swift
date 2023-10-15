@@ -303,6 +303,7 @@ extension RecipesViewController: UICollectionViewDelegateFlowLayout {
 
 extension UIAlertController {
     func applyCustomStyle() {
+        overrideUserInterfaceStyle = .light
         // Customize the title and message text color
         if let title = self.title {
             let attributedTitle = NSAttributedString(string: title, attributes: [
